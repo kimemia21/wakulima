@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 class CurrentUserProvider extends ChangeNotifier {
   String currentUser = "${FirebaseAuth.instance.currentUser?.email}";
   bool _isLoading = false;
-  bool _internetConnected = true;
+  bool _internetConnected = false;
 
   bool get isLoading => _isLoading;
-  bool get internetConnected => _internetConnected;
+    bool get internetConnected => _internetConnected;
 
   int _newMessages = 0;
 
@@ -39,4 +39,5 @@ class CurrentUserProvider extends ChangeNotifier {
         "Internet connection status changed to: $_internetConnected"); // Debug print
     notifyListeners();
   }
+
 }

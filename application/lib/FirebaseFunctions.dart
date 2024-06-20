@@ -42,8 +42,6 @@ Future signInWithEmailAndPassword(
     required String email,
     required String password}) async {
   try {
-
-   
     context.read<CurrentUserProvider>().changeIsLoading();
 
     await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -67,7 +65,6 @@ Future signInWithEmailAndPassword(
   }
 }
 
-
 // signed in user
 
 // function for creating account using email and password
@@ -78,22 +75,15 @@ Future signup(
     required String password_}) async {
   try {
     await _auth
-        .createUserWithEmailAndPassword(email: email_, password: password_).then((value) =>
-
-        FirebaseFirestore.instance.collection("users").doc(email_).set({"email":email_}))
+        .createUserWithEmailAndPassword(email: email_, password: password_)
+        .then((value) => FirebaseFirestore.instance
+            .collection("users")
+            .doc(email_)
+            .set({"email": email_}))
         .then((value) => Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => MyHomePage(title: "homepage"))));
-
-
-
-
-
-
-
-
-
   } on FirebaseAuthException catch (e) {
     CherryToast.warning(
       disableToastAnimation: false,
@@ -210,13 +200,12 @@ class Authentication {
 
 // checking if stream has data
 
- 
-
-
 Future<int> getNextId() async {
-  final DocumentReference counterRef = FirebaseFirestore.instance.collection('counters').doc('documentCounter');
+  final DocumentReference counterRef =
+      FirebaseFirestore.instance.collection('counters').doc('documentCounter');
 
-  return FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
+  return FirebaseFirestore.instance
+      .runTransaction((Transaction transaction) async {
     DocumentSnapshot snapshot = await transaction.get(counterRef);
 
     if (!snapshot.exists) {

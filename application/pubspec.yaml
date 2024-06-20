@@ -76,6 +76,8 @@ dependencies:
   calendar_date_picker2: ^1.0.2
   loading_animation_widget: ^1.2.1
   uuid: ^4.4.0
+  auth_buttons: ^1.0.1+4
+  connectivity_plus: ^6.0.3
 
 
   # file_picker: "C:\Users\user\Downloads\file_picker-8.0.0+1"
