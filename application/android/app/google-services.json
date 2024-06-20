@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "390200952161",
+    "project_id": "gnovation-wakulima",
+    "storage_bucket": "gnovation-wakulima.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390200952161:android:3e1ca6ae5817426ad03120",
+        "android_client_info": {
+          "package_name": "com.example.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsn5KRDkt7EMeUjAByQLQ5SUGmT46WW2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
