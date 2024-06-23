@@ -48,23 +48,23 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
 
   final Connectivity _connectivity = Connectivity();
-  @override
-  void initState() {
-    super.initState();
-    // Use Future.microtask to delay the initial context usage
-    Future.microtask(() => _checkInitialConnectivity());
-    subscription = _connectivity.onConnectivityChanged
-        .listen((List<ConnectivityResult> result) {
-      final isConnected = result != ConnectivityResult.none;
-      context.read<CurrentUserProvider>().changeInternetConnection(isConnected);
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Use Future.microtask to delay the initial context usage
+  //   Future.microtask(() => _checkInitialConnectivity());
+  //   subscription = _connectivity.onConnectivityChanged
+  //       .listen((ConnectivityResult> result) {
+  //     final isConnected = result != ConnectivityResult.none;
+  //     context.read<CurrentUserProvider>().changeInternetConnection(isConnected);
+  //   });
+  // }
 
-  Future<void> _checkInitialConnectivity() async {
-    List<ConnectivityResult> result = await _connectivity.checkConnectivity();
-    final isConnected = result != ConnectivityResult.none;
-    context.read<CurrentUserProvider>().changeInternetConnection(isConnected);
-  }
+  // Future<void> _checkInitialConnectivity() async {
+  //   List<ConnectivityResult> result = await _connectivity.checkConnectivity();
+  //   final isConnected = result != ConnectivityResult.none;
+  //   context.read<CurrentUserProvider>().changeInternetConnection(isConnected);
+  // }
 
   @override
   void dispose() {
