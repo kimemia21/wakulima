@@ -78,6 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Signup",style: GoogleFonts.poppins(),),
+        leading: Container(
+
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+                borderRadius: BorderRadiusDirectional.all(Radius.circular(20))),
+            child: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back,color: Colors.black,))),
+      ),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Container(
@@ -333,7 +342,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           margin: EdgeInsets.only(top: 15),
                           child: GoogleAuthButton(
                               onPressed: () {},
-                              // themeMode: themeMode,
+                              themeMode: themeMode,
                               isLoading: isLoading,
                               style: AuthButtonStyle(
                                 width: MediaQuery.of(context).size.width * 0.75,
@@ -354,9 +363,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius:
                                     BorderRadiusDirectional.circular(10)),
                             child: TextButton(
-                              onPressed: () async{
-                                bool connection =await checkInternetConnection(context);
-                                  
+                              onPressed: () async {
+                                bool connection =
+                                    await checkInternetConnection(context);
 
                                 if (connection) {
                                   Navigator.push(

@@ -45,6 +45,27 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Signup",
+          style: GoogleFonts.poppins(
+            
+            fontWeight:FontWeight.w600),
+        ),
+        leading: Container(
+          width: 10,
+          height: 10,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadiusDirectional.all(Radius.circular(30))),
+            child: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ))),
+      ),
       resizeToAvoidBottomInset: true,
       body: Container(
         padding: EdgeInsets.all(5),
@@ -312,7 +333,7 @@ class _SignUpState extends State<SignUp> {
                           child: GoogleAuthButton(
                               text: "Signup with Google",
                               onPressed: () {},
-                              // themeMode: themeMode,
+                              themeMode: themeMode,
                               isLoading: isLoading,
                               style: AuthButtonStyle(
                                 width: MediaQuery.of(context).size.width * 0.75,
@@ -323,6 +344,24 @@ class _SignUpState extends State<SignUp> {
                                 iconType: iconType,
                               )),
                         ),
+                        //  Container(
+                        //   margin: EdgeInsets.only(top: 15),
+                        //   child:
+
+                        //    GoogleAuthButton(
+                        //       text: "Signup with Google",
+                        //       onPressed: () {},
+                        //        themeMode: themeMode,
+                        //       isLoading: isLoading,
+                        //       style: AuthButtonStyle(
+                        //         width: MediaQuery.of(context).size.width * 0.75,
+                        //         textStyle: GoogleFonts.poppins(
+                        //             color: Colors.black54,
+                        //             fontWeight: FontWeight.w600),
+                        //         buttonType: buttonType,
+                        //         iconType: iconType,
+                        //       )),
+                        // ),
 
                         // end of text fields
                         // Container(
