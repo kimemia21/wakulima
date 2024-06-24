@@ -353,35 +353,32 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadiusDirectional.circular(10)),
-                            child: Consumer<CurrentUserProvider>(
-                              builder: (context, value, child) {
-                                return TextButton(
-                                  onPressed: () {
-                                    if (value.internetConnected) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => SignUp()));
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content:
-                                              Text('No internet connection'),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: Text(
-                                    "Sign up",
-                                    style: GoogleFonts.abel(
-                                        color: Colors.blue.shade300,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                );
+                            child: TextButton(
+                              onPressed: () async{
+                                bool connection =await checkInternetConnection(context);
+                                  
+
+                                if (connection) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUp()));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('No internet connection'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
                               },
+                              child: Text(
+                                "Sign up",
+                                style: GoogleFonts.abel(
+                                    color: Colors.blue.shade300,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
