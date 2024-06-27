@@ -11,6 +11,7 @@ import 'dart:ui';
 import 'package:app/AppBloc.dart';
 import 'package:app/FirebaseFunctions.dart';
 import 'package:app/authentication/SignUp.dart';
+import 'package:app/authentication/SplashScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,13 +80,27 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Signup",style: GoogleFonts.poppins(),),
+        centerTitle: true,
+        title: Text(
+          "Login",
+          style: GoogleFonts.poppins(
+              color: Colors.black54, fontWeight: FontWeight.w600),
+        ),
         leading: Container(
-
+          width: 5,
+          height: 5,
             decoration: BoxDecoration(
-              color: Colors.grey.shade200,
+                color: Colors.grey.shade400,
                 borderRadius: BorderRadiusDirectional.all(Radius.circular(20))),
-            child: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back,color: Colors.black,))),
+            child: IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Splashscreen()));
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ))),
       ),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -94,24 +109,26 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Column(
+
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  margin: EdgeInsets.only(top: 20),
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width * 1,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: ClipRRect(
-                    borderRadius: BorderRadiusDirectional.circular(20),
-                    child: Image.network(
-                      "https://i.pinimg.com/originals/d5/69/12/d56912e297cf3a797d5d5c728a23fda9.gif",
-                      // https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/8e/16/91/caption.jpg?w=1200&h=1200&s=1
+              // Container(
+              //     margin: EdgeInsets.only(top: 20),
+              //     color: Colors.white,
+              //     width: MediaQuery.of(context).size.width * 1,
+              //     height: MediaQuery.of(context).size.height * 0.3,
+              //     child: ClipRRect(
+              //       borderRadius: BorderRadiusDirectional.circular(20),
+              //       child: Image.network(
+              //         "https://i.pinimg.com/originals/d5/69/12/d56912e297cf3a797d5d5c728a23fda9.gif",
+              //         // https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/8e/16/91/caption.jpg?w=1200&h=1200&s=1
 
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+              //         fit: BoxFit.cover,
+              //       ),
+              //     )),
               Container(
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width * 1,
@@ -130,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     key: _formState,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           margin: EdgeInsets.only(bottom: 4),
@@ -142,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
                           child: Text(
-                            "Welcome to our App! Please sign in to continue",
+                            "Welcome to our App, Please login to continue",
                             style: GoogleFonts.abel(),
                           ),
                         ),
@@ -324,18 +342,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _passwordController.text.trim());
                                 }
                               },
-                              child: context
-                                      .watch<CurrentUserProvider>()
-                                      .isLoading
-                                  ? LoadingAnimationWidget.staggeredDotsWave(
-                                      color: Colors.white, size: 25)
-                                  : Text(
-                                      "Login",
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                              child:
+                              
+                                  context
+                                          .watch<CurrentUserProvider>()
+                                          .isLoading
+                                      ? LoadingAnimationWidget.staggeredDotsWave(
+                                          color: Colors.white, size: 25)
+                                      :
+                                  Text(
+                                "Login",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             )),
 
                         Container(
@@ -364,22 +385,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     BorderRadiusDirectional.circular(10)),
                             child: TextButton(
                               onPressed: () async {
-                                bool connection =
-                                    await checkInternetConnection(context);
-
-                                if (connection) {
-                                  Navigator.push(
+                                 Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => SignUp()));
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('No internet connection'),
-                                      duration: Duration(seconds: 2),
-                                    ),
-                                  );
-                                }
+                     
                               },
                               child: Text(
                                 "Sign up",

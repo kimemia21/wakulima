@@ -45,22 +45,26 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
           "Signup",
           style: GoogleFonts.poppins(
-            
-            fontWeight:FontWeight.w600),
+            color: Colors.black54,
+            fontWeight: FontWeight.w500),
         ),
         leading: Container(
-          width: 10,
-          height: 10,
+            width: 10,
+            height: 10,
             decoration: BoxDecoration(
                 color: Colors.grey.shade300,
                 borderRadius: BorderRadiusDirectional.all(Radius.circular(30))),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
                 icon: Icon(
                   Icons.arrow_back,
                   color: Colors.black,
@@ -70,34 +74,35 @@ class _SignUpState extends State<SignUp> {
       body: Container(
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadiusDirectional.circular(20),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 1,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: Image.network(
-                    "https://www.icegif.com/wp-content/uploads/farmer-icegif-1.gif",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 0.65,
-                // padding: EdgeInsets.only(left: 20),
-                margin: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.only(
-                        topStart: Radius.circular(40),
-                        bottomStart: Radius.circular(40)),
-                    color: Colors.grey.shade100),
-                child: Form(
-                    key: _formState,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // ClipRRect(
+            //   borderRadius: BorderRadiusDirectional.circular(20),
+            //   child: SizedBox(
+            //     width: MediaQuery.of(context).size.width * 1,
+            //     height: MediaQuery.of(context).size.height * 0.3,
+            //     child: Image.network(
+            //       "https://www.icegif.com/wp-content/uploads/farmer-icegif-1.gif",
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 0.65,
+              // padding: EdgeInsets.only(left: 20),
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadiusDirectional.only(
+                      topStart: Radius.circular(40),
+                      bottomStart: Radius.circular(40)),
+                  color: Colors.grey.shade100),
+              child: Form(
+                  key: _formState,
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -116,9 +121,9 @@ class _SignUpState extends State<SignUp> {
                             style: GoogleFonts.abel(),
                           ),
                         ),
-
+                            
                         // form textfields
-
+                            
                         Container(
                           margin: EdgeInsets.only(bottom: 5),
                           alignment: Alignment.center,
@@ -164,7 +169,7 @@ class _SignUpState extends State<SignUp> {
                             },
                           ),
                         ),
-
+                            
                         Container(
                           margin: EdgeInsets.only(bottom: 15, top: 15),
                           alignment: Alignment.center,
@@ -219,7 +224,7 @@ class _SignUpState extends State<SignUp> {
                             },
                           ),
                         ),
-
+                            
                         Container(
                           margin: EdgeInsets.only(
                             bottom: 25,
@@ -276,7 +281,7 @@ class _SignUpState extends State<SignUp> {
                             },
                           ),
                         ),
-
+                            
                         Container(
                           margin: EdgeInsets.only(bottom: 5),
                           alignment: Alignment.center,
@@ -309,7 +314,7 @@ class _SignUpState extends State<SignUp> {
                                 } else {
                                   print(
                                       "${_SignemailController.text.trim()}  ${_SignUpPasswordController.text.trim()} ");
-
+                            
                                   signup(
                                       context: context,
                                       email_: _SignemailController.text.trim(),
@@ -347,7 +352,7 @@ class _SignUpState extends State<SignUp> {
                         //  Container(
                         //   margin: EdgeInsets.only(top: 15),
                         //   child:
-
+                            
                         //    GoogleAuthButton(
                         //       text: "Signup with Google",
                         //       onPressed: () {},
@@ -362,7 +367,7 @@ class _SignUpState extends State<SignUp> {
                         //         iconType: iconType,
                         //       )),
                         // ),
-
+                            
                         // end of text fields
                         // Container(
                         //   width: MediaQuery.of(context).size.width * .25,
@@ -376,10 +381,10 @@ class _SignUpState extends State<SignUp> {
                         //   ),
                         // ),
                       ],
-                    )),
-              ),
-            ],
-          ),
+                    ),
+                  )),
+            ),
+          ],
         ),
       ),
     );

@@ -3,8 +3,10 @@
 import 'dart:async';
 
 import 'package:app/AppBloc.dart';
+import 'package:app/globals.dart';
 import 'package:app/main.dart';
 import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +23,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 FirebaseAuth _auth = FirebaseAuth.instance;
 
 var alertStyle = AlertStyle(
-  animationType: AnimationType.fromTop,
   isCloseButton: false,
   isOverlayTapDismiss: false,
   descStyle: GoogleFonts.abel(
@@ -36,33 +37,44 @@ var alertStyle = AlertStyle(
   alertAlignment: Alignment.topCenter,
 );
 
-// sign in with email and  password
-Future signInWithEmailAndPassword(
-    {required BuildContext context,
-    required String email,
-    required String password}) async {
-  try {
-    context.read<CurrentUserProvider>().changeIsLoading();
+// error codes
 
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+// sign in with email and  password
+Future<void> signInWithEmailAndPassword({
+  required BuildContext context,
+  required String email,
+  required String password,
+}) async {
+  context.read<CurrentUserProvider>().changeIsLoading();
+
+  try {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
     print("Email signup is $email");
   } on FirebaseAuthException catch (e) {
+    // Map FirebaseAuthException codes to user-friendly messages
+    final errorMessage = _getErrorMessage(e.code);
+
     CherryToast.warning(
+      toastPosition: Position.top,
       disableToastAnimation: false,
       animationCurve: Curves.ease,
-      animationDuration: Duration(milliseconds: 200),
+      animationDuration: Duration(milliseconds: 500),
       title: Text('Login Error',
           style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
-      action: Text(
-        e.code,
-        style: GoogleFonts.abel(),
-      ),
+      action: Text(errorMessage, style: GoogleFonts.abel()),
       actionHandler: () {},
       onToastClosed: () {},
     ).show(context);
   } finally {
     context.read<CurrentUserProvider>().changeIsLoading();
   }
+}
+
+String _getErrorMessage(String errorCode) {
+  return Globals().authErrors[errorCode] ?? "an  undefined error happened";
+  
 }
 
 // signed in user

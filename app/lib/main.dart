@@ -21,29 +21,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: MultiProvider(
-            //  StreamBuilder<User?>(
-            //     stream: FirebaseAuth.instance.authStateChanges(),
-            //     builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.waiting) {
-            //         return Center(
-            //           child: LoadingAnimationWidget.hexagonDots(
-            //               color: Colors.green, size: 30),
-            //         );
-            //       } else if (snapshot.hasData) {
-
-            //         return MyHomePage(title: "homepage");
-            //       } else {
-            //         return Splashscreen();
-            //       }
-            //     }),
-            providers: [
-          ChangeNotifierProvider(create: (context) => CurrentUserProvider())
-        ],
-            child:Splashscreen(),
-        
-        ));
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CurrentUserProvider())
+      ],
+      child: MaterialApp(
+          home: StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: LoadingAnimationWidget.hexagonDots(
+                        color: Colors.green, size: 30),
+                  );
+                } else if (snapshot.hasData) {
+                  return MyHomePage(title: "homepage");
+                } else {
+                  return Splashscreen();
+                }
+              })),
+    );
   }
 }
 
@@ -60,7 +57,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Hello world "),
+      body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TextButton(
+              onPressed: () {
+                try {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                } catch (e) {}
+              },
+              child: Text("Logout")),
+          Text(
+            "${FirebaseAuth.instance.currentUser?.displayName}",
+            style: TextStyle(color: Colors.black, fontSize: 30),
+          ),
+        ],
+      )),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
