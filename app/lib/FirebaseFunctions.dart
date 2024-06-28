@@ -21,6 +21,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 FirebaseAuth _auth = FirebaseAuth.instance;
+String _getErrorMessage(String errorCode) {
+  return Globals().authErrors[errorCode] ?? "an  undefined error happened";
+}
 
 var alertStyle = AlertStyle(
   isCloseButton: false,
@@ -39,7 +42,6 @@ var alertStyle = AlertStyle(
 
 // error codes
 
-
 // sign in with email and  password
 Future<void> signInWithEmailAndPassword({
   required BuildContext context,
@@ -51,6 +53,8 @@ Future<void> signInWithEmailAndPassword({
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+        Navigator.push(context,
+        MaterialPageRoute(builder: (context) => MyHomePage(title: "Homepage")));
     print("Email signup is $email");
   } on FirebaseAuthException catch (e) {
     // Map FirebaseAuthException codes to user-friendly messages
@@ -61,7 +65,7 @@ Future<void> signInWithEmailAndPassword({
       disableToastAnimation: false,
       animationCurve: Curves.ease,
       animationDuration: Duration(milliseconds: 500),
-      title: Text('Login Error',
+      title: Text('Sign up Error',
           style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
       action: Text(errorMessage, style: GoogleFonts.abel()),
       actionHandler: () {},
@@ -69,12 +73,8 @@ Future<void> signInWithEmailAndPassword({
     ).show(context);
   } finally {
     context.read<CurrentUserProvider>().changeIsLoading();
+    
   }
-}
-
-String _getErrorMessage(String errorCode) {
-  return Globals().authErrors[errorCode] ?? "an  undefined error happened";
-  
 }
 
 // signed in user
@@ -86,6 +86,7 @@ Future signup(
     required String email_,
     required String password_}) async {
   try {
+    context.read<CurrentUserProvider>().changeIsLoading();
     await _auth
         .createUserWithEmailAndPassword(email: email_, password: password_)
         .then((value) => FirebaseFirestore.instance
@@ -97,6 +98,7 @@ Future signup(
             MaterialPageRoute(
                 builder: (context) => MyHomePage(title: "homepage"))));
   } on FirebaseAuthException catch (e) {
+    String _error = _getErrorMessage(e.code);
     CherryToast.warning(
       disableToastAnimation: false,
       animationCurve: Curves.ease,
@@ -104,12 +106,14 @@ Future signup(
       title: Text('Email Error',
           style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
       action: Text(
-        e.code,
+        _error,
         style: GoogleFonts.abel(),
       ),
       actionHandler: () {},
       onToastClosed: () {},
     ).show(context);
+  } finally {
+    context.read<CurrentUserProvider>().changeIsLoading();
   }
 }
 

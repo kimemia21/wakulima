@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("Logout")),
           Text(
-            "${FirebaseAuth.instance.currentUser?.displayName}",
+            "${FirebaseAuth.instance.currentUser?.email}",
             style: TextStyle(color: Colors.black, fontSize: 30),
           ),
         ],

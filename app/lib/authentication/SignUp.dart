@@ -1,3 +1,4 @@
+import 'package:app/AppBloc.dart';
 import 'package:app/FirebaseFunctions.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:auth_buttons/auth_buttons.dart';
@@ -8,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
 // import 'package:or/or.dart';
 
 class SignUp extends StatefulWidget {
@@ -323,7 +326,13 @@ class _SignUpState extends State<SignUp> {
                                 }
                               }
                             },
-                            child: Text(
+                            child:context.watch<CurrentUserProvider>().isLoading?
+                             LoadingAnimationWidget.staggeredDotsWave(
+                                      color: Colors.white, size: 25):
+
+
+                            
+                             Text(
                               "Sign Up",
                               style: GoogleFonts.abel(
                                 color: Colors.white,

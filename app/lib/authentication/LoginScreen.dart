@@ -87,10 +87,11 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.black54, fontWeight: FontWeight.w600),
         ),
         leading: Container(
-          width: 5,
-          height: 5,
+          margin: EdgeInsets.only(left: 10),
+            width: 2,
+            height: 2,
             decoration: BoxDecoration(
-                color: Colors.grey.shade400,
+                color: Colors.grey.shade300,
                 borderRadius: BorderRadiusDirectional.all(Radius.circular(20))),
             child: IconButton(
                 onPressed: () {
@@ -109,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Column(
-
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
@@ -335,6 +335,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (_formState.currentState!.validate()) {
                                   print(
                                       "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
+
                                   signInWithEmailAndPassword(
                                       context: context,
                                       email: _emailController.text.trim(),
@@ -342,27 +343,29 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _passwordController.text.trim());
                                 }
                               },
-                              child:
-                              
-                                  context
-                                          .watch<CurrentUserProvider>()
-                                          .isLoading
-                                      ? LoadingAnimationWidget.staggeredDotsWave(
-                                          color: Colors.white, size: 25)
-                                      :
-                                  Text(
-                                "Login",
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              child: context
+                                      .watch<CurrentUserProvider>()
+                                      .isLoading
+                                  ? LoadingAnimationWidget.staggeredDotsWave(
+                                      color: Colors.white, size: 25)
+                                  : Text(
+                                      "Login",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                             )),
 
                         Container(
                           margin: EdgeInsets.only(top: 15),
                           child: GoogleAuthButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                try {
+                                  Authentication.signInWithGoogle(
+                                      context: context);
+                                } catch (e) {}
+                              },
                               themeMode: themeMode,
                               isLoading: isLoading,
                               style: AuthButtonStyle(
@@ -385,11 +388,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     BorderRadiusDirectional.circular(10)),
                             child: TextButton(
                               onPressed: () async {
-                                 Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUp()));
-                     
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUp()));
                               },
                               child: Text(
                                 "Sign up",

@@ -185,7 +185,9 @@ class _SplashscreenState extends State<Splashscreen> {
                 borderRadius: BorderRadius.circular(10),
 
                 child: GoogleAuthButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Authentication.signInWithGoogle(context: context);
+                    },
                     themeMode: themeMode,
                     isLoading: isLoading,
                     style: AuthButtonStyle(
