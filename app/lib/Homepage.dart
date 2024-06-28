@@ -1,3 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:app/AddItem.dart';
+import 'package:app/Analyitics.dart';
+import 'package:app/Offers.dart';
+import 'package:app/Profile.dart';
+import 'package:app/Sales.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,6 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  List<Widget> Screens = [Sales(),Analyitics(),Additem(),Offers(),Profile()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
         key: _bottomNavigationKey,
         index: 0,
         items: <Widget>[
-          Icon(Icons.local_offer, size: 30),
-          Icon(Icons.auto_graph, size: 30),
-          Icon(Icons.add, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
-          Icon(Icons.perm_identity, size: 30),
+          Icon(Icons.shopping_bag, size: 28),
+          Icon(Icons.auto_graph, size: 28),
+          Icon(Icons.add, size: 28),
+          Icon(Icons.compare_arrows, size: 28),
+          Icon(Icons.perm_identity, size: 28),
         ],
         color: Colors.white,
         buttonBackgroundColor: Colors.white,
@@ -77,25 +86,28 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         letIndexChange: (index) => true,
       ),
-      body: Container(
-        color: Colors.blueAccent,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(_page.toString(), style: TextStyle(fontSize: 160)),
-              ElevatedButton(
-                child: Text('Go To Page of index 1'),
-                onPressed: () {
-                  final CurvedNavigationBarState? navBarState =
-                      _bottomNavigationKey.currentState;
-                  navBarState?.setPage(1);
-                },
-              )
-            ],
-          ),
-        ),
-      ),
+
+      body:Screens[_page]
+      
+      //  Container(
+      //   color: Colors.red,
+      //   child: Center(
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: <Widget>[
+      //         Text(_page.toString(), style: TextStyle(fontSize: 160)),
+      //         ElevatedButton(
+      //           child: Text('Go To Page of index 1'),
+      //           onPressed: () {
+      //             final CurvedNavigationBarState? navBarState =
+      //                 _bottomNavigationKey.currentState;
+      //             navBarState?.setPage(1);
+      //           },
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
 
       // body: Center(
       //     child: Column(
