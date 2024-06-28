@@ -7,6 +7,7 @@ import 'package:app/AppBloc.dart';
 import 'package:app/FirebaseFunctions.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SignUp.dart';
+import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -159,10 +160,9 @@ class _SplashscreenState extends State<Splashscreen> {
                       borderRadius: BorderRadiusDirectional.circular(10)),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
+                      Globals().switchScreens(
+                          context: context, screen: LoginScreen());
+                     
                     },
                     child: Text(
                       "Email",
@@ -215,8 +215,8 @@ class _SplashscreenState extends State<Splashscreen> {
                     bool connection = await checkInternetConnection(context);
 
                     if (connection) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SignUp()));
+                      Globals()
+                          .switchScreens(context: context, screen: SignUp());
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

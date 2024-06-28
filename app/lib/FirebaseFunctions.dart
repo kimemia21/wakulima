@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:app/AppBloc.dart';
+import 'package:app/Homepage.dart';
 import 'package:app/globals.dart';
 import 'package:app/main.dart';
 import 'package:cherry_toast/cherry_toast.dart';
@@ -53,7 +54,7 @@ Future<void> signInWithEmailAndPassword({
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
-        Navigator.push(context,
+    Navigator.push(context,
         MaterialPageRoute(builder: (context) => MyHomePage(title: "Homepage")));
     print("Email signup is $email");
   } on FirebaseAuthException catch (e) {
@@ -73,7 +74,6 @@ Future<void> signInWithEmailAndPassword({
     ).show(context);
   } finally {
     context.read<CurrentUserProvider>().changeIsLoading();
-    
   }
 }
 
@@ -93,10 +93,8 @@ Future signup(
             .collection("users")
             .doc(email_)
             .set({"email": email_}))
-        .then((value) => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MyHomePage(title: "homepage"))));
+        .then((value) => Globals().switchScreens(
+            context: context, screen: MyHomePage(title: "homepage")));
   } on FirebaseAuthException catch (e) {
     String _error = _getErrorMessage(e.code);
     CherryToast.warning(

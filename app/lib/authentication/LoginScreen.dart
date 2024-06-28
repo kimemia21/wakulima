@@ -12,6 +12,7 @@ import 'package:app/AppBloc.dart';
 import 'package:app/FirebaseFunctions.dart';
 import 'package:app/authentication/SignUp.dart';
 import 'package:app/authentication/SplashScreen.dart';
+import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -80,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Colors.grey.shade100,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade100,
         centerTitle: true,
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.black54, fontWeight: FontWeight.w500),
         ),
         leading: Container(
-          margin: EdgeInsets.only(left: 10),
+            margin: EdgeInsets.only(left: 10),
             width: 2,
             height: 2,
             decoration: BoxDecoration(
@@ -98,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadiusDirectional.all(Radius.circular(20))),
             child: IconButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Splashscreen()));
+                  Globals()
+                      .switchScreens(context: context, screen: Splashscreen());
                 },
                 icon: Icon(
                   Icons.arrow_back,
@@ -108,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       resizeToAvoidBottomInset: true,
       body: Container(
-
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width * 1,
         height: MediaQuery.of(context).size.height,
@@ -117,13 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
           color: Colors.grey.shade200,
-            borderRadius:
-                BorderRadiusDirectional.all(Radius.circular(40)
-            
-                    // topStart: Radius.circular(40),
-                    // bottomStart: Radius.circular(40)
-                    ),
-          ),
+          borderRadius: BorderRadiusDirectional.all(Radius.circular(40)
+
+              // topStart: Radius.circular(40),
+              // bottomStart: Radius.circular(40)
+              ),
+        ),
         child: Form(
             key: _formState,
             child: SingleChildScrollView(
@@ -147,9 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: GoogleFonts.abel(),
                     ),
                   ),
-              
+
                   // form textfields
-              
+
                   // GestureDetector(
                   //   onTap: () {
                   //     Authentication.signInWithGoogle(context: context);
@@ -167,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   //           placeholder: kTransparentImage,
                   //           image:
                   //               "https://miro.medium.com/freeze/fit/c/160/112/1*NyU8Hi9juxH7__nspK6erg.gif")
-              
+
                   //       //  Image.network(
                   //       //     "https://miro.medium.com/freeze/fit/c/160/112/1*NyU8Hi9juxH7__nspK6erg.gif"),
                   //       ),
@@ -183,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   //     dividerColor: Colors.black54,
                   //   ),
                   // ),
-              
+
                   Container(
                     margin: EdgeInsets.only(bottom: 4),
                     alignment: Alignment.center,
@@ -191,8 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: MediaQuery.of(context).size.width * 0.75,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius:
-                            BorderRadiusDirectional.circular(5)),
+                        borderRadius: BorderRadiusDirectional.circular(5)),
                     child: TextFormField(
                       // keyboardType: TextInputType.name,
                       controller: _emailController,
@@ -229,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-              
+
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     alignment: Alignment.center,
@@ -237,8 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: MediaQuery.of(context).size.width * 0.75,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius:
-                            BorderRadiusDirectional.circular(5)),
+                        borderRadius: BorderRadiusDirectional.circular(5)),
                     child: TextFormField(
                       obscureText: visibility,
                       keyboardType: TextInputType.visiblePassword,
@@ -284,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-              
+
                   Container(
                     width: MediaQuery.of(context).size.width * 0.75,
                     margin: EdgeInsets.only(
@@ -297,13 +294,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         //     context,
                         //     MaterialPageRoute(
                         //         builder: (context) =>
-              
+
                         //             ForgotPassWord()));
                       },
                       child: Text("Forgot Password ?"),
                     ),
                   ),
-              
+
                   Container(
                       margin: EdgeInsets.only(bottom: 5),
                       alignment: Alignment.center,
@@ -311,24 +308,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: MediaQuery.of(context).size.width * 0.75,
                       decoration: BoxDecoration(
                           color: Colors.green.shade500,
-                          borderRadius:
-                              BorderRadiusDirectional.circular(10)),
+                          borderRadius: BorderRadiusDirectional.circular(10)),
                       child: TextButton(
                         onPressed: () {
                           if (_formState.currentState!.validate()) {
                             print(
                                 "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
-              
+
                             signInWithEmailAndPassword(
                                 context: context,
                                 email: _emailController.text.trim(),
-                                password:
-                                    _passwordController.text.trim());
+                                password: _passwordController.text.trim());
                           }
                         },
-                        child: context
-                                .watch<CurrentUserProvider>()
-                                .isLoading
+                        child: context.watch<CurrentUserProvider>().isLoading
                             ? LoadingAnimationWidget.staggeredDotsWave(
                                 color: Colors.white, size: 25)
                             : Text(
@@ -339,14 +332,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontWeight: FontWeight.bold),
                               ),
                       )),
-              
+
                   Container(
                     margin: EdgeInsets.only(top: 15),
                     child: GoogleAuthButton(
                         onPressed: () {
                           try {
-                            Authentication.signInWithGoogle(
-                                context: context);
+                            Authentication.signInWithGoogle(context: context);
                           } catch (e) {}
                         },
                         themeMode: themeMode,
@@ -367,14 +359,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 40,
                       width: MediaQuery.of(context).size.width * 0.25,
                       decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadiusDirectional.circular(10)),
+                          borderRadius: BorderRadiusDirectional.circular(10)),
                       child: TextButton(
                         onPressed: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUp()));
+                          Globals().switchScreens(
+                              context: context, screen: SignUp());
                         },
                         child: Text(
                           "Sign up",
@@ -386,7 +375,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-              
+
                   // end of text fields
                 ],
               ),

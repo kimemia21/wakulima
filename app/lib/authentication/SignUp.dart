@@ -1,6 +1,7 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/FirebaseFunctions.dart';
 import 'package:app/authentication/LoginScreen.dart';
+import 'package:app/globals.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 
@@ -55,8 +56,7 @@ class _SignUpState extends State<SignUp> {
         title: Text(
           "Signup",
           style: GoogleFonts.poppins(
-            color: Colors.black54,
-            fontWeight: FontWeight.w500),
+              color: Colors.black54, fontWeight: FontWeight.w500),
         ),
         leading: Container(
             width: 10,
@@ -66,8 +66,8 @@ class _SignUpState extends State<SignUp> {
                 borderRadius: BorderRadiusDirectional.all(Radius.circular(30))),
             child: IconButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  Globals()
+                      .switchScreens(context: context, screen: LoginScreen());
                 },
                 icon: Icon(
                   Icons.arrow_back,
@@ -111,9 +111,9 @@ class _SignUpState extends State<SignUp> {
                         style: GoogleFonts.abel(),
                       ),
                     ),
-                        
+
                     // form textfields
-                        
+
                     Container(
                       margin: EdgeInsets.only(bottom: 5),
                       alignment: Alignment.center,
@@ -121,8 +121,7 @@ class _SignUpState extends State<SignUp> {
                       width: MediaQuery.of(context).size.width * 0.75,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                              BorderRadiusDirectional.circular(5)),
+                          borderRadius: BorderRadiusDirectional.circular(5)),
                       child: TextFormField(
                         keyboardType: TextInputType.name,
                         controller: _SignemailController,
@@ -159,7 +158,7 @@ class _SignUpState extends State<SignUp> {
                         },
                       ),
                     ),
-                        
+
                     Container(
                       margin: EdgeInsets.only(bottom: 15, top: 15),
                       alignment: Alignment.center,
@@ -167,8 +166,7 @@ class _SignUpState extends State<SignUp> {
                       width: MediaQuery.of(context).size.width * 0.75,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                              BorderRadiusDirectional.circular(5)),
+                          borderRadius: BorderRadiusDirectional.circular(5)),
                       child: TextFormField(
                         obscureText: visibility,
                         keyboardType: TextInputType.visiblePassword,
@@ -214,7 +212,7 @@ class _SignUpState extends State<SignUp> {
                         },
                       ),
                     ),
-                        
+
                     Container(
                       margin: EdgeInsets.only(
                         bottom: 25,
@@ -224,8 +222,7 @@ class _SignUpState extends State<SignUp> {
                       width: MediaQuery.of(context).size.width * 0.75,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                              BorderRadiusDirectional.circular(5)),
+                          borderRadius: BorderRadiusDirectional.circular(5)),
                       child: TextFormField(
                         obscureText: confirm_visibilty,
                         keyboardType: TextInputType.visiblePassword,
@@ -271,7 +268,7 @@ class _SignUpState extends State<SignUp> {
                         },
                       ),
                     ),
-                        
+
                     Container(
                       margin: EdgeInsets.only(bottom: 5),
                       alignment: Alignment.center,
@@ -279,8 +276,7 @@ class _SignUpState extends State<SignUp> {
                       width: MediaQuery.of(context).size.width * 0.75,
                       decoration: BoxDecoration(
                           color: Colors.green.shade500,
-                          borderRadius:
-                              BorderRadiusDirectional.circular(10)),
+                          borderRadius: BorderRadiusDirectional.circular(10)),
                       child: TextButton(
                         onPressed: () {
                           if (_formState.currentState!.validate()) {
@@ -289,8 +285,7 @@ class _SignUpState extends State<SignUp> {
                               CherryToast.warning(
                                 disableToastAnimation: false,
                                 animationCurve: Curves.ease,
-                                animationDuration:
-                                    Duration(milliseconds: 200),
+                                animationDuration: Duration(milliseconds: 200),
                                 title: Text('Password Error',
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.bold)),
@@ -304,29 +299,26 @@ class _SignUpState extends State<SignUp> {
                             } else {
                               print(
                                   "${_SignemailController.text.trim()}  ${_SignUpPasswordController.text.trim()} ");
-                        
+
                               signup(
                                   context: context,
                                   email_: _SignemailController.text.trim(),
-                                  password_: _SignUpPasswordController.text
-                                      .trim());
+                                  password_:
+                                      _SignUpPasswordController.text.trim());
                             }
                           }
                         },
-                        child:context.watch<CurrentUserProvider>().isLoading?
-                         LoadingAnimationWidget.staggeredDotsWave(
-                                  color: Colors.white, size: 25):
-        
-        
-                        
-                         Text(
-                          "Sign Up",
-                          style: GoogleFonts.abel(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
+                        child: context.watch<CurrentUserProvider>().isLoading
+                            ? LoadingAnimationWidget.staggeredDotsWave(
+                                color: Colors.white, size: 25)
+                            : Text(
+                                "Sign Up",
+                                style: GoogleFonts.abel(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
                       ),
                     ),
                     Container(
@@ -348,7 +340,7 @@ class _SignUpState extends State<SignUp> {
                     //  Container(
                     //   margin: EdgeInsets.only(top: 15),
                     //   child:
-                        
+
                     //    GoogleAuthButton(
                     //       text: "Signup with Google",
                     //       onPressed: () {},
@@ -363,7 +355,7 @@ class _SignUpState extends State<SignUp> {
                     //         iconType: iconType,
                     //       )),
                     // ),
-                        
+
                     // end of text fields
                     // Container(
                     //   width: MediaQuery.of(context).size.width * .25,
