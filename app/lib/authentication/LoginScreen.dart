@@ -14,6 +14,7 @@ import 'package:app/authentication/SignUp.dart';
 import 'package:app/authentication/SplashScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,12 +80,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:  Colors.grey.shade100,
       appBar: AppBar(
+        backgroundColor: Colors.grey.shade100,
         centerTitle: true,
         title: Text(
           "Login",
           style: GoogleFonts.poppins(
-              color: Colors.black54, fontWeight: FontWeight.w600),
+              color: Colors.black54, fontWeight: FontWeight.w500),
         ),
         leading: Container(
           margin: EdgeInsets.only(left: 10),
@@ -104,313 +107,290 @@ class _LoginScreenState extends State<LoginScreen> {
                 ))),
       ),
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Container(
-              //     margin: EdgeInsets.only(top: 20),
-              //     color: Colors.white,
-              //     width: MediaQuery.of(context).size.width * 1,
-              //     height: MediaQuery.of(context).size.height * 0.3,
-              //     child: ClipRRect(
-              //       borderRadius: BorderRadiusDirectional.circular(20),
-              //       child: Image.network(
-              //         "https://i.pinimg.com/originals/d5/69/12/d56912e297cf3a797d5d5c728a23fda9.gif",
-              //         // https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/8e/16/91/caption.jpg?w=1200&h=1200&s=1
+      body: Container(
 
-              //         fit: BoxFit.cover,
-              //       ),
-              //     )),
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 0.7,
-                // padding: EdgeInsets.only(left: 20),
-                margin: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadiusDirectional.all(Radius.circular(40)
-
-                            // topStart: Radius.circular(40),
-                            // bottomStart: Radius.circular(40)
-                            ),
-                    color: Colors.grey.shade100),
-                child: Form(
-                    key: _formState,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 4),
-                          child: Text(
-                            "Login to your Account",
-                            style: GoogleFonts.abel(
-                                fontSize: 30, fontWeight: FontWeight.bold),
-                          ),
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width * 1,
+        height: MediaQuery.of(context).size.height,
+        // padding: EdgeInsets.only(left: 20),
+        margin: EdgeInsets.only(top: 40),
+        padding: EdgeInsets.only(top: 20),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+            borderRadius:
+                BorderRadiusDirectional.all(Radius.circular(40)
+            
+                    // topStart: Radius.circular(40),
+                    // bottomStart: Radius.circular(40)
+                    ),
+          ),
+        child: Form(
+            key: _formState,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      "Login to your Account",
+                      style: GoogleFonts.abel(
+                          fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      "Welcome to our App, Please login to continue",
+                      style: GoogleFonts.abel(),
+                    ),
+                  ),
+              
+                  // form textfields
+              
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Authentication.signInWithGoogle(context: context);
+                  //   },
+                  //   child: Container(
+                  //       margin: EdgeInsets.only(top: 10, bottom: 20),
+                  //       alignment: Alignment.center,
+                  //       height: 40,
+                  //       width: MediaQuery.of(context).size.width * 0.25,
+                  //       decoration: BoxDecoration(
+                  //           color: Colors.white,
+                  //           borderRadius:
+                  //               BorderRadiusDirectional.circular(5)),
+                  //       child: FadeInImage.memoryNetwork(
+                  //           placeholder: kTransparentImage,
+                  //           image:
+                  //               "https://miro.medium.com/freeze/fit/c/160/112/1*NyU8Hi9juxH7__nspK6erg.gif")
+              
+                  //       //  Image.network(
+                  //       //     "https://miro.medium.com/freeze/fit/c/160/112/1*NyU8Hi9juxH7__nspK6erg.gif"),
+                  //       ),
+                  // ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width * .25,
+                  //   alignment: Alignment.center,
+                  //   padding: EdgeInsets.all(5),
+                  //   margin: EdgeInsets.all(5),
+                  //   child: Or(
+                  //     fontSize: 8,
+                  //     dividerThickness: 0.2,
+                  //     dividerColor: Colors.black54,
+                  //   ),
+                  // ),
+              
+                  Container(
+                    margin: EdgeInsets.only(bottom: 4),
+                    alignment: Alignment.center,
+                    height: 60,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadiusDirectional.circular(5)),
+                    child: TextFormField(
+                      // keyboardType: TextInputType.name,
+                      controller: _emailController,
+                      cursorColor: Colors.black,
+                      onChanged: (value) {
+                        // setState(() {
+                        //   email = value;
+                        // });
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Email",
+                        labelStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: Colors.black,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: Text(
-                            "Welcome to our App, Please login to continue",
-                            style: GoogleFonts.abel(),
-                          ),
+                        prefixIcon: Icon(
+                          CupertinoIcons.mail_solid,
+                          color: Colors.black54,
                         ),
-
-                        // form textfields
-
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     Authentication.signInWithGoogle(context: context);
-                        //   },
-                        //   child: Container(
-                        //       margin: EdgeInsets.only(top: 10, bottom: 20),
-                        //       alignment: Alignment.center,
-                        //       height: 40,
-                        //       width: MediaQuery.of(context).size.width * 0.25,
-                        //       decoration: BoxDecoration(
-                        //           color: Colors.white,
-                        //           borderRadius:
-                        //               BorderRadiusDirectional.circular(5)),
-                        //       child: FadeInImage.memoryNetwork(
-                        //           placeholder: kTransparentImage,
-                        //           image:
-                        //               "https://miro.medium.com/freeze/fit/c/160/112/1*NyU8Hi9juxH7__nspK6erg.gif")
-
-                        //       //  Image.network(
-                        //       //     "https://miro.medium.com/freeze/fit/c/160/112/1*NyU8Hi9juxH7__nspK6erg.gif"),
-                        //       ),
-                        // ),
-                        // Container(
-                        //   width: MediaQuery.of(context).size.width * .25,
-                        //   alignment: Alignment.center,
-                        //   padding: EdgeInsets.all(5),
-                        //   margin: EdgeInsets.all(5),
-                        //   child: Or(
-                        //     fontSize: 8,
-                        //     dividerThickness: 0.2,
-                        //     dividerColor: Colors.black54,
-                        //   ),
-                        // ),
-
-                        Container(
-                          margin: EdgeInsets.only(bottom: 4),
-                          alignment: Alignment.center,
-                          height: 60,
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadiusDirectional.circular(5)),
-                          child: TextFormField(
-                            // keyboardType: TextInputType.name,
-                            controller: _emailController,
-                            cursorColor: Colors.black,
-                            onChanged: (value) {
-                              // setState(() {
-                              //   email = value;
-                              // });
-                            },
-                            decoration: InputDecoration(
-                              labelText: "Email",
-                              labelStyle: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: Colors.black,
-                              ),
-                              prefixIcon: Icon(
-                                CupertinoIcons.mail_solid,
-                                color: Colors.black54,
-                              ),
-                              border: InputBorder.none,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Email is empty";
-                              }
-                              if (!RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email';
-                              }
-                              return null;
-                            },
-                          ),
+                        border: InputBorder.none,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                         ),
-
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          alignment: Alignment.center,
-                          height: 60,
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadiusDirectional.circular(5)),
-                          child: TextFormField(
-                            obscureText: visibility,
-                            keyboardType: TextInputType.visiblePassword,
-                            controller: _passwordController,
-                            cursorColor: Colors.black,
-                            onChanged: (value) {
-                              // setState(() {
-                              //   password = value;
-                              // });
-                            },
-                            decoration: InputDecoration(
-                              labelText: "Password",
-                              labelStyle: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: Colors.black,
-                              ),
-                              prefixIcon: Icon(CupertinoIcons.padlock_solid,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Email is empty";
+                        }
+                        if (!RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
+                            .hasMatch(value)) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+              
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    alignment: Alignment.center,
+                    height: 60,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadiusDirectional.circular(5)),
+                    child: TextFormField(
+                      obscureText: visibility,
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _passwordController,
+                      cursorColor: Colors.black,
+                      onChanged: (value) {
+                        // setState(() {
+                        //   password = value;
+                        // });
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        labelStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: Colors.black,
+                        ),
+                        prefixIcon: Icon(CupertinoIcons.padlock_solid,
+                            color: Colors.black54),
+                        suffixIcon: IconButton(
+                          icon: visibility
+                              ? Icon(
+                                  CupertinoIcons.eye_slash_fill,
+                                  color: Colors.black54,
+                                )
+                              : Icon(CupertinoIcons.eye_fill,
                                   color: Colors.black54),
-                              suffixIcon: IconButton(
-                                icon: visibility
-                                    ? Icon(
-                                        CupertinoIcons.eye_slash_fill,
-                                        color: Colors.black54,
-                                      )
-                                    : Icon(CupertinoIcons.eye_fill,
-                                        color: Colors.black54),
-                                onPressed: () {
-                                  setState(() {
-                                    visibility = !visibility;
-                                  });
-                                },
-                              ),
-                              border: InputBorder.none,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Password is Empty";
-                              }
-                              return null;
-                            },
-                          ),
+                          onPressed: () {
+                            setState(() {
+                              visibility = !visibility;
+                            });
+                          },
                         ),
-
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          margin: EdgeInsets.only(
-                            bottom: 5,
-                          ),
-                          alignment: Alignment.bottomRight,
-                          child: TextButton(
-                            onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-
-                              //             ForgotPassWord()));
-                            },
-                            child: Text("Forgot Password ?"),
-                          ),
+                        border: InputBorder.none,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                         ),
-
-                        Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: MediaQuery.of(context).size.width * 0.75,
-                            decoration: BoxDecoration(
-                                color: Colors.green.shade500,
-                                borderRadius:
-                                    BorderRadiusDirectional.circular(10)),
-                            child: TextButton(
-                              onPressed: () {
-                                if (_formState.currentState!.validate()) {
-                                  print(
-                                      "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
-
-                                  signInWithEmailAndPassword(
-                                      context: context,
-                                      email: _emailController.text.trim(),
-                                      password:
-                                          _passwordController.text.trim());
-                                }
-                              },
-                              child: context
-                                      .watch<CurrentUserProvider>()
-                                      .isLoading
-                                  ? LoadingAnimationWidget.staggeredDotsWave(
-                                      color: Colors.white, size: 25)
-                                  : Text(
-                                      "Login",
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                            )),
-
-                        Container(
-                          margin: EdgeInsets.only(top: 15),
-                          child: GoogleAuthButton(
-                              onPressed: () {
-                                try {
-                                  Authentication.signInWithGoogle(
-                                      context: context);
-                                } catch (e) {}
-                              },
-                              themeMode: themeMode,
-                              isLoading: isLoading,
-                              style: AuthButtonStyle(
-                                width: MediaQuery.of(context).size.width * 0.75,
-                                textStyle: GoogleFonts.poppins(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.w600),
-                                buttonType: buttonType,
-                                iconType: iconType,
-                              )),
-                        ),
-                        Center(
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            // alignment: Alignment.center,
-                            height: 40,
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadiusDirectional.circular(10)),
-                            child: TextButton(
-                              onPressed: () async {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUp()));
-                              },
-                              child: Text(
-                                "Sign up",
-                                style: GoogleFonts.abel(
-                                    color: Colors.blue.shade300,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password is Empty";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+              
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    margin: EdgeInsets.only(
+                      bottom: 5,
+                    ),
+                    alignment: Alignment.bottomRight,
+                    child: TextButton(
+                      onPressed: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+              
+                        //             ForgotPassWord()));
+                      },
+                      child: Text("Forgot Password ?"),
+                    ),
+                  ),
+              
+                  Container(
+                      margin: EdgeInsets.only(bottom: 5),
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      decoration: BoxDecoration(
+                          color: Colors.green.shade500,
+                          borderRadius:
+                              BorderRadiusDirectional.circular(10)),
+                      child: TextButton(
+                        onPressed: () {
+                          if (_formState.currentState!.validate()) {
+                            print(
+                                "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
+              
+                            signInWithEmailAndPassword(
+                                context: context,
+                                email: _emailController.text.trim(),
+                                password:
+                                    _passwordController.text.trim());
+                          }
+                        },
+                        child: context
+                                .watch<CurrentUserProvider>()
+                                .isLoading
+                            ? LoadingAnimationWidget.staggeredDotsWave(
+                                color: Colors.white, size: 25)
+                            : Text(
+                                "Login",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
                               ),
-                            ),
-                          ),
+                      )),
+              
+                  Container(
+                    margin: EdgeInsets.only(top: 15),
+                    child: GoogleAuthButton(
+                        onPressed: () {
+                          try {
+                            Authentication.signInWithGoogle(
+                                context: context);
+                          } catch (e) {}
+                        },
+                        themeMode: themeMode,
+                        isLoading: isLoading,
+                        style: AuthButtonStyle(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          textStyle: GoogleFonts.poppins(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w600),
+                          buttonType: buttonType,
+                          iconType: iconType,
+                        )),
+                  ),
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 5),
+                      // alignment: Alignment.center,
+                      height: 40,
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadiusDirectional.circular(10)),
+                      child: TextButton(
+                        onPressed: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
+                        },
+                        child: Text(
+                          "Sign up",
+                          style: GoogleFonts.abel(
+                              color: Colors.blue.shade300,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
                         ),
-
-                        // end of text fields
-                      ],
-                    )),
+                      ),
+                    ),
+                  ),
+              
+                  // end of text fields
+                ],
               ),
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }
