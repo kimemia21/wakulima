@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAsn5KRDkt7EMeUjAByQLQ5SUGmT46WW2Y',
-    appId: '1:390200952161:android:3e1ca6ae5817426ad03120',
+    appId: '1:390200952161:android:9c4420992b5cdd16d03120',
     messagingSenderId: '390200952161',
     projectId: 'gnovation-wakulima',
     storageBucket: 'gnovation-wakulima.appspot.com',
@@ -59,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCU7mRVJzTnWSTxlGjy175e2fjs4gyk9iM',
-    appId: '1:390200952161:ios:38e8ee34592a0f3ed03120',
+    appId: '1:390200952161:ios:2a28872332a27251d03120',
     messagingSenderId: '390200952161',
     projectId: 'gnovation-wakulima',
     storageBucket: 'gnovation-wakulima.appspot.com',
-    iosBundleId: 'com.example.application',
+    iosBundleId: 'com.example.app',
   );
 
 }

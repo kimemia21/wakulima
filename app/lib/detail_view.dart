@@ -74,6 +74,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                           champion.imageUrl,
                           fit: BoxFit.fitWidth,
                           width: double.infinity,
+                          height: MediaQuery.of(context).size.height*0.5,
                         ),
                       ),
                       AnimatedOpacity(

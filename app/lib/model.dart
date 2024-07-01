@@ -28,7 +28,7 @@ final championsMap = {
       difficulty: Difficulty.MODERATE,
       nickName: "THE ROGUE ASSASSIN",
       imageUrl:
-          "https://kenyaseed.com/wp-content/uploads/2018/02/smaller-farmer.png",
+          "https://img.freepik.com/free-photo/flat-lay-assortment-fresh-autumnal-vegetables_23-2148647916.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1719100800&semt=ais_user",
       description:
           "Abandoning the Kinkou Order and her title of the Fist of Shadow, Akali now strikes alone, ready to be the deadly weapon her people need. Though she holds onto all she learned from her master Shen, she has pledged to defend Ionia from its enemies, one kill at a time. Akali may strike in silence, but her message will be heard loud and clear: fear the assassin with no master."),
   "camile": Champion(
@@ -37,7 +37,7 @@ final championsMap = {
       difficulty: Difficulty.MODERATE,
       nickName: "THE STEEL SHADOW",
       imageUrl:
-          "https://kenyaseed.com/wp-content/uploads/2018/02/smaller-farmer.png",
+          "https://us.123rf.com/450wm/kaewphoto/kaewphoto1406/kaewphoto140600053/29603263-still-life-vegetables-herbs-and-fruit-as-ingredients-in-cooking.jpg?ver=6",
       description:
           "Weaponized to operate outside the boundaries of the law, Camille is the Principal Intelligencer of Clan Ferros—an elegant and elite agent who ensures the Piltover machine and its Zaunite underbelly runs smoothly. Adaptable and precise, she views sloppy technique as an embarrassment that must be put to order. With a mind as sharp as the blades she bears, Camille's pursuit of superiority through hextech body augmentation has left many to wonder if she is now more machine than woman."),
   "ezreal": Champion(

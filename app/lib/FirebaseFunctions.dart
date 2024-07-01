@@ -162,25 +162,16 @@ final user = FirebaseAuth.instance.currentUser;
 
 class Authentication {
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
+    print("Starting Google Sign-In");
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
-    if (kIsWeb) {
-      GoogleAuthProvider authProvider = GoogleAuthProvider();
+    final GoogleSignIn googleSignIn = GoogleSignIn();
 
-      try {
-        final UserCredential userCredential =
-            await auth.signInWithPopup(authProvider);
-
-        user = userCredential.user;
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
-
+    try {
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
+      print("Google Sign-In account retrieved: ${googleSignInAccount != null}");
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -194,24 +185,38 @@ class Authentication {
         try {
           final UserCredential userCredential =
               await auth.signInWithCredential(credential);
-
           user = userCredential.user;
+          print("Google Sign-In successful: ${user?.email}");
+
+          Globals().switchScreens(
+              context: context, screen: MyHomePage(title: "Homepage"));
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
-            // ...
+            print('The account already exists with a different credential.');
+            // Handle the error accordingly in your app
           } else if (e.code == 'invalid-credential') {
-            // ...
+            print('The credential received is malformed or has expired.');
+            // Handle the error accordingly in your app
+          } else {
+            print('FirebaseAuthException: ${e.message}');
+            // Handle other FirebaseAuthException errors accordingly in your app
           }
         } catch (e) {
-          // ...
+          print("Google sign-up error: $e");
+          // Handle other errors accordingly in your app
         }
+      } else {
+        print("Google Sign-In was canceled by the user.");
+        // Handle the scenario where the user cancels the Google Sign-In
       }
+    } catch (e) {
+      print("Error during Google Sign-In: $e");
+      // Handle errors related to Google Sign-In process
     }
 
     return user;
   }
 }
-
 // checking if stream has data
 
 Future<int> getNextId() async {
