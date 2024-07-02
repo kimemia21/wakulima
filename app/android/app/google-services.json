@@ -1,45 +1,44 @@
 {
   "project_info": {
-    "project_number": "390200952161",
-    "project_id": "gnovation-wakulima",
-    "storage_bucket": "gnovation-wakulima.appspot.com"
+    "project_number": "265728956034",
+    "project_id": "gnovation-wakulima-d5bbc",
+    "storage_bucket": "gnovation-wakulima-d5bbc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:390200952161:android:9c4420992b5cdd16d03120",
+        "mobilesdk_app_id": "1:265728956034:android:67b5471595350478e6869b",
         "android_client_info": {
           "package_name": "com.example.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "265728956034-3bgebgfk0q6joqtmjbp8tq8eiotd3u30.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app",
+            "certificate_hash": "1c36fedc9ed8a44e1136844f24daa575b572ed3c"
+          }
+        },
+        {
+          "client_id": "265728956034-gk73tmaaagjlmbgvn68t741ibgkcfidu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAsn5KRDkt7EMeUjAByQLQ5SUGmT46WW2Y"
+          "current_key": "AIzaSyBdDGh1le6yYRjaX9Y_YOuGWtVQfEp0k5Q"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:390200952161:android:3e1ca6ae5817426ad03120",
-        "android_client_info": {
-          "package_name": "com.example.application"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAsn5KRDkt7EMeUjAByQLQ5SUGmT46WW2Y"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265728956034-gk73tmaaagjlmbgvn68t741ibgkcfidu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -52,8 +52,11 @@ Future<void> signInWithEmailAndPassword({
   context.read<CurrentUserProvider>().changeIsLoading();
 
   try {
+    await Future.delayed(Duration(seconds: 2));
+
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => MyHomePage(title: "Homepage")));
     print("Email signup is $email");
@@ -87,14 +90,16 @@ Future signup(
     required String password_}) async {
   try {
     context.read<CurrentUserProvider>().changeIsLoading();
+    await Future.delayed(Duration(seconds: 2));
+
     await _auth
         .createUserWithEmailAndPassword(email: email_, password: password_)
         .then((value) => FirebaseFirestore.instance
             .collection("users")
             .doc(email_)
-            .set({"email": email_}))
-        .then((value) => Globals().switchScreens(
-            context: context, screen: MyHomePage(title: "homepage")));
+            .set({"email": email_}));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => MyHomePage(title: "Homepage")));
   } on FirebaseAuthException catch (e) {
     String _error = _getErrorMessage(e.code);
     CherryToast.warning(

@@ -74,6 +74,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: Colors.white,
       // appBar: AppBar(
@@ -162,7 +163,6 @@ class _SplashscreenState extends State<Splashscreen> {
                     onPressed: () {
                       Globals().switchScreens(
                           context: context, screen: LoginScreen());
-                     
                     },
                     child: Text(
                       "Email",
