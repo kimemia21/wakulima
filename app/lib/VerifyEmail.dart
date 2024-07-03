@@ -1,10 +1,14 @@
+import 'package:app/AppBloc.dart';
+import 'package:app/FirebaseFunctions.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SignUp.dart';
 import 'package:app/contant.dart';
 import 'package:app/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class VerifyEmail extends StatefulWidget {
   final String email;
@@ -100,6 +104,7 @@ class _VerifyEmailState extends State<VerifyEmail>
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                resendLink(context: context);
                 // Add your onPressed code here
               },
               style: ElevatedButton.styleFrom(
@@ -109,14 +114,17 @@ class _VerifyEmailState extends State<VerifyEmail>
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: Text(
-                "Resend Email",
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
+              child: context.watch<CurrentUserProvider>().isLoading
+                  ? LoadingAnimationWidget.staggeredDotsWave(
+                      color: Colors.white, size: 25)
+                  : Text(
+                      "Resend Email",
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
             ),
             SizedBox(
               height: 30,
@@ -131,8 +139,8 @@ class _VerifyEmailState extends State<VerifyEmail>
                 children: [
                   IconButton(
                       onPressed: () {
-                        Globals().switchScreens(
-                            context: context, screen: SignUp());
+                        Globals()
+                            .switchScreens(context: context, screen: SignUp());
                       },
                       icon: Icon(
                         Icons.arrow_back,

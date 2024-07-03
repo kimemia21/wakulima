@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           centerTitle: true,
           title: Text(
-            "${FirebaseAuth.instance.currentUser?.email}",
+            "${Globals().auth.currentUser?.emailVerified}",
             style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,

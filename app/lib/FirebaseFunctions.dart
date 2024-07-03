@@ -56,11 +56,19 @@ Future<void> signInWithEmailAndPassword({
   try {
     await Future.delayed(Duration(seconds: 2));
 
-    await FirebaseAuth.instance
+    await Globals()
+        .auth
         .signInWithEmailAndPassword(email: email, password: password);
+    if (Globals().auth.currentUser?.emailVerified == true) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MyHomePage(title: "Homepage")));
+    } else {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => VerifyEmail(email: email)));
+    }
 
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => MyHomePage(title: "Homepage")));
     print("Email signup is $email");
   } on FirebaseAuthException catch (e) {
     // Map FirebaseAuthException codes to user-friendly messages
@@ -122,13 +130,46 @@ Future signup(
   }
 }
 
+Future<void> resendLink({required BuildContext context}) async {
+  try {
+    context.read<CurrentUserProvider>().changeIsLoading();
+    await Future.delayed(Duration(seconds: 2));
+    await user.sendEmailVerification();
 
-
-Future<void> resendLink() async{
- await user.sendEmailVerification();
+    CherryToast.success(
+      disableToastAnimation: false,
+      animationCurve: Curves.ease,
+      animationDuration: Duration(milliseconds: 500),
+      title: Text('Verification link sent',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+      action: Text(
+        "verification link sent to  ${FirebaseAuth.instance.currentUser?.email}",
+        style: GoogleFonts.abel(fontWeight: FontWeight.w400),
+      ),
+      actionHandler: () {},
+      onToastClosed: () {},
+    ).show(context);
+  } on FirebaseAuthException catch (e) {
+    String _error = _getErrorMessage(e.code);
+    CherryToast.warning(
+      disableToastAnimation: false,
+      animationCurve: Curves.ease,
+      animationDuration: Duration(milliseconds: 200),
+      title: Text('Verification Error',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+      action: Text(
+        _error,
+        style: GoogleFonts.abel(),
+      ),
+      actionHandler: () {},
+      onToastClosed: () {},
+    ).show(context);
+  } catch (e) {
+    print("Resend Link Error $e");
+  } finally {
+    context.read<CurrentUserProvider>().changeIsLoading();
+  }
 }
-
-
 
 Future<void> resetPassword({required context, required email}) async {
   try {
@@ -172,8 +213,6 @@ Future<void> resetPassword({required context, required email}) async {
     ).show(context);
   }
 }
-
-
 
 class Authentication {
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
