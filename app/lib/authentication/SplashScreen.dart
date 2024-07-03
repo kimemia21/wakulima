@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:app/AppBloc.dart';
-import 'package:app/FirebaseFunctions.dart';
+import 'package:app/FirebaseFunctions/FirebaseFunctions.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SignUp.dart';
 import 'package:app/globals.dart';

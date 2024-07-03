@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/AppBloc.dart';
-import 'package:app/FirebaseFunctions.dart';
+import 'package:app/FirebaseFunctions/FirebaseFunctions.dart';
 import 'package:app/Homepage.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SignUp.dart';

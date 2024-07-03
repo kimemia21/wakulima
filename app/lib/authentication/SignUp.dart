@@ -1,5 +1,5 @@
 import 'package:app/AppBloc.dart';
-import 'package:app/FirebaseFunctions.dart';
+import 'package:app/FirebaseFunctions/FirebaseFunctions.dart';
 import 'package:app/VerifyEmail.dart';
 import 'package:app/VerifyEmail.dart';
 import 'package:app/authentication/LoginScreen.dart';

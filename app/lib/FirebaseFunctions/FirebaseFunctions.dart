@@ -51,22 +51,23 @@ Future<void> signInWithEmailAndPassword({
   required String email,
   required String password,
 }) async {
+  // Start loading state
   context.read<CurrentUserProvider>().changeIsLoading();
 
   try {
+    // Simulate network delay
     await Future.delayed(Duration(seconds: 2));
 
-    await Globals()
-        .auth
-        .signInWithEmailAndPassword(email: email, password: password);
-    if (_auth.currentUser?.emailVerified == true) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MyHomePage(title: "Homepage")));
+    // Attempt to sign in with email and password
+    await Globals().auth.signInWithEmailAndPassword(email: email, password: password);
+
+    // Check if email is verified
+    if (Globals().auth.currentUser?.emailVerified == true) {
+      // Navigate to home page if email is verified
+      Globals().switchScreens(context: context, screen: MyHomePage(title: "Homepage"));
     } else {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => VerifyEmail(email: email)));
+      // Navigate to VerifyEmail screen if email is not verified
+       Globals().switchScreens(context: context, screen: VerifyEmail(email: email));
     }
 
     print("Email signup is $email");
@@ -79,17 +80,18 @@ Future<void> signInWithEmailAndPassword({
       disableToastAnimation: false,
       animationCurve: Curves.ease,
       animationDuration: Duration(milliseconds: 500),
-      title: Text('Sign up Error',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+      title: Text('Sign up Error', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
       action: Text(errorMessage, style: GoogleFonts.abel()),
       actionHandler: () {},
       onToastClosed: () {},
     ).show(context);
+  } catch (e) {
+    print("Sign in with email and password error: $e");
   } finally {
+    // Stop loading state
     context.read<CurrentUserProvider>().changeIsLoading();
   }
 }
-
 // signed in user
 
 // function for creating account using email and password
@@ -107,7 +109,8 @@ Future<void> signup({
     await Future.delayed(Duration(seconds: 2));
 
     // Create user with email and password
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email_,
       password: password_,
     );
@@ -151,6 +154,7 @@ Future<void> signup({
     context.read<CurrentUserProvider>().changeIsLoading();
   }
 }
+
 Future<void> resendLink({required BuildContext context}) async {
   try {
     context.read<CurrentUserProvider>().changeIsLoading();
