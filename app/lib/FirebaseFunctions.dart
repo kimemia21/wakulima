@@ -22,8 +22,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-FirebaseAuth _auth = FirebaseAuth.instance;
-dynamic user;
+FirebaseAuth _auth = _auth;
+User? user;
 String _getErrorMessage(String errorCode) {
   return Globals().authErrors[errorCode] ?? "an  undefined error happened";
 }
@@ -59,7 +59,7 @@ Future<void> signInWithEmailAndPassword({
     await Globals()
         .auth
         .signInWithEmailAndPassword(email: email, password: password);
-    if (Globals().auth.currentUser?.emailVerified == true) {
+    if (_auth.currentUser?.emailVerified == true) {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -94,30 +94,48 @@ Future<void> signInWithEmailAndPassword({
 
 // function for creating account using email and password
 
-Future signup(
-    {required BuildContext context,
-    required String email_,
-    required String password_}) async {
+Future<void> signup({
+  required BuildContext context,
+  required String email_,
+  required String password_,
+}) async {
   try {
+    // Start loading
     context.read<CurrentUserProvider>().changeIsLoading();
+
+    // Delay for 2 seconds (for demonstration or network simulation)
     await Future.delayed(Duration(seconds: 2));
 
-    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email_, password: password_);
+    // Create user with email and password
+    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email_,
+      password: password_,
+    );
 
-    user = userCredential.user!;
+    // Get the created user
+    User? user = userCredential.user;
 
-    await user.sendEmailVerification();
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => VerifyEmail(email: email_)));
+    // Send email verification if user is not null
+    if (user != null) {
+      await user.sendEmailVerification();
+
+      // Navigate to the VerifyEmail screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => VerifyEmail(email: email_)),
+      );
+    }
   } on FirebaseAuthException catch (e) {
+    // Handle Firebase-specific errors
     String _error = _getErrorMessage(e.code);
     CherryToast.warning(
       disableToastAnimation: false,
       animationCurve: Curves.ease,
       animationDuration: Duration(milliseconds: 200),
-      title: Text('Email Error',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+      title: Text(
+        'Email Error',
+        style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+      ),
       action: Text(
         _error,
         style: GoogleFonts.abel(),
@@ -125,16 +143,19 @@ Future signup(
       actionHandler: () {},
       onToastClosed: () {},
     ).show(context);
+  } catch (e) {
+    // Handle any other errors
+    print("Signup error $e");
   } finally {
+    // Stop loading
     context.read<CurrentUserProvider>().changeIsLoading();
   }
 }
-
 Future<void> resendLink({required BuildContext context}) async {
   try {
     context.read<CurrentUserProvider>().changeIsLoading();
     await Future.delayed(Duration(seconds: 2));
-    await user.sendEmailVerification();
+    await user?.sendEmailVerification();
 
     CherryToast.success(
       disableToastAnimation: false,
@@ -217,6 +238,7 @@ Future<void> resetPassword({required context, required email}) async {
 class Authentication {
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     print("Starting Google Sign-In");
+
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -242,8 +264,14 @@ class Authentication {
           user = userCredential.user;
           print("Google Sign-In successful: ${user?.email}");
 
-          Globals().switchScreens(
-              context: context, screen: MyHomePage(title: "Homepage"));
+          await user?.sendEmailVerification();
+          if (user?.emailVerified == true) {
+            Globals().switchScreens(
+                context: context, screen: MyHomePage(title: "Homepage"));
+          } else {
+            Globals().switchScreens(
+                context: context, screen: VerifyEmail(email: "${user?.email}"));
+          }
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             print('The account already exists with a different credential.');

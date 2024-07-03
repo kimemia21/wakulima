@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:app/AppBloc.dart';
 import 'package:app/FirebaseFunctions.dart';
+import 'package:app/Homepage.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SignUp.dart';
 import 'package:app/contant.dart';
@@ -24,6 +27,7 @@ class _VerifyEmailState extends State<VerifyEmail>
   _VerifyEmailState({required this.email});
 
   dynamic _animationController;
+  late Timer timer;
 
   @override
   void initState() {
@@ -33,6 +37,14 @@ class _VerifyEmailState extends State<VerifyEmail>
       vsync: this,
     );
     _animationController.forward();
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      Globals().auth.currentUser?.reload();
+      if (Globals().auth.currentUser?.emailVerified == true) {
+        Globals().switchScreens(
+            context: context, screen: MyHomePage(title: "Homepage"));
+        timer.cancel();
+      }
+    });
   }
 
   @override
