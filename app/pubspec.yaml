@@ -51,6 +51,8 @@ dependencies:
   vertical_card_pager: ^1.6.2
   clippy_flutter: ^2.0.0-nullsafety.1
   lottie: ^2.1.0
+  file_picker: ^8.0.6
+  dotted_border: ^2.1.0
 
 
 dev_dependencies:
@@ -80,6 +82,7 @@ flutter:
     - assets/images/login.avif
     - assets/gif/AnimationOne.json
     - assets/gif/AnimationLogin.json
+    - assets/gif/AnimationFiles.json
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
