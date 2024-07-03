@@ -1,3 +1,4 @@
+import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SignUp.dart';
 import 'package:app/contant.dart';
 import 'package:app/globals.dart';
@@ -5,20 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-
-
-
 class VerifyEmail extends StatefulWidget {
   final String email;
   const VerifyEmail({super.key, required this.email});
 
   @override
-  State<VerifyEmail> createState() => _VerifyEmailState();
+  State<VerifyEmail> createState() => _VerifyEmailState(email: email);
 }
 
-class _VerifyEmailState extends State<VerifyEmail> with SingleTickerProviderStateMixin {
+class _VerifyEmailState extends State<VerifyEmail>
+    with SingleTickerProviderStateMixin {
+  final String email;
+  _VerifyEmailState({required this.email});
 
-dynamic _animationController;
+  dynamic _animationController;
 
   @override
   void initState() {
@@ -51,9 +52,8 @@ dynamic _animationController;
                   curve: Curves.elasticOut,
                 ),
               ),
-              child:
-               Lottie.asset(
-                'assets/email_verification.json', // Ensure you have this animation in your assets
+              child: Lottie.asset(
+                "assets/gif/AnimationOne.json", // Ensure you have this animation in your assets
                 height: 150,
                 width: 150,
               ),
@@ -69,7 +69,7 @@ dynamic _animationController;
               child: Text(
                 "Email Verification",
                 style: GoogleFonts.poppins(
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -83,17 +83,21 @@ dynamic _animationController;
                   curve: Interval(0.5, 1.0),
                 ),
               ),
-              child: Text(
-                "A verification email has been sent. \nPlease check your inbox and click the link to verify your email address.",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black54,
+              child: Container(
+                margin: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
+                child: Text(
+                  "Please check $email inbox and click  wakulima verification link to verify your email address.",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Add your onPressed code here
@@ -114,6 +118,33 @@ dynamic _animationController;
                 ),
               ),
             ),
+            SizedBox(
+              height: 30,
+            ),
+            GestureDetector(
+              onTap: () {
+                Globals()
+                    .switchScreens(context: context, screen: LoginScreen());
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Globals().switchScreens(
+                            context: context, screen: SignUp());
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.blue,
+                      )),
+                  Text(
+                    "back to Signup",
+                    style: GoogleFonts.poppins(color: Colors.blue),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

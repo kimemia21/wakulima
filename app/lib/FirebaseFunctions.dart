@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:app/AppBloc.dart';
 import 'package:app/Homepage.dart';
+import 'package:app/VerifyEmail.dart';
 import 'package:app/globals.dart';
 import 'package:app/main.dart';
 import 'package:cherry_toast/cherry_toast.dart';
@@ -22,6 +23,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 FirebaseAuth _auth = FirebaseAuth.instance;
+dynamic user;
 String _getErrorMessage(String errorCode) {
   return Globals().authErrors[errorCode] ?? "an  undefined error happened";
 }
@@ -92,14 +94,14 @@ Future signup(
     context.read<CurrentUserProvider>().changeIsLoading();
     await Future.delayed(Duration(seconds: 2));
 
-    await _auth
-        .createUserWithEmailAndPassword(email: email_, password: password_)
-        .then((value) => FirebaseFirestore.instance
-            .collection("users")
-            .doc(email_)
-            .set({"email": email_}));
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email_, password: password_);
+
+    user = userCredential.user!;
+
+    await user.sendEmailVerification();
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => MyHomePage(title: "Homepage")));
+        MaterialPageRoute(builder: (context) => VerifyEmail(email: email_)));
   } on FirebaseAuthException catch (e) {
     String _error = _getErrorMessage(e.code);
     CherryToast.warning(
@@ -119,6 +121,14 @@ Future signup(
     context.read<CurrentUserProvider>().changeIsLoading();
   }
 }
+
+
+
+Future<void> resendLink() async{
+ await user.sendEmailVerification();
+}
+
+
 
 Future<void> resetPassword({required context, required email}) async {
   try {
@@ -163,7 +173,7 @@ Future<void> resetPassword({required context, required email}) async {
   }
 }
 
-final user = FirebaseAuth.instance.currentUser;
+
 
 class Authentication {
   static Future<User?> signInWithGoogle({required BuildContext context}) async {

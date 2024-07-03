@@ -1,8 +1,10 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/Homepage.dart';
+import 'package:app/VerifyEmail.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SplashScreen.dart';
 import 'package:app/firebase_options.dart';
+import 'package:app/globals.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,16 +32,20 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           home: StreamBuilder<User?>(
-              stream: FirebaseAuth.instance.authStateChanges(),
+              stream: Globals().auth.authStateChanges(),
               builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: LoadingAnimationWidget.hexagonDots(
                         color: Colors.green, size: 30),
                   );
-                } else if (snapshot.hasData) {
+                } else if (snapshot.hasData&& snapshot.data!.emailVerified==true) {
                   return MyHomePage(title: "homepage");
-                } else {
+                }else if(snapshot.hasData&& snapshot.data!.emailVerified==false){
+                  return VerifyEmail(email: "${Globals().auth.currentUser?.email}");
+                }
+                
+                 else {
                   return Splashscreen();
                 }
               })),

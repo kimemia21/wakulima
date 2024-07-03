@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Globals {
+  FirebaseAuth auth = FirebaseAuth.instance;
   Map authErrors = {
     "admin-restricted-operation":
         "This operation is restricted to administrators only.",
@@ -171,30 +173,30 @@ class Globals {
   Future<dynamic> switchScreens(
       {required BuildContext context, required Widget screen}) {
     return Navigator.push(
-  context,
-  
-  PageRouteBuilder(
-    transitionDuration: const Duration(milliseconds: 500), // Adjust duration here
-    pageBuilder: (context, animation, secondaryAnimation) => screen,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const curve = Curves.easeOutQuart;
+      context,
+      PageRouteBuilder(
+        transitionDuration:
+            const Duration(milliseconds: 500), // Adjust duration here
+        pageBuilder: (context, animation, secondaryAnimation) => screen,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const curve = Curves.easeOutQuart;
 
-      final opacityTween = Tween(begin: 0.3, end: 1.0);
-      final scaleTween = Tween(begin: 0.3, end: 1.0);
-      final curvedAnimation = CurvedAnimation(
-        parent: animation,
-        curve: curve,
-      );
+          final opacityTween = Tween(begin: 0.3, end: 1.0);
+          final scaleTween = Tween(begin: 0.3, end: 1.0);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
 
-      return FadeTransition(
-        opacity: opacityTween.animate(curvedAnimation),
-        child: ScaleTransition(
-          scale: scaleTween.animate(curvedAnimation),
-          child: child,
-        ),
-      );
-    },
-  ),
-);
+          return FadeTransition(
+            opacity: opacityTween.animate(curvedAnimation),
+            child: ScaleTransition(
+              scale: scaleTween.animate(curvedAnimation),
+              child: child,
+            ),
+          );
+        },
+      ),
+    );
   }
 }

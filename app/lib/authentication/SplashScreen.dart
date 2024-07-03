@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -28,13 +29,15 @@ class Splashscreen extends StatefulWidget {
   State<Splashscreen> createState() => _SplashscreenState();
 }
 
-class _SplashscreenState extends State<Splashscreen> {
+class _SplashscreenState extends State<Splashscreen>
+    with SingleTickerProviderStateMixin {
   GlobalKey<FormState> _formState = GlobalKey<FormState>();
   late StreamSubscription<List<ConnectivityResult>> subscription;
   bool isLoading = false;
   bool isConnected = false;
   bool darkMode = false;
   ThemeMode get themeMode => darkMode ? ThemeMode.dark : ThemeMode.light;
+  dynamic splashAnimation;
 
   AuthButtonType? buttonType;
   AuthIconType? iconType;
@@ -45,6 +48,16 @@ class _SplashscreenState extends State<Splashscreen> {
   TextEditingController _emailController = TextEditingController();
 
   final Connectivity _connectivity = Connectivity();
+
+  @override
+  void initState() {
+    splashAnimation = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    splashAnimation.forward();
+    super.initState();
+  }
   // @override
   // void initState() {
   //   super.initState();
@@ -68,13 +81,13 @@ class _SplashscreenState extends State<Splashscreen> {
     _emailController.dispose();
     _passwordController.dispose();
     subscription.cancel();
+    splashAnimation.dispose();
     // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.white,
       // appBar: AppBar(
@@ -92,151 +105,154 @@ class _SplashscreenState extends State<Splashscreen> {
         alignment: Alignment.center,
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(bottom: 4, top: 4),
-              child: Text(
-                "Farming App",
-                style: GoogleFonts.poppins(
-                    color: Colors.green.shade500,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(bottom: 4, top: 4),
-              child: Text(
-                "Welcome! Please Log In",
-                style: GoogleFonts.poppins(
-                    color: Colors.black54,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            Container(
-                margin: EdgeInsets.only(top: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
+        child: FadeTransition(
+          opacity: Tween(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent: splashAnimation, curve: Curves.easeIn)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(bottom: 4, top: 4),
+                child: Text(
+                  "Farming App",
+                  style: GoogleFonts.poppins(
+                      color: Colors.green.shade500,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600),
                 ),
-                width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: ClipRRect(
-                  borderRadius: BorderRadiusDirectional.circular(30),
-                  child: Image.network(
-                    "https://img.freepik.com/premium-vector/smart-technology-farming-concept_179970-1924.jpg",
-                    // https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/8e/16/91/caption.jpg?w=1200&h=1200&s=1
-
-                    fit: BoxFit.cover,
-                  ),
-                )),
-            Container(
-              margin: EdgeInsets.only(bottom: 4),
-              child: Text(
-                "Continue With",
-                style: GoogleFonts.poppins(
-                    fontSize: 22, fontWeight: FontWeight.w500),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Material(
-              elevation: 5,
-
-              shadowColor: Colors.grey, // This sets the color of the shadow
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                  // margin: EdgeInsets.only(bottom: 10),
-                  alignment: Alignment.center,
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.75,
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(bottom: 4, top: 4),
+                child: Text(
+                  "Welcome! Please Log In",
+                  style: GoogleFonts.poppins(
+                      color: Colors.black54,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              Container(
+                  margin: EdgeInsets.only(top: 20),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadiusDirectional.circular(10)),
-                  child: TextButton(
-                    onPressed: () {
-                      Globals().switchScreens(
-                          context: context, screen: LoginScreen());
-                    },
-                    child: Text(
-                      "Email",
-                      style: GoogleFonts.poppins(
-                          color: Colors.black54,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
+                    color: Colors.white,
+                  ),
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: ClipRRect(
+                    borderRadius: BorderRadiusDirectional.circular(30),
+                    child: 
+                    
+                    FadeTransition(
+                      opacity:Tween(begin: 0.8,end: 1.0).animate(CurvedAnimation(parent: splashAnimation, curve: Curves.easeIn)) ,
+                      child: Lottie.asset("assets/gif/AnimationLogin.json")
                     ),
                   )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 50,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Material(
+              Container(
+                margin: EdgeInsets.only(bottom: 4),
+                child: Text(
+                  "Continue With",
+                  style: GoogleFonts.poppins(
+                      fontSize: 22, fontWeight: FontWeight.w500),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Material(
                 elevation: 5,
+          
                 shadowColor: Colors.grey, // This sets the color of the shadow
                 borderRadius: BorderRadius.circular(10),
-
-                child: GoogleAuthButton(
-                    onPressed: () {
-                      Authentication.signInWithGoogle(context: context);
-                    },
-                    themeMode: themeMode,
-                    isLoading: isLoading,
-                    style: AuthButtonStyle(
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      height: 40,
-                      textStyle: GoogleFonts.poppins(
-                          color: Colors.black54, fontWeight: FontWeight.w600),
-                      buttonType: buttonType,
-                      iconType: iconType,
+                child: Container(
+                    // margin: EdgeInsets.only(bottom: 10),
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadiusDirectional.circular(10)),
+                    child: TextButton(
+                      onPressed: () {
+                        Globals().switchScreens(
+                            context: context, screen: LoginScreen());
+                      },
+                      child: Text(
+                        "Email",
+                        style: GoogleFonts.poppins(
+                            color: Colors.black54,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
                     )),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Container(
-                // alignment: Alignment.center,
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.25,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.circular(10)),
-                child: TextButton(
-                  onPressed: () async {
-                    bool connection = await checkInternetConnection(context);
-
-                    if (connection) {
-                      Globals()
-                          .switchScreens(context: context, screen: SignUp());
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('No internet connection'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text(
-                    "Sign up",
-                    style: GoogleFonts.poppins(
-                        color: Colors.blue.shade300,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 50,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Material(
+                  elevation: 5,
+                  shadowColor: Colors.grey, // This sets the color of the shadow
+                  borderRadius: BorderRadius.circular(10),
+          
+                  child: GoogleAuthButton(
+                      onPressed: () {
+                        Authentication.signInWithGoogle(context: context);
+                      },
+                      themeMode: themeMode,
+                      isLoading: isLoading,
+                      style: AuthButtonStyle(
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        height: 40,
+                        textStyle: GoogleFonts.poppins(
+                            color: Colors.black54, fontWeight: FontWeight.w600),
+                        buttonType: buttonType,
+                        iconType: iconType,
+                      )),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Container(
+                  // alignment: Alignment.center,
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadiusDirectional.circular(10)),
+                  child: TextButton(
+                    onPressed: () async {
+                      bool connection = await checkInternetConnection(context);
+          
+                      if (connection) {
+                        Globals()
+                            .switchScreens(context: context, screen: SignUp());
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('No internet connection'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Sign up",
+                      style: GoogleFonts.poppins(
+                          color: Colors.blue.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
