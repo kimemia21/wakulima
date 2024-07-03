@@ -313,37 +313,52 @@ class _LoginScreenState extends State<LoginScreen> {
                             password: _passwordController.text.trim());
                       }
                     },
-                    child: Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        alignment: Alignment.center,
-                        height: 40,
-                        width: MediaQuery.of(context).size.width * 0.75,
-                        decoration: BoxDecoration(
-                            color: Colors.green.shade500,
-                            borderRadius: BorderRadiusDirectional.circular(10)),
-                        child: TextButton(
-                          onPressed: () {
-                            if (_formState.currentState!.validate()) {
-                              print(
-                                  "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_formState.currentState!.validate()) {
+                          print(
+                              "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
 
-                              signInWithEmailAndPassword(
-                                  context: context,
-                                  email: _emailController.text.trim(),
-                                  password: _passwordController.text.trim());
-                            }
-                          },
-                          child: context.watch<CurrentUserProvider>().isLoading
-                              ? LoadingAnimationWidget.staggeredDotsWave(
-                                  color: Colors.white, size: 25)
-                              : Text(
-                                  "Login",
-                                  style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                        )),
+                          signInWithEmailAndPassword(
+                              context: context,
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text.trim());
+                        }
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(bottom: 5),
+                          alignment: Alignment.center,
+                          height: 40,
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          decoration: BoxDecoration(
+                              color: Colors.green.shade500,
+                              borderRadius:
+                                  BorderRadiusDirectional.circular(10)),
+                          child: TextButton(
+                            onPressed: () {
+                              if (_formState.currentState!.validate()) {
+                                print(
+                                    "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
+
+                                signInWithEmailAndPassword(
+                                    context: context,
+                                    email: _emailController.text.trim(),
+                                    password: _passwordController.text.trim());
+                              }
+                            },
+                            child:
+                                context.watch<CurrentUserProvider>().isLoading
+                                    ? LoadingAnimationWidget.staggeredDotsWave(
+                                        color: Colors.white, size: 25)
+                                    : Text(
+                                        "Login",
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                          )),
+                    ),
                   ),
 
                   Container(

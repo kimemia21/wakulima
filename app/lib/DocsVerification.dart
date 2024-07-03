@@ -18,12 +18,16 @@ class _DocsverificationState extends State<Docsverification>
   final TextEditingController _descriptionController = TextEditingController();
 
   Future<void> _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-    if (result != null) {
-      setState(() {
-        _file = result;
-      });
+      if (result != null) {
+        setState(() {
+          _file = result;
+        });
+      }
+    } catch (e) {
+      print("pick file  error $e ");
     }
   }
 
@@ -84,6 +88,7 @@ class _DocsverificationState extends State<Docsverification>
 
               SizedBox(height: 10),
               DottedBorder(
+                color: Colors.black54,
                 borderType: BorderType.RRect,
                 radius: Radius.circular(12),
                 padding: EdgeInsets.all(6),
@@ -92,19 +97,45 @@ class _DocsverificationState extends State<Docsverification>
                     height: MediaQuery.of(context).size.width * 0.5,
                     width: MediaQuery.of(context).size.width,
                     child: Column(
-                      children: [Text("center")],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.file_copy,
+                          size: 40,
+                          color: Colors.black54,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "Select Document to uplaod",
+                          style: GoogleFonts.poppins(color: Colors.black54),
+                        ),
+                        SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () async {
+                            _pickFile;
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadiusDirectional.circular(10),
+                                color: Colors.grey.shade300),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "Choose File",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54),
+                            ),
+                          ),
+                        )
+                      ],
                     )),
               ),
 
               SizedBox(height: 20),
-              TextField(
-                controller: _descriptionController,
-                decoration: InputDecoration(
-                  labelText: "File Description",
-                  border: OutlineInputBorder(),
-                ),
-                maxLines: 3,
-              ),
+
               SizedBox(height: 20),
 
               Center(

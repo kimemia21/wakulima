@@ -271,57 +271,62 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
 
-                    Container(
-                      margin: EdgeInsets.only(bottom: 5),
-                      alignment: Alignment.center,
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      decoration: BoxDecoration(
-                          color: Colors.green.shade500,
-                          borderRadius: BorderRadiusDirectional.circular(10)),
-                      child: TextButton(
-                        onPressed: () {
-                          
-
-                          if (_formState.currentState!.validate()) {
-                            if (_SignUpPasswordController.text !=
-                                _confirmController.text) {
-                              CherryToast.warning(
-                                disableToastAnimation: false,
-                                animationCurve: Curves.ease,
-                                animationDuration: Duration(milliseconds: 200),
-                                title: Text('Password Error',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.bold)),
-                                action: Text(
-                                  'Make sure the password and confirm password match ',
-                                  style: GoogleFonts.abel(),
-                                ),
-                                actionHandler: () {},
-                                onToastClosed: () {},
-                              ).show(context);
-                            } else {
-                              
-
-                              signup(
-                                  context: context,
-                                  email_: _SignemailController.text.trim(),
-                                  password_:
-                                      _SignUpPasswordController.text.trim());
+                    GestureDetector(
+                      onTap: (){
+                           if (_formState.currentState!.validate()) {
+                              if (_SignUpPasswordController.text !=
+                                  _confirmController.text) {
+                                CherryToast.warning(
+                                  disableToastAnimation: false,
+                                  animationCurve: Curves.ease,
+                                  animationDuration: Duration(milliseconds: 200),
+                                  title: Text('Password Error',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold)),
+                                  action: Text(
+                                    'Make sure the password and confirm password match ',
+                                    style: GoogleFonts.abel(),
+                                  ),
+                                  actionHandler: () {},
+                                  onToastClosed: () {},
+                                ).show(context);
+                              } else {
+                                
+                      
+                                signup(
+                                    context: context,
+                                    email_: _SignemailController.text.trim(),
+                                    password_:
+                                        _SignUpPasswordController.text.trim());
+                              }
                             }
-                          }
-                        },
-                        child: context.watch<CurrentUserProvider>().isLoading
-                            ? LoadingAnimationWidget.staggeredDotsWave(
-                                color: Colors.white, size: 25)
-                            : Text(
-                                "Sign Up",
-                                style: GoogleFonts.abel(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        alignment: Alignment.center,
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        decoration: BoxDecoration(
+                            color: Colors.green.shade500,
+                            borderRadius: BorderRadiusDirectional.circular(10)),
+                        child: TextButton(
+                          onPressed: () {
+                            
+                      
+                         
+                          },
+                          child: context.watch<CurrentUserProvider>().isLoading
+                              ? LoadingAnimationWidget.staggeredDotsWave(
+                                  color: Colors.white, size: 25)
+                              : Text(
+                                  "Sign Up",
+                                  style: GoogleFonts.abel(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
                                 ),
-                              ),
+                        ),
                       ),
                     ),
                     Container(
