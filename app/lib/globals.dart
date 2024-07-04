@@ -60,7 +60,7 @@ class Globals {
   Future<void> switchScreens(
       {required BuildContext context, required Widget screen}) {
     try {
-      return Navigator.push(
+      return Navigator.pushReplacement(
           context,
           PageRouteBuilder(
             transitionDuration: Duration(
@@ -94,15 +94,9 @@ class Globals {
 
   Future checkDocVerified({required BuildContext context}) async {
     try {
-      // Get the current user's email
+  
       String? email = Globals().auth.currentUser?.email;
 
-      // if (email == null) {
-      //   print("No user is currently signed in.");
-      //   return;
-      // }
-
-      // Reference to the document
       DocumentReference docRef =
           FirebaseFirestore.instance.collection("$email").doc(email);
 
