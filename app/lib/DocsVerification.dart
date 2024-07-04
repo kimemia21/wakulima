@@ -6,7 +6,9 @@ import 'package:app/globals.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +25,10 @@ class Docsverification extends StatefulWidget {
 
 class _DocsverificationState extends State<Docsverification>
     with SingleTickerProviderStateMixin {
-  String _fileName = "id";
+  String? _fileName;
+  Uint8List? _fileBytes;
+  String? _fileExtention;
+
   double upload_progress = 0.0;
   // FilePickerResult? _file;
   final TextEditingController _titleController = TextEditingController();
@@ -32,26 +37,14 @@ class _DocsverificationState extends State<Docsverification>
   @override
   void initState() {
     super.initState();
-    try {
-      Globals()
-          .firebaseFirestore
-          .collection("${Globals().auth.currentUser?.email}")
-          .doc(_fileName)
-          .set({"createdOn": FieldValue.serverTimestamp(), "doc": _fileName});
-    } catch (e) {
-      print("firestore error $e");
-    }
   }
 
-  Future<String?> uploadDocument() async {
+  Future<void> uploadDocument() async {
     String? authUserEmail = Globals().auth.currentUser?.email;
     // var uuid = Uuid().v4();
     context.read<CurrentUserProvider>().changeIsLoading();
 
     try {
-      setState(() {
-        // isuploading = !isuploading;
-      });
       FilePickerResult? result =
           await FilePicker.platform.pickFiles(type: FileType.any);
       if (result != null && result.files.isNotEmpty) {
@@ -63,45 +56,20 @@ class _DocsverificationState extends State<Docsverification>
           final fileName = result.files.first.name;
           final fileExtension = file.extension;
 
-          print("fileExtension $fileExtension");
-          print("fileBytes $fileBytes");
+          print("fileExtension ${fileExtension.runtimeType}");
+          print("fileBytes ${fileBytes.runtimeType}");
           setState(() {
             _fileName = fileName;
+            _fileBytes = fileBytes;
+            _fileExtention = fileExtension;
           });
 
-          print(fileBytes);
           if (fileBytes == null || fileExtension == null) {
             print("File picking failed");
             return null;
           }
 
-          final mimeType = Globals().getMimeType(fileExtension);
-
-          final metaData = SettableMetadata(contentType: mimeType);
-
-          UploadTask uploadTask = FirebaseStorage.instance
-              .ref('$authUserEmail/$fileName')
-              .putData(fileBytes, metaData);
-
-          uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-            setState(() {
-              upload_progress = snapshot.bytesTransferred / snapshot.totalBytes;
-            });
-          });
-
-          TaskSnapshot taskSnapshot = await uploadTask;
-          String downloadURL = await taskSnapshot.ref.getDownloadURL();
-
-          Globals()
-              .firebaseFirestore
-              .collection("${Globals().auth.currentUser?.email}")
-              .doc(_fileName)
-              .set({
-            "createdOn": FieldValue.serverTimestamp(),
-            "doc": _fileName
-          });
-
-          return downloadURL;
+          // return downloadURL;
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -118,16 +86,65 @@ class _DocsverificationState extends State<Docsverification>
     }
   }
 
+  Future<void> SaveDoc({required BuildContext context}) async {
+    String? authUserEmail = Globals().auth.currentUser?.email;
+    if (_fileBytes != null && _fileExtention != null && _fileName != null) {
+      final mimeType = Globals().getMimeType(_fileExtention);
+      final metaData = SettableMetadata(contentType: mimeType);
+      context.read<CurrentUserProvider>().changeIsLoading();
+      try {
+        UploadTask uploadTask = FirebaseStorage.instance
+            .ref('$authUserEmail/$_fileName')
+            .putData(_fileBytes!, metaData);
+
+        uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+          setState(() {
+            upload_progress = snapshot.bytesTransferred / snapshot.totalBytes;
+          });
+        });
+
+        TaskSnapshot taskSnapshot = await uploadTask;
+        String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+        await Globals()
+            .firebaseFirestore
+            .collection("${Globals().auth.currentUser?.email}")
+            .doc(authUserEmail)
+            .update({
+          "createdOn": FieldValue.serverTimestamp(),
+          "doc": _fileName,
+          "docUrl": downloadURL,
+          "isVerified":true,
+          
+        });
+        context.read<CurrentUserProvider>().changeIsLoading();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: Duration(seconds: 1),
+            backgroundColor: Colors.green.shade400,
+            content: Text(
+              "Uplaoded Success",
+              style: GoogleFonts.poppins(color: Colors.white),
+            )));
+      } catch (e) {
+        print("saveDoc error $e");
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please select a file to upload")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadiusDirectional.circular(30),
-              color: Colors.blueGrey.shade100),
-          child: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios)),
-        ),
+        // leading: Container(
+        //   decoration: BoxDecoration(
+        //       borderRadius: BorderRadiusDirectional.circular(30),
+        //       color: Colors.blueGrey.shade100),
+        //   child: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios)),
+        // ),
         centerTitle: true,
         title: Text(
           "Upload Document",
@@ -149,7 +166,7 @@ class _DocsverificationState extends State<Docsverification>
               SizedBox(height: 10),
               Text(
                 // textAlign: TextAlign.center,
-                "Please select a file you wish to upload and fill out the required information below.\n  Ensure that the file is in an appropriate format and provides a clear and concise title and description. This will help in categorizing and retrieving the file more efficiently in the future.",
+                "Please select a file you wish to upload.\nEnsure that the file is in an appropriate format and provides a clear and concise information. This will help in categorizing and retrieving the file more efficiently in the future.",
                 // style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(height: 10),
@@ -215,22 +232,29 @@ class _DocsverificationState extends State<Docsverification>
               ),
               SizedBox(height: 20),
               SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_fileName != null) {
-                      // Implement the file upload logic here
-                      print("Title: ${_titleController.text}");
-                      print("Description: ${_descriptionController.text}");
-                      print("File Name: ${_fileName}");
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text("Please select a file to upload")),
-                      );
-                    }
-                  },
-                  child: Text("Upload"),
+              GestureDetector(
+                onTap: () {
+                  SaveDoc(context: context);
+                },
+                child: Center(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadiusDirectional.circular(10),
+                        color: Colors.grey.shade400),
+                    width: 250,
+                    height: 50,
+                    child: context.watch<CurrentUserProvider>().isLoading
+                        ? LoadingAnimationWidget.staggeredDotsWave(
+                            color: Colors.white, size: 40)
+                        : Text(
+                            "Upload",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                  ),
                 ),
               ),
             ],

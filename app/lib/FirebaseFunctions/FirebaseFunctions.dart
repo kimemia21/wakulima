@@ -59,15 +59,19 @@ Future<void> signInWithEmailAndPassword({
     await Future.delayed(Duration(seconds: 2));
 
     // Attempt to sign in with email and password
-    await Globals().auth.signInWithEmailAndPassword(email: email, password: password);
+    await Globals()
+        .auth
+        .signInWithEmailAndPassword(email: email, password: password);
 
     // Check if email is verified
     if (Globals().auth.currentUser?.emailVerified == true) {
       // Navigate to home page if email is verified
-      Globals().switchScreens(context: context, screen: MyHomePage(title: "Homepage"));
+      Globals().switchScreens(
+          context: context, screen: MyHomePage(title: "Homepage"));
     } else {
       // Navigate to VerifyEmail screen if email is not verified
-       Globals().switchScreens(context: context, screen: VerifyEmail(email: email));
+      Globals()
+          .switchScreens(context: context, screen: VerifyEmail(email: email));
     }
 
     print("Email signup is $email");
@@ -80,7 +84,8 @@ Future<void> signInWithEmailAndPassword({
       disableToastAnimation: false,
       animationCurve: Curves.ease,
       animationDuration: Duration(milliseconds: 500),
-      title: Text('Sign up Error', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+      title: Text('Sign up Error',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
       action: Text(errorMessage, style: GoogleFonts.abel()),
       actionHandler: () {},
       onToastClosed: () {},
@@ -120,6 +125,8 @@ Future<void> signup({
 
     // Send email verification if user is not null
     if (user != null) {
+      Globals().initUserDb();
+
       await user.sendEmailVerification();
 
       // Navigate to the VerifyEmail screen
@@ -266,7 +273,7 @@ class Authentication {
           final UserCredential userCredential =
               await auth.signInWithCredential(credential);
           user = userCredential.user;
-          print("Google Sign-In successful: ${user?.email}");
+          Globals().initUserDb();
 
           await user?.sendEmailVerification();
           if (user?.emailVerified == true) {

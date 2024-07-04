@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:ffi';
+
+import 'package:app/DocsVerification.dart';
+import 'package:app/Homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,6 +13,93 @@ import 'package:flutter/widgets.dart';
 class Globals {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  Future<void> initUserDb() async {
+    await Globals()
+        .firebaseFirestore
+        .collection("${Globals().auth.currentUser?.email}")
+        .doc(Globals().auth.currentUser?.email)
+        .set({
+      "createdOn": FieldValue.serverTimestamp(),
+      "doc": "",
+      "docUrl": "",
+      "docVerified": false,
+    });
+  }
+
+  Future<dynamic> switchScreens(
+      {required BuildContext context, required Widget screen}) {
+    return Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration:
+            const Duration(milliseconds: 500), // Adjust duration here
+        pageBuilder: (context, animation, secondaryAnimation) => screen,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const curve = Curves.easeOutQuart;
+
+          final opacityTween = Tween(begin: 0.3, end: 1.0);
+          final scaleTween = Tween(begin: 0.3, end: 1.0);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
+
+          return FadeTransition(
+            opacity: opacityTween.animate(curvedAnimation),
+            child: ScaleTransition(
+              scale: scaleTween.animate(curvedAnimation),
+              child: child,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> checkDocVerified({required BuildContext context}) async {
+    try {
+      // Get the current user's email
+      String? email = Globals().auth.currentUser?.email;
+
+      if (email == null) {
+        print("No user is currently signed in.");
+        return;
+      }
+
+      // Reference to the document
+      DocumentReference docRef =
+          FirebaseFirestore.instance.collection(email).doc(email);
+
+      // Fetch the document
+      DocumentSnapshot docSnapshot = await docRef.get();
+
+      if (docSnapshot.exists) {
+        // Cast the data to a Map<String, dynamic>
+        Map<String, dynamic>? data =
+            docSnapshot.data() as Map<String, dynamic>?;
+
+        // Check if the 'docVerified' field exists and its value is true
+        bool isDocVerified = data?['docVerified'] == true;
+
+        if (isDocVerified) {
+          print("The document is verified.");
+          switchScreens(
+              context: context, screen: MyHomePage(title: "homepage"));
+        } else {
+          print(
+              "The document is not verified or 'docVerified' field is missing.");
+              switchScreens(
+              context: context, screen: Docsverification());
+   
+        }
+      } else {
+        print("Document does not exist.");
+      }
+    } catch (e) {
+      print("Error checking 'docVerified': $e");
+    }
+  }
+
   Map authErrors = {
     "admin-restricted-operation":
         "This operation is restricted to administrators only.",
@@ -172,36 +264,6 @@ class Globals {
     "web-storage-unsupported":
         "This browser is not supported or 3rd party cookies and data may be disabled."
   };
-
-  Future<dynamic> switchScreens(
-      {required BuildContext context, required Widget screen}) {
-    return Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration:
-            const Duration(milliseconds: 500), // Adjust duration here
-        pageBuilder: (context, animation, secondaryAnimation) => screen,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const curve = Curves.easeOutQuart;
-
-          final opacityTween = Tween(begin: 0.3, end: 1.0);
-          final scaleTween = Tween(begin: 0.3, end: 1.0);
-          final curvedAnimation = CurvedAnimation(
-            parent: animation,
-            curve: curve,
-          );
-
-          return FadeTransition(
-            opacity: opacityTween.animate(curvedAnimation),
-            child: ScaleTransition(
-              scale: scaleTween.animate(curvedAnimation),
-              child: child,
-            ),
-          );
-        },
-      ),
-    );
-  }
 
   String getMimeType(String? extension) {
     switch (extension!.toLowerCase()) {
