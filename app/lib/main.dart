@@ -33,33 +33,29 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CurrentUserProvider())
       ],
       child: MaterialApp(
-          home:WelcomeScreen()
-          // Docsverification()
-          //  StreamBuilder<User?>(
-          //     stream: Globals().auth.authStateChanges(),
-          //     builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
-          //       try {
-          //         if (snapshot.connectionState == ConnectionState.waiting) {
-          //           return Center(
-          //             child: LoadingAnimationWidget.hexagonDots(
-          //                 color: Colors.green, size: 30),
-          //           );
-          //         } else if (snapshot.hasData &&
-          //             snapshot.data!.emailVerified == true) {
-          //           return MyHomePage(title: "homepage");
-          //         } else if (snapshot.hasData &&
-          //             snapshot.data!.emailVerified) {
-          //           return VerifyEmail(
-          //               email: "${Globals().auth.currentUser?.email}");
-          //         } else {
-          //           return Splashscreen();
-          //         }
-          //       } catch (e) {
-          //         print("Streambuilder error $e");
-          //         throw Exception(e);
-          //       }
-          //     })
-              ),
+          home: StreamBuilder<User?>(
+              stream: Globals().auth.authStateChanges(),
+              builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+                try {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: LoadingAnimationWidget.hexagonDots(
+                          color: Colors.green, size: 30),
+                    );
+                  } else if (snapshot.hasData &&
+                      snapshot.data!.emailVerified == true) {
+                    return MyHomePage(title: "homepage");
+                  } else if (snapshot.hasData && snapshot.data!.emailVerified) {
+                    return VerifyEmail(
+                        email: "${Globals().auth.currentUser?.email}");
+                  } else {
+                    return Splashscreen();
+                  }
+                } catch (e) {
+                  print("Streambuilder error $e");
+                  throw Exception(e);
+                }
+              })),
     );
   }
 }

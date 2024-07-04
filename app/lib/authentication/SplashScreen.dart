@@ -106,7 +106,8 @@ class _SplashscreenState extends State<Splashscreen>
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
         child: FadeTransition(
-          opacity: Tween(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent: splashAnimation, curve: Curves.easeIn)),
+          opacity: Tween(begin: 0.0, end: 1.0).animate(
+              CurvedAnimation(parent: splashAnimation, curve: Curves.easeIn)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,12 +144,11 @@ class _SplashscreenState extends State<Splashscreen>
                   height: MediaQuery.of(context).size.height * 0.4,
                   child: ClipRRect(
                     borderRadius: BorderRadiusDirectional.circular(30),
-                    child: 
-                    
-                    FadeTransition(
-                      opacity:Tween(begin: 0.8,end: 1.0).animate(CurvedAnimation(parent: splashAnimation, curve: Curves.easeIn)) ,
-                      child: Lottie.asset("assets/gif/AnimationLogin.json")
-                    ),
+                    child: FadeTransition(
+                        opacity: Tween(begin: 0.8, end: 1.0).animate(
+                            CurvedAnimation(
+                                parent: splashAnimation, curve: Curves.easeIn)),
+                        child: Lottie.asset("assets/gif/AnimationLogin.json")),
                   )),
               Container(
                 margin: EdgeInsets.only(bottom: 4),
@@ -163,7 +163,7 @@ class _SplashscreenState extends State<Splashscreen>
               ),
               Material(
                 elevation: 5,
-          
+
                 shadowColor: Colors.grey, // This sets the color of the shadow
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
@@ -176,6 +176,11 @@ class _SplashscreenState extends State<Splashscreen>
                         borderRadius: BorderRadiusDirectional.circular(10)),
                     child: TextButton(
                       onPressed: () {
+                        print("pressed");
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => LoginScreen()));
                         Globals().switchScreens(
                             context: context, screen: LoginScreen());
                       },
@@ -198,7 +203,7 @@ class _SplashscreenState extends State<Splashscreen>
                   elevation: 5,
                   shadowColor: Colors.grey, // This sets the color of the shadow
                   borderRadius: BorderRadius.circular(10),
-          
+
                   child: GoogleAuthButton(
                       onPressed: () {
                         Authentication.signInWithGoogle(context: context);
@@ -219,16 +224,12 @@ class _SplashscreenState extends State<Splashscreen>
                 height: 10,
               ),
               Center(
-                child: Container(
-                  // alignment: Alignment.center,
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * 0.25,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadiusDirectional.circular(10)),
-                  child: TextButton(
-                    onPressed: () async {
+                child: GestureDetector(
+                  onTap: () async {
+                    print("pressed");
+                    try {
                       bool connection = await checkInternetConnection(context);
-          
+
                       if (connection) {
                         Globals()
                             .switchScreens(context: context, screen: SignUp());
@@ -240,13 +241,44 @@ class _SplashscreenState extends State<Splashscreen>
                           ),
                         );
                       }
-                    },
-                    child: Text(
-                      "Sign up",
-                      style: GoogleFonts.poppins(
-                          color: Colors.blue.shade300,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                    } catch (e) {
+                      print("Got this error in splashScreen $e");
+                    }
+                  },
+                  child: Container(
+                    // alignment: Alignment.center,
+                    height: 40,
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadiusDirectional.circular(10)),
+                    child: TextButton(
+                      onPressed: () async {
+                        try {
+                          bool connection =
+                              await checkInternetConnection(context);
+
+                          if (connection) {
+                            Globals().switchScreens(
+                                context: context, screen: SignUp());
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('No internet connection'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          print("Got this error in splashScreen $e");
+                        }
+                      },
+                      child: Text(
+                        "Sign up",
+                        style: GoogleFonts.poppins(
+                            color: Colors.blue.shade300,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
