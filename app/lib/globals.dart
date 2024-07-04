@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:app/DocsVerification.dart';
 import 'package:app/Homepage.dart';
+import 'package:app/Welcome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,23 +26,18 @@ class Globals {
       "docVerified": false,
     });
   }
-
-  Future<dynamic> switchScreens(
-      {required BuildContext context, required Widget screen}) {
-    return Navigator.push(
+     void slowSwitchScreens({required BuildContext context, required Widget screen}) {
+    Navigator.push(
       context,
       PageRouteBuilder(
-        transitionDuration:
-            const Duration(milliseconds: 500), // Adjust duration here
+        transitionDuration: Duration(seconds: 1), // Increase duration for a smoother transition
         pageBuilder: (context, animation, secondaryAnimation) => screen,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const curve = Curves.easeOutQuart;
-
-          final opacityTween = Tween(begin: 0.3, end: 1.0);
-          final scaleTween = Tween(begin: 0.3, end: 1.0);
+          final opacityTween = Tween(begin: 0.0, end: 1.0);
+          final scaleTween = Tween(begin: 0.95, end: 1.0); // Slight scale transition for ambient effect
           final curvedAnimation = CurvedAnimation(
             parent: animation,
-            curve: curve,
+            curve: Curves.easeInOut, // Use easeInOut for a smoother transition
           );
 
           return FadeTransition(
@@ -56,19 +52,45 @@ class Globals {
     );
   }
 
-  Future<void> checkDocVerified({required BuildContext context}) async {
+   void switchScreens({required BuildContext context, required Widget screen}) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: Duration(seconds: 400), // Increase duration for a smoother transition
+        pageBuilder: (context, animation, secondaryAnimation) => screen,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final opacityTween = Tween(begin: 0.0, end: 1.0);
+          final scaleTween = Tween(begin: 0.5, end: 1.0); // Slight scale transition for ambient effect
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInOut, // Use easeInOut for a smoother transition
+          );
+
+          return FadeTransition(
+            opacity: opacityTween.animate(curvedAnimation),
+            child: ScaleTransition(
+              scale: scaleTween.animate(curvedAnimation),
+              child: child,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Future checkDocVerified({required BuildContext context}) async {
     try {
       // Get the current user's email
       String? email = Globals().auth.currentUser?.email;
 
-      if (email == null) {
-        print("No user is currently signed in.");
-        return;
-      }
+      // if (email == null) {
+      //   print("No user is currently signed in.");
+      //   return;
+      // }
 
       // Reference to the document
       DocumentReference docRef =
-          FirebaseFirestore.instance.collection(email).doc(email);
+          FirebaseFirestore.instance.collection("$email").doc(email);
 
       // Fetch the document
       DocumentSnapshot docSnapshot = await docRef.get();
@@ -84,7 +106,7 @@ class Globals {
         if (isDocVerified) {
           print("The document is verified.");
           switchScreens(
-              context: context, screen: MyHomePage(title: "homepage"));
+              context: context, screen: WelcomeScreen());
         } else {
           print(
               "The document is not verified or 'docVerified' field is missing.");

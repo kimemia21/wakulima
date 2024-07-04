@@ -85,6 +85,7 @@ flutter:
     - assets/gif/AnimationOne.json
     - assets/gif/AnimationLogin.json
     - assets/gif/AnimationFiles.json
+    - assets/gif/AnimationWelcome.json
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

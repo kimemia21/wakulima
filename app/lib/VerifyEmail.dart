@@ -40,8 +40,7 @@ class _VerifyEmailState extends State<VerifyEmail>
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       Globals().auth.currentUser?.reload();
       if (Globals().auth.currentUser?.emailVerified == true) {
-        Globals().switchScreens(
-            context: context, screen: MyHomePage(title: "Homepage"));
+        Globals().checkDocVerified(context: context);
         timer.cancel();
       }
     });

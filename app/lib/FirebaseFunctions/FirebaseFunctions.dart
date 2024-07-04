@@ -66,8 +66,7 @@ Future<void> signInWithEmailAndPassword({
     // Check if email is verified
     if (Globals().auth.currentUser?.emailVerified == true) {
       // Navigate to home page if email is verified
-      Globals().switchScreens(
-          context: context, screen: MyHomePage(title: "Homepage"));
+      Globals().checkDocVerified(context: context);
     } else {
       // Navigate to VerifyEmail screen if email is not verified
       Globals()
@@ -109,9 +108,10 @@ Future<void> signup({
   try {
     // Start loading
     context.read<CurrentUserProvider>().changeIsLoading();
+    print("in");
 
-    // Delay for 2 seconds (for demonstration or network simulation)
-    await Future.delayed(Duration(seconds: 2));
+    // // Delay for 2 seconds (for demonstration or network simulation)
+    // await Future.delayed(Duration(seconds: 2));
 
     // Create user with email and password
     UserCredential userCredential =
@@ -277,8 +277,7 @@ class Authentication {
 
           await user?.sendEmailVerification();
           if (user?.emailVerified == true) {
-            Globals().switchScreens(
-                context: context, screen: MyHomePage(title: "Homepage"));
+            Globals().checkDocVerified(context: context);
           } else {
             Globals().switchScreens(
                 context: context, screen: VerifyEmail(email: "${user?.email}"));

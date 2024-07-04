@@ -2,6 +2,7 @@ import 'package:app/AppBloc.dart';
 import 'package:app/DocsVerification.dart';
 import 'package:app/Homepage.dart';
 import 'package:app/VerifyEmail.dart';
+import 'package:app/Welcome.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SplashScreen.dart';
 import 'package:app/firebase_options.dart';
@@ -32,8 +33,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CurrentUserProvider())
       ],
       child: MaterialApp(
-          home: Docsverification()
-          
+          home:WelcomeScreen()
+          // Docsverification()
           //  StreamBuilder<User?>(
           //     stream: Globals().auth.authStateChanges(),
           //     builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {

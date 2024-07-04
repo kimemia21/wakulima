@@ -114,9 +114,9 @@ class _DocsverificationState extends State<Docsverification>
           "createdOn": FieldValue.serverTimestamp(),
           "doc": _fileName,
           "docUrl": downloadURL,
-          "isVerified":true,
-          
+          "docVerified": true,
         });
+
         context.read<CurrentUserProvider>().changeIsLoading();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: Duration(seconds: 1),
@@ -125,6 +125,10 @@ class _DocsverificationState extends State<Docsverification>
               "Uplaoded Success",
               style: GoogleFonts.poppins(color: Colors.white),
             )));
+
+        Future.delayed(Duration(seconds: 1)).then((_) {
+          Globals().checkDocVerified(context: context);
+        });
       } catch (e) {
         print("saveDoc error $e");
       }

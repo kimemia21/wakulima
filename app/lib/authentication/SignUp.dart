@@ -272,34 +272,33 @@ class _SignUpState extends State<SignUp> {
                     ),
 
                     GestureDetector(
-                      onTap: (){
-                           if (_formState.currentState!.validate()) {
-                              if (_SignUpPasswordController.text !=
-                                  _confirmController.text) {
-                                CherryToast.warning(
-                                  disableToastAnimation: false,
-                                  animationCurve: Curves.ease,
-                                  animationDuration: Duration(milliseconds: 200),
-                                  title: Text('Password Error',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.bold)),
-                                  action: Text(
-                                    'Make sure the password and confirm password match ',
-                                    style: GoogleFonts.abel(),
-                                  ),
-                                  actionHandler: () {},
-                                  onToastClosed: () {},
-                                ).show(context);
-                              } else {
-                                
-                      
-                                signup(
-                                    context: context,
-                                    email_: _SignemailController.text.trim(),
-                                    password_:
-                                        _SignUpPasswordController.text.trim());
-                              }
-                            }
+                      onTap: () {
+                        print("tapped");
+                        if (_formState.currentState!.validate()) {
+                          if (_SignUpPasswordController.text !=
+                              _confirmController.text) {
+                            CherryToast.warning(
+                              disableToastAnimation: false,
+                              animationCurve: Curves.ease,
+                              animationDuration: Duration(milliseconds: 200),
+                              title: Text('Password Error',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold)),
+                              action: Text(
+                                'Make sure the password and confirm password match ',
+                                style: GoogleFonts.abel(),
+                              ),
+                              actionHandler: () {},
+                              onToastClosed: () {},
+                            ).show(context);
+                          } else {
+                            signup(
+                                context: context,
+                                email_: _SignemailController.text.trim(),
+                                password_:
+                                    _SignUpPasswordController.text.trim());
+                          }
+                        }
                       },
                       child: Container(
                         margin: EdgeInsets.only(bottom: 5),
@@ -311,9 +310,33 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadiusDirectional.circular(10)),
                         child: TextButton(
                           onPressed: () {
-                            
-                      
-                         
+                            print("tapped");
+                            if (_formState.currentState!.validate()) {
+                              if (_SignUpPasswordController.text !=
+                                  _confirmController.text) {
+                                CherryToast.warning(
+                                  disableToastAnimation: false,
+                                  animationCurve: Curves.ease,
+                                  animationDuration:
+                                      Duration(milliseconds: 200),
+                                  title: Text('Password Error',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold)),
+                                  action: Text(
+                                    'Make sure the password and confirm password match ',
+                                    style: GoogleFonts.abel(),
+                                  ),
+                                  actionHandler: () {},
+                                  onToastClosed: () {},
+                                ).show(context);
+                              } else {
+                                signup(
+                                    context: context,
+                                    email_: _SignemailController.text.trim(),
+                                    password_:
+                                        _SignUpPasswordController.text.trim());
+                              }
+                            }
                           },
                           child: context.watch<CurrentUserProvider>().isLoading
                               ? LoadingAnimationWidget.staggeredDotsWave(
