@@ -1,8 +1,18 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:app/AppBloc.dart';
+import 'package:app/globals.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:provider/provider.dart';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class Docsverification extends StatefulWidget {
   const Docsverification({super.key});
@@ -13,21 +23,98 @@ class Docsverification extends StatefulWidget {
 
 class _DocsverificationState extends State<Docsverification>
     with SingleTickerProviderStateMixin {
-  FilePickerResult? _file;
+  String _fileName = "id";
+  double upload_progress = 0.0;
+  // FilePickerResult? _file;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  Future<void> _pickFile() async {
+  @override
+  void initState() {
+    super.initState();
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      Globals()
+          .firebaseFirestore
+          .collection("${Globals().auth.currentUser?.email}")
+          .doc(_fileName)
+          .set({"createdOn": FieldValue.serverTimestamp(), "doc": _fileName});
+    } catch (e) {
+      print("firestore error $e");
+    }
+  }
 
-      if (result != null) {
-        setState(() {
-          _file = result;
-        });
+  Future<String?> uploadDocument() async {
+    String? authUserEmail = Globals().auth.currentUser?.email;
+    // var uuid = Uuid().v4();
+    context.read<CurrentUserProvider>().changeIsLoading();
+
+    try {
+      setState(() {
+        // isuploading = !isuploading;
+      });
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.any);
+      if (result != null && result.files.isNotEmpty) {
+        final PlatformFile file = result.files.first;
+
+        if (file.path != null) {
+          final localFile = File(file.path!);
+          final Uint8List fileBytes = await localFile.readAsBytes();
+          final fileName = result.files.first.name;
+          final fileExtension = file.extension;
+
+          print("fileExtension $fileExtension");
+          print("fileBytes $fileBytes");
+          setState(() {
+            _fileName = fileName;
+          });
+
+          print(fileBytes);
+          if (fileBytes == null || fileExtension == null) {
+            print("File picking failed");
+            return null;
+          }
+
+          final mimeType = Globals().getMimeType(fileExtension);
+
+          final metaData = SettableMetadata(contentType: mimeType);
+
+          UploadTask uploadTask = FirebaseStorage.instance
+              .ref('$authUserEmail/$fileName')
+              .putData(fileBytes, metaData);
+
+          uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+            setState(() {
+              upload_progress = snapshot.bytesTransferred / snapshot.totalBytes;
+            });
+          });
+
+          TaskSnapshot taskSnapshot = await uploadTask;
+          String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+          Globals()
+              .firebaseFirestore
+              .collection("${Globals().auth.currentUser?.email}")
+              .doc(_fileName)
+              .set({
+            "createdOn": FieldValue.serverTimestamp(),
+            "doc": _fileName
+          });
+
+          return downloadURL;
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Please select a file to upload")),
+        );
       }
     } catch (e) {
-      print("pick file  error $e ");
+      print("got this error in uploadDocument function $e");
+    } finally {
+      context.read<CurrentUserProvider>().changeIsLoading();
+      // setState(() {
+      //   isuploading = !isuploading;
+      // });
     }
   }
 
@@ -65,16 +152,10 @@ class _DocsverificationState extends State<Docsverification>
                 "Please select a file you wish to upload and fill out the required information below.\n  Ensure that the file is in an appropriate format and provides a clear and concise title and description. This will help in categorizing and retrieving the file more efficiently in the future.",
                 // style: Theme.of(context).textTheme.bodyText1,
               ),
-              // SizedBox(height: 20),
-              // ElevatedButton(
-              //   onPressed: _pickFile,
-              //   child: Text("Pick a file"),
-              // ),
               SizedBox(height: 10),
-
-              _file != null
+              _fileName != null
                   ? Text(
-                      "Selected File: ${_file!.files.single.name}",
+                      "Selected File: ${_fileName}",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     )
@@ -85,7 +166,6 @@ class _DocsverificationState extends State<Docsverification>
                           fontWeight: FontWeight.bold,
                           color: Colors.black54),
                     ),
-
               SizedBox(height: 10),
               DottedBorder(
                 color: Colors.black54,
@@ -112,7 +192,7 @@ class _DocsverificationState extends State<Docsverification>
                         SizedBox(height: 10),
                         GestureDetector(
                           onTap: () async {
-                            _pickFile;
+                            uploadDocument();
                           },
                           child: Container(
                             padding: EdgeInsets.all(10),
@@ -133,19 +213,16 @@ class _DocsverificationState extends State<Docsverification>
                       ],
                     )),
               ),
-
               SizedBox(height: 20),
-
               SizedBox(height: 20),
-
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_file != null) {
+                    if (_fileName != null) {
                       // Implement the file upload logic here
                       print("Title: ${_titleController.text}");
                       print("Description: ${_descriptionController.text}");
-                      print("File Name: ${_file!.files.single.name}");
+                      print("File Name: ${_fileName}");
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

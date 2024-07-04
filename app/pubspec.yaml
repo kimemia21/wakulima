@@ -53,6 +53,8 @@ dependencies:
   lottie: ^2.1.0
   file_picker: ^8.0.6
   dotted_border: ^2.1.0
+  firebase_storage: ^12.1.0
+  uuid: ^4.4.0
 
 
 dev_dependencies:

@@ -116,9 +116,9 @@ class _SplashscreenState extends State<Splashscreen>
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(bottom: 4, top: 4),
                 child: Text(
-                  "Farming App",
+                  "cmx",
                   style: GoogleFonts.poppins(
-                      color: Colors.green.shade500,
+                      color: Colors.black54,
                       fontSize: 22,
                       fontWeight: FontWeight.w600),
                 ),
