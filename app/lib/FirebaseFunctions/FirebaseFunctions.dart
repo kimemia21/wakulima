@@ -77,18 +77,8 @@ Future<void> signInWithEmailAndPassword({
   } on FirebaseAuthException catch (e) {
     // Map FirebaseAuthException codes to user-friendly messages
     final errorMessage = _getErrorMessage(e.code);
-
-    CherryToast.warning(
-      toastPosition: Position.top,
-      disableToastAnimation: false,
-      animationCurve: Curves.ease,
-      animationDuration: Duration(milliseconds: 500),
-      title: Text('Sign up Error',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
-      action: Text(errorMessage, style: GoogleFonts.abel()),
-      actionHandler: () {},
-      onToastClosed: () {},
-    ).show(context);
+    Globals().warningsAlerts(
+        title: "Login Error", content: errorMessage, context: context);
   } catch (e) {
     print("Sign in with email and password error: $e");
   } finally {
@@ -110,51 +100,38 @@ Future<void> signup({
     context.read<CurrentUserProvider>().changeIsLoading();
     print("in");
 
-    // // Delay for 2 seconds (for demonstration or network simulation)
-    // await Future.delayed(Duration(seconds: 2));
-
-    // Create user with email and password
-    UserCredential userCredential =
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email_,
-      password: password_,
-    );
-
-    // Get the created user
-    User? user = userCredential.user;
-
-    // Send email verification if user is not null
-    if (user != null) {
-      Globals().initUserDb();
-
-      await user.sendEmailVerification();
-
-      // Navigate to the VerifyEmail screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => VerifyEmail(email: email_)),
+    bool connection = await checkInternetConnection(context);
+    if (connection) {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email_,
+        password: password_,
       );
+
+      // Get the created user
+      User? user = userCredential.user;
+
+      // Send email verification if user is not null
+      if (user != null) {
+        Globals().initUserDb();
+
+        await user.sendEmailVerification();
+
+        // Navigate to the VerifyEmail screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => VerifyEmail(email: email_)),
+        );
+      }
+    } else {
+      Globals().nointernet(context: context);
     }
   } on FirebaseAuthException catch (e) {
     // Handle Firebase-specific errors
     String _error = _getErrorMessage(e.code);
-    CherryToast.warning(
-      disableToastAnimation: false,
-      animationCurve: Curves.ease,
-      animationDuration: Duration(milliseconds: 200),
-      title: Text(
-        'Email Error',
-        style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-      ),
-      action: Text(
-        _error,
-        style: GoogleFonts.abel(),
-      ),
-      actionHandler: () {},
-      onToastClosed: () {},
-    ).show(context);
+    Globals().warningsAlerts(
+        title: "Signup Error", content: _error, context: context);
   } catch (e) {
-    // Handle any other errors
     print("Signup error $e");
   } finally {
     // Stop loading
@@ -167,35 +144,15 @@ Future<void> resendLink({required BuildContext context}) async {
     context.read<CurrentUserProvider>().changeIsLoading();
     await Future.delayed(Duration(seconds: 2));
     await user?.sendEmailVerification();
-
-    CherryToast.success(
-      disableToastAnimation: false,
-      animationCurve: Curves.ease,
-      animationDuration: Duration(milliseconds: 500),
-      title: Text('Verification link sent',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-      action: Text(
-        "verification link sent to  ${FirebaseAuth.instance.currentUser?.email}",
-        style: GoogleFonts.abel(fontWeight: FontWeight.w400),
-      ),
-      actionHandler: () {},
-      onToastClosed: () {},
-    ).show(context);
+    Globals().successAlerts(
+        title: "Verification Link",
+        content:
+            "verification link sent to  ${FirebaseAuth.instance.currentUser?.email}",
+        context: context);
   } on FirebaseAuthException catch (e) {
     String _error = _getErrorMessage(e.code);
-    CherryToast.warning(
-      disableToastAnimation: false,
-      animationCurve: Curves.ease,
-      animationDuration: Duration(milliseconds: 200),
-      title: Text('Verification Error',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
-      action: Text(
-        _error,
-        style: GoogleFonts.abel(),
-      ),
-      actionHandler: () {},
-      onToastClosed: () {},
-    ).show(context);
+    Globals().warningsAlerts(
+        title: "Verification", content: _error, context: context);
   } catch (e) {
     print("Resend Link Error $e");
   } finally {
@@ -275,7 +232,7 @@ class Authentication {
           user = userCredential.user;
           Globals().initUserDb();
 
-          await user?.sendEmailVerification();
+          // await user?.sendEmailVerification();
           if (user?.emailVerified == true) {
             Globals().checkDocVerified(context: context);
           } else {

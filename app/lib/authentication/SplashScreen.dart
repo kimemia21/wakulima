@@ -161,37 +161,57 @@ class _SplashscreenState extends State<Splashscreen>
               SizedBox(
                 height: 10,
               ),
-              Material(
-                elevation: 5,
+              GestureDetector(
+                onTap: () async {
+                  bool connection = await checkInternetConnection(context);
 
-                shadowColor: Colors.grey, // This sets the color of the shadow
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                    // margin: EdgeInsets.only(bottom: 10),
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadiusDirectional.circular(10)),
-                    child: TextButton(
-                      onPressed: () {
-                        print("pressed");
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => LoginScreen()));
-                        Globals().switchScreens(
-                            context: context, screen: LoginScreen());
-                      },
-                      child: Text(
-                        "Email",
-                        style: GoogleFonts.poppins(
-                            color: Colors.black54,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )),
+                  print("this is the internet connection status $connection");
+
+                  if (connection) {
+                    Globals()
+                        .switchScreens(context: context, screen: LoginScreen());
+                  } else {
+                    Globals().nointernet(context: context);
+                  }
+                },
+                child: Material(
+                  elevation: 5,
+
+                  shadowColor: Colors.grey, // This sets the color of the shadow
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                      // margin: EdgeInsets.only(bottom: 10),
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadiusDirectional.circular(10)),
+                      child: TextButton(
+                        onPressed: () async {
+                          print("pressed");
+                          bool connection =
+                              await checkInternetConnection(context);
+
+                          print(
+                              "this is the internet connection status $connection");
+
+                          if (connection) {
+                            Globals().switchScreens(
+                                context: context, screen: LoginScreen());
+                          } else {
+                            Globals().nointernet(context: context);
+                          }
+                        },
+                        child: Text(
+                          "Email",
+                          style: GoogleFonts.poppins(
+                              color: Colors.black54,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -205,7 +225,7 @@ class _SplashscreenState extends State<Splashscreen>
                   borderRadius: BorderRadius.circular(10),
 
                   child: GoogleAuthButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Authentication.signInWithGoogle(context: context);
                       },
                       themeMode: themeMode,
@@ -234,12 +254,7 @@ class _SplashscreenState extends State<Splashscreen>
                         Globals()
                             .switchScreens(context: context, screen: SignUp());
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('No internet connection'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
+                        Globals().nointernet(context: context);
                       }
                     } catch (e) {
                       print("Got this error in splashScreen $e");
@@ -257,16 +272,12 @@ class _SplashscreenState extends State<Splashscreen>
                           bool connection =
                               await checkInternetConnection(context);
 
-                          if (connection) {
+                          if (connection != null && connection) {
+                            print("connection is $connection");
                             Globals().switchScreens(
                                 context: context, screen: SignUp());
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('No internet connection'),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
+                            Globals().nointernet(context: context);
                           }
                         } catch (e) {
                           print("Got this error in splashScreen $e");

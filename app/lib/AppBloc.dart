@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -47,21 +48,30 @@ class CurrentUserProvider extends ChangeNotifier {
 }
 
 Future<bool> checkInternetConnection(BuildContext context) async {
-  final url = "https://i.gnovation.tech:3000/listUsers";
-  try {
-    final client = HttpClient()
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-    final ioClient = IOClient(client);
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.none) {
+    // No network connection
+    return false;
+  }
 
-    final response = await ioClient.get(Uri.parse(url));
+  final url = "https://www.google.com"; // Use a reliable URL
+
+  try {
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    );
     if (response.statusCode == 200) {
-      Provider.of<CurrentUserProvider>(context, listen: false).changeInternetConnection(true);
-      return Provider.of<CurrentUserProvider>(context, listen: false).internetConnected;
+      return true;
     } else {
-      Provider.of<CurrentUserProvider>(context, listen: false).changeInternetConnection(false);
-      return Provider.of<CurrentUserProvider>(context, listen: false).internetConnected;
+      return false;
     }
   } catch (e) {
-    throw Exception("got this error in checkInternetConnection function $e");
+    // Network request failed, likely due to no internet
+    return false;
   }
 }

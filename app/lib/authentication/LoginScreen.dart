@@ -335,15 +335,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius:
                                   BorderRadiusDirectional.circular(10)),
                           child: TextButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formState.currentState!.validate()) {
-                                print(
-                                    "email is ${_emailController.text.trim()} ${_passwordController.text.trim()}");
-
-                                signInWithEmailAndPassword(
-                                    context: context,
-                                    email: _emailController.text.trim(),
-                                    password: _passwordController.text.trim());
+                                bool connection =
+                                    await checkInternetConnection(context);
+                                if (connection) {
+                                  signInWithEmailAndPassword(
+                                      context: context,
+                                      email: _emailController.text.trim(),
+                                      password:
+                                          _passwordController.text.trim());
+                                } else {
+                                  Globals().nointernet(context: context);
+                                }
                               }
                             },
                             child:
@@ -364,10 +368,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 15),
                     child: GoogleAuthButton(
-                        onPressed: () {
-                          try {
+                        onPressed: () async {
+                          bool connection =
+                              await checkInternetConnection(context);
+                          if (connection) {
                             Authentication.signInWithGoogle(context: context);
-                          } catch (e) {}
+                          } else {
+                            Globals().nointernet(context: context);
+                          }
                         },
                         themeMode: themeMode,
                         isLoading: isLoading,

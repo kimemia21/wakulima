@@ -1,15 +1,16 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:app/DocsVerification.dart';
 import 'package:app/Homepage.dart';
 import 'package:app/Welcome.dart';
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Globals {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -64,7 +65,8 @@ class Globals {
           context,
           PageRouteBuilder(
             transitionDuration: Duration(
-                milliseconds: 600), // Increase duration for a smoother transition
+                milliseconds:
+                    600), // Increase duration for a smoother transition
             pageBuilder: (context, animation, secondaryAnimation) => screen,
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
@@ -94,7 +96,6 @@ class Globals {
 
   Future checkDocVerified({required BuildContext context}) async {
     try {
-  
       String? email = Globals().auth.currentUser?.email;
 
       DocumentReference docRef =
@@ -125,6 +126,50 @@ class Globals {
     } catch (e) {
       print("Error checking 'docVerified': $e");
     }
+  }
+
+  void nointernet({required BuildContext context}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('No internet connection'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void warningsAlerts({required String title, required String content, required BuildContext context}){
+     CherryToast.warning(
+      disableToastAnimation: false,
+      animationCurve: Curves.ease,
+      animationDuration: Duration(milliseconds: 200),
+      title: Text(
+        '$title',
+        style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+      ),
+      action: Text(
+        content,
+        style: GoogleFonts.abel(),
+      ),
+      actionHandler: () {},
+      onToastClosed: () {},
+    ).show(context);
+  }
+
+  void successAlerts({required String title, required String content, required BuildContext context}){
+     CherryToast.success(
+      disableToastAnimation: false,
+      animationCurve: Curves.ease,
+      animationDuration: Duration(milliseconds: 500),
+      title: Text('$title',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+      action: Text(
+        "$content",
+        style: GoogleFonts.abel(fontWeight: FontWeight.w400),
+      ),
+      actionHandler: () {},
+      onToastClosed: () {},
+    ).show(context);
+
   }
 
   Map authErrors = {
