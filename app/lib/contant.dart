@@ -54,3 +54,11 @@ List shoes = [
   "https://www.heritagefoods.in/blog/wp-content/uploads/2020/12/shutterstock_539045662.jpg",
   "https://imageio.forbes.com/specials-images/imageserve/607c03be4b5b7c7fe822e494/Coal-mining---coal-miner-in-the-man-hands-of-coal-background--Picture-idea-about-coal/0x0.jpg?format=jpg&crop=1657,931,x0,y0,safe&width=960",
 ];
+
+
+List Agriculture = [
+  "https://www.packtek.in/wp-content/uploads/2023/02/Tea-Packaging-1.jpg",
+  "https://pictures-kenya.jijistatic.com/6341508__620x1103.jpg",
+  "https://www.teahong.com/wp-content/uploads/2017/08/standard-packings-re4.jpg",
+  "https://dcassetcdn.com/design_img/2780703/153037/153037_15261472_2780703_f3a1275b_image.jpg",
+];

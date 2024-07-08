@@ -13,6 +13,7 @@ class CurrentUserProvider extends ChangeNotifier {
   String currentUser = "${FirebaseAuth.instance.currentUser?.email}";
   bool _isLoading = false;
   bool _internetConnected = false;
+  
 
   bool get isLoading => _isLoading;
   bool get internetConnected => _internetConnected;

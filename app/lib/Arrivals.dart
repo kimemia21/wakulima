@@ -1,4 +1,3 @@
-
 import 'package:app/contant.dart';
 import 'package:app/globals.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -54,7 +53,8 @@ class _ArrivalsState extends State<Arrivals> {
             margin: EdgeInsets.all(AppHeight(context, 0.01)),
             child: Text(
               "New Commodities",
-              style: GoogleFonts.brunoAce(
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
                   textStyle: TextStyle(fontSize: AppHeight(context, 0.02))),
             ),
           ),
@@ -65,9 +65,7 @@ class _ArrivalsState extends State<Arrivals> {
                 itemCount: shoes.length,
                 itemBuilder: (context, index, realindex) {
                   final urlImage = shoes[index];
-                  return Container(
-                      width: AppWidth(context, 1),
-                      child: buildImage(context, urlImage));
+                  return Container(child: buildImage(context, urlImage));
                 },
                 options: CarouselOptions(
                     onPageChanged: (index, reason) =>
@@ -91,55 +89,62 @@ Widget buildImage(
   String urlImage,
 ) {
   return Container(
+    width: AppWidth(context, 0.7),
     margin: EdgeInsets.symmetric(
         horizontal: AppWidth(context, 0.005),
-        vertical: AppWidth(context, 0.005)),
+        vertical: AppWidth(context, 0.005)
+        ),
     decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.white54,
         borderRadius: BorderRadius.circular(AppHeight(context, 0.02))),
     child: Container(
       padding: EdgeInsets.all(AppWidth(context, 0.02)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
-        
         children: [
           Container(
-            margin: EdgeInsets.only(left:AppWidth(context, 0.02 )),
+            margin: EdgeInsets.only(left: AppWidth(context, 0.02)),
             padding: EdgeInsets.only(top: AppHeight(context, 0.02)),
-            width: AppWidth(context, 0.37),
+            // width: AppWidth(context, 0.37),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  child: Text("Best Choice",style: GoogleFonts.brunoAce(textStyle: TextStyle(
-                    fontSize: AppWidth(context, 0.04),
-                    color: Colors.blue[300],
-                    
-                    
-                   )),),
+                  child: Text(
+                    "Best Choice",
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                      fontSize: AppWidth(context, 0.04),
+                      color: Colors.blue[300],
+                    )),
+                  ),
                 ),
                 Container(
-                  child: Text("Nike Air Jordan 4",style: GoogleFonts.abel(textStyle: TextStyle(
-                    fontSize: AppWidth(context, 0.05),
-                    color: Colors.black,
-                    
-                    
-                   )),),
+                  child: Text(
+                    "Nike Air Jordan 4",
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                    )),
+                  ),
                 ),
-                 Container(
-                  child: Text("\$750",style: GoogleFonts.abel(textStyle: TextStyle(
-                    fontSize: AppWidth(context, 0.04),
-                    color: Colors.black,
-                    
-                    
-                   )),),
+                Container(
+                  child: Text(
+                    "\$750",
+                    style: GoogleFonts.abel(
+                        textStyle: TextStyle(
+                      fontSize: AppWidth(context, 0.04),
+                      color: Colors.black,
+                    )),
+                  ),
                 ),
               ],
             ),
           ),
-          
-         Globals().imagesEdges(context: context, image: urlImage,height: 150.0,width: 200.0)
+          Globals().imagesEdges(
+              context: context, image: urlImage, height: 150.0, width: 120.0)
         ],
       ),
     ),

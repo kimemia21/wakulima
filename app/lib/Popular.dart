@@ -42,14 +42,14 @@ Widget popular(context) {
                  
                   Container(
                     margin: EdgeInsets.symmetric(
-                        vertical: AppHeight(context, 0.002),
-                        horizontal: AppHeight(context, 0.005)),
+                        vertical: 2,
+                        horizontal: 5),
                     child: Text(
                       "Best Seller",
-                      style: GoogleFonts.brunoAce(
+                      style: GoogleFonts.poppins(
                           textStyle: TextStyle(
-                              fontSize: AppWidth(context, 0.04),
-                              color: const Color.fromARGB(255, 153, 194, 228))),
+                              fontSize:13,
+                              color:Colors.blue.shade400)),
                     ),
                   ),
                   Container(
@@ -57,7 +57,7 @@ Widget popular(context) {
                         vertical: AppHeight(context, 0.002),
                         horizontal: AppHeight(context, 0.005)),
                     child: Text(
-                      "Nike Air Jordan 4",
+                      "Item$Index ",
                       style: GoogleFonts.brunoAce(
                           textStyle: TextStyle(
                               fontSize: AppWidth(context, 0.045),
@@ -66,36 +66,37 @@ Widget popular(context) {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(
-                        vertical: AppHeight(context, 0.002),
-                        horizontal: AppHeight(context, 0.005)),
+                        vertical:4,
+                        horizontal:4),
                     child: Text(
-                      "\$450",
-                      style: GoogleFonts.brunoAce(
+                      " Price \$450",
+                      style: GoogleFonts.poppins(
                           textStyle: TextStyle(
-                              fontSize: AppWidth(context, 0.04),
+                              fontSize:13,
                               color: Colors.black)),
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                           alignment: Alignment.center,
-                          height: AppHeight(context, 0.06),
-                          width: AppWidth(context, 0.12),
+                          margin: EdgeInsets.all(3),
+                          height: 40,
+                          width: 40,
                           decoration: BoxDecoration(
-                              color: Colors.blue[300],
+                              color: Colors.grey[600],
                               borderRadius: BorderRadius.only(
                                   topLeft:
-                                      Radius.circular(AppWidth(context, 0.03)),
+                                      Radius.circular(10),
                                   bottomLeft:
-                                      Radius.circular(AppWidth(context, 0.03)),
+                                      Radius.circular(10),
                                   bottomRight: Radius.circular(
-                                      AppWidth(context, 0.03)))),
+                                     10))),
                           child: Icon(
-                            CupertinoIcons.plus,
+                            CupertinoIcons.shopping_cart,
                             color: Colors.white,
-                            size: AppHeight(context, 0.03),
+                            size:20,
                           )),
                     ],
                   )
