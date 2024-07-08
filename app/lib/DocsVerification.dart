@@ -162,7 +162,7 @@ class _DocsverificationState extends State<Docsverification>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Upload Verification Document",
+                "Upload Seller License",
                 style: GoogleFonts.poppins(
                     fontSize: 16, fontWeight: FontWeight.w400),
                 // style: Theme.of(context).textTheme.headline5,
@@ -170,7 +170,7 @@ class _DocsverificationState extends State<Docsverification>
               SizedBox(height: 10),
               Text(
                 // textAlign: TextAlign.center,
-                "Please select a file you wish to upload.\nEnsure that the file is in an appropriate format and provides a clear and concise information. This will help in categorizing and retrieving the file more efficiently in the future.",
+                "Please select a license file you wish to upload.\nEnsure that the file is in an appropriate format and provides a clear and concise information.",
                 // style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(height: 10),

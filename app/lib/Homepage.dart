@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return PopScope(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.grey.shade200,
+            backgroundColor: Colors.white,
             leading: Icon(Icons.more_vert_outlined),
             actions: [
               IconButton(
@@ -72,14 +72,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     FirebaseAuth.instance.signOut();
                     Globals().switchScreens(context: context, screen: LoginScreen());
                   },
-                  icon: Icon(Icons.settings))
+                  icon: Icon(Icons.logout))
             ],
             centerTitle: true,
             title: Text(
-              "${Globals().auth.currentUser?.emailVerified}",
+              "CXT",
               style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                   color: Colors.black54),
             ),
           ),

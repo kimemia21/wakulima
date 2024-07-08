@@ -1,4 +1,6 @@
+import 'package:app/Homepage.dart';
 import 'package:app/contant.dart';
+import 'package:app/globals.dart';
 import 'package:app/model.dart';
 import 'package:flutter/material.dart';
 import 'package:clippy_flutter/paralellogram.dart';
@@ -56,6 +58,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+  
       backgroundColor: backgoundColor,
       body: Stack(
         children: [
@@ -72,9 +75,9 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                         tag: champion.name.toUpperCase(),
                         child: Image.network(
                           champion.imageUrl,
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.cover,
                           width: double.infinity,
-                          height: MediaQuery.of(context).size.height*0.5,
+                          height: MediaQuery.of(context).size.height * 0.45,
                         ),
                       ),
                       AnimatedOpacity(
@@ -86,10 +89,11 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             gradient: RadialGradient(
                               colors: [
-                                backgoundColor.withOpacity(0.0),
-                                backgoundColor.withOpacity(0.0),
-                                backgoundColor.withOpacity(0.0),
-                                backgoundColor,
+                                imageOpacity.withOpacity(0.0),
+                                imageOpacity.withOpacity(0.0),
+                                imageOpacity.withOpacity(0.0),
+                                imageOpacity.withOpacity(0.0),
+                                // imageOpacity,
                               ],
                             ),
                           ),
@@ -105,7 +109,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                             padding: EdgeInsets.only(
                                 left: 15, right: 15, bottom: 20),
                             width: double.infinity,
-                            height: 320,
+                            height:MediaQuery.of(context).size.height*0.4,
                             child: Stack(
                               children: [
                                 AnimatedBorder(animation: animation),
@@ -129,10 +133,10 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Image.asset(
-                                                          "images/role/${champion.role.toString().split(".")[1].toLowerCase()}.png",
-                                                          width: 40,
-                                                          height: 40),
+                                                      // Image.asset(
+                                                      //     "images/role/${champion.role.toString().split(".")[1].toLowerCase()}.png",
+                                                      //     width: 40,
+                                                      //     height: 40),
                                                       SizedBox(
                                                         height: 20,
                                                       ),
@@ -337,11 +341,11 @@ class CustomBackButton extends StatelessWidget {
       height: 40,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Colors.grey[100]?.withOpacity(0.3), shape: BoxShape.circle),
+          color: Colors.grey[300]?.withOpacity(0.3), shape: BoxShape.circle),
       child: InkWell(
         child: Icon(
           Icons.arrow_back_ios,
-          color: Colors.white,
+          color: Colors.black54,
         ),
         onTap: () {
           Navigator.pop(context);
