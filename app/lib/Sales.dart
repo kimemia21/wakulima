@@ -1,3 +1,6 @@
+import 'package:app/Arrivals.dart';
+import 'package:app/Popular.dart';
+import 'package:app/TobBar.dart';
 import 'package:app/detail_view.dart';
 import 'package:app/model.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +23,11 @@ class _SalesState extends State<Sales> {
     final champions = championsMap.values.toList();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            TopBar(),
             // Container(
             //   width: double.infinity,
             //   height: 70,
@@ -35,36 +40,38 @@ class _SalesState extends State<Sales> {
             //     )),
             //   ),
             // ),
-            Expanded(
-              child: Container(
-                child: VerticalCardPager(
-                  textStyle: GoogleFonts.poppins(color: Colors.white),
-                  titles: champions.map((e) => e.name.toLowerCase()).toList(),
-                  images: champions
-                      .map((e) => Hero(
-                            tag: e.name.toUpperCase(),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: Image.network(
-                                e.imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onPageChanged: (page) {},
-                  onSelectedItem: (index) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailView(
-                                champion: champions[index],
-                              )),
-                    );
-                  },
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: Container(
+            //     child: VerticalCardPager(
+            //       textStyle: GoogleFonts.poppins(color: Colors.white),
+            //       titles: champions.map((e) => e.name.toLowerCase()).toList(),
+            //       images: champions
+            //           .map((e) => Hero(
+            //                 tag: e.name.toUpperCase(),
+            //                 child: ClipRRect(
+            //                   borderRadius: BorderRadius.circular(20.0),
+            //                   child: Image.network(
+            //                     e.imageUrl,
+            //                     fit: BoxFit.cover,
+            //                   ),
+            //                 ),
+            //               ))
+            //           .toList(),
+            //       onPageChanged: (page) {},
+            //       onSelectedItem: (index) {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => DetailView(
+            //                     champion: champions[index],
+            //                   )),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
+            popular(context),
+            Arrivals()
           ],
         ),
       ),

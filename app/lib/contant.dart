@@ -37,3 +37,20 @@ final textTheme = TextTheme(
       color: Colors.black54,
       letterSpacing: 1.0),
 );
+
+AppWidth(context, size) {
+  return MediaQuery.of(context).size.width * size;
+}
+
+AppHeight(context, size) {
+  return MediaQuery.of(context).size.height * size;
+}
+
+List shoes = [
+  "https://www.greenlife.co.ke/wp-content/uploads/2022/04/Tea-Picking.jpg",
+  "https://borgenproject.org/wp-content/uploads/5367333294_11355b10a6_c.jpg",
+  "https://lh3.googleusercontent.com/ePwpK6fEaE3sYD0EZW02s6jICcS-o0nbgSStVHewRSRksEE8-bG_6utTlcbpqvJQlZqVa1eEH_YhvBuQ6UTYEEn80FV-ihlEejj_pk5xLinYAg=s1500",
+  "https://i.shgcdn.com/19200e5f-1079-4858-b5df-30b3a9d99ae5/-/format/auto/-/preview/3000x3000/-/quality/lighter/",
+  "https://www.heritagefoods.in/blog/wp-content/uploads/2020/12/shutterstock_539045662.jpg",
+  "https://imageio.forbes.com/specials-images/imageserve/607c03be4b5b7c7fe822e494/Coal-mining---coal-miner-in-the-man-hands-of-coal-background--Picture-idea-about-coal/0x0.jpg?format=jpg&crop=1657,931,x0,y0,safe&width=960",
+];

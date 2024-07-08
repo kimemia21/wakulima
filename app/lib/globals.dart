@@ -13,6 +13,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Globals {
+  double raduis = 20.0;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   Future<void> initUserDb() async {
@@ -137,8 +138,11 @@ class Globals {
     );
   }
 
-  void warningsAlerts({required String title, required String content, required BuildContext context}){
-     CherryToast.warning(
+  void warningsAlerts(
+      {required String title,
+      required String content,
+      required BuildContext context}) {
+    CherryToast.warning(
       disableToastAnimation: false,
       animationCurve: Curves.ease,
       animationDuration: Duration(milliseconds: 200),
@@ -155,8 +159,11 @@ class Globals {
     ).show(context);
   }
 
-  void successAlerts({required String title, required String content, required BuildContext context}){
-     CherryToast.success(
+  void successAlerts(
+      {required String title,
+      required String content,
+      required BuildContext context}) {
+    CherryToast.success(
       disableToastAnimation: false,
       animationCurve: Curves.ease,
       animationDuration: Duration(milliseconds: 500),
@@ -169,7 +176,20 @@ class Globals {
       actionHandler: () {},
       onToastClosed: () {},
     ).show(context);
+  }
 
+  Widget imagesEdges({required BuildContext context, required String image, required height, required double width}) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(raduis),
+        image: DecorationImage(
+          image: NetworkImage(image),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 
   Map authErrors = {

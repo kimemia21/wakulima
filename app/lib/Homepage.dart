@@ -10,6 +10,7 @@ import 'package:app/authentication/SignUp.dart';
 import 'package:app/globals.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -63,22 +64,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return PopScope(
       child: Scaffold(
+        backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            leading: Icon(Icons.more_vert_outlined),
+            leading: Icon(CupertinoIcons.person),
             actions: [
               IconButton(
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                     Globals().switchScreens(context: context, screen: LoginScreen());
                   },
-                  icon: Icon(Icons.logout))
+                  icon: Icon(CupertinoIcons.cart))
             ],
             centerTitle: true,
             title: Text(
               "CXT",
-              style: GoogleFonts.poppins(
-                  fontSize: 16,
+              style: GoogleFonts.brunoAce(
+                letterSpacing: 1,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: Colors.black54),
             ),
@@ -106,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
             letIndexChange: (index) => true,
           ),
           body: Screens[_page]
+          
       
           //  Container(
           //   color: Colors.red,
