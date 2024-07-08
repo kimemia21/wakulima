@@ -1,25 +1,26 @@
+import 'package:app/AppBloc.dart';
 import 'package:app/contant.dart';
 import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-Widget popular(context) {
-;
+Widget popular(BuildContext context) {
+  ;
   return Container(
       decoration: BoxDecoration(
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(AppWidth(context, 0.04))),
       margin: EdgeInsets.symmetric(
-          
           horizontal: AppWidth(
-            context,
-            0.02,
-          )),
+        context,
+        0.02,
+      )),
       height: AppHeight(context, 0.371),
       width: AppWidth(context, 1),
       child: ListView.builder(
-          itemCount: shoes.length,
+          itemCount: context.watch<CurrentUserProvider>().list.length,
           physics: BouncingScrollPhysics(
               parent: ScrollPhysics(),
               decelerationRate: ScrollDecelerationRate.normal),
@@ -38,18 +39,18 @@ Widget popular(context) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Globals().imagesEdges(context: context,image:shoes[Index],height: 150.0, width: 150.0 ),
-                 
+                  Globals().imagesEdges(
+                      context: context,
+                      image: context.watch<CurrentUserProvider>().list[Index],
+                      height: 150.0,
+                      width: 150.0),
                   Container(
-                    margin: EdgeInsets.symmetric(
-                        vertical: 2,
-                        horizontal: 5),
+                    margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                     child: Text(
                       "Best Seller",
                       style: GoogleFonts.poppins(
                           textStyle: TextStyle(
-                              fontSize:13,
-                              color:Colors.blue.shade400)),
+                              fontSize: 13, color: Colors.blue.shade400)),
                     ),
                   ),
                   Container(
@@ -65,15 +66,12 @@ Widget popular(context) {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(
-                        vertical:4,
-                        horizontal:4),
+                    margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                     child: Text(
                       " Price \$450",
                       style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              fontSize:13,
-                              color: Colors.black)),
+                          textStyle:
+                              TextStyle(fontSize: 13, color: Colors.black)),
                     ),
                   ),
                   Row(
@@ -87,16 +85,13 @@ Widget popular(context) {
                           decoration: BoxDecoration(
                               color: Colors.grey[600],
                               borderRadius: BorderRadius.only(
-                                  topLeft:
-                                      Radius.circular(10),
-                                  bottomLeft:
-                                      Radius.circular(10),
-                                  bottomRight: Radius.circular(
-                                     10))),
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10))),
                           child: Icon(
                             CupertinoIcons.shopping_cart,
                             color: Colors.white,
-                            size:20,
+                            size: 20,
                           )),
                     ],
                   )

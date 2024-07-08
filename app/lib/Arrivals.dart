@@ -1,9 +1,11 @@
+import 'package:app/AppBloc.dart';
 import 'package:app/contant.dart';
 import 'package:app/globals.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Arrivals extends StatefulWidget {
@@ -35,7 +37,7 @@ class _ArrivalsState extends State<Arrivals> {
                     dotHeight: MediaQuery.of(context).size.height * 0.0039,
                     activeDotColor: Colors.black),
                 activeIndex: activeIndex,
-                count: shoes.length),
+                count: context.watch<CurrentUserProvider>().list.length),
           ],
         ),
       );
@@ -62,9 +64,9 @@ class _ArrivalsState extends State<Arrivals> {
             height: AppHeight(context, 0.2),
             width: AppWidth(context, 1),
             child: CarouselSlider.builder(
-                itemCount: shoes.length,
+                itemCount:  context.watch<CurrentUserProvider>().list.length,
                 itemBuilder: (context, index, realindex) {
-                  final urlImage = shoes[index];
+                  final urlImage =  context.watch<CurrentUserProvider>().list[index];
                   return Container(child: buildImage(context, urlImage));
                 },
                 options: CarouselOptions(

@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:app/contant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,10 +14,12 @@ class CurrentUserProvider extends ChangeNotifier {
   String currentUser = "${FirebaseAuth.instance.currentUser?.email}";
   bool _isLoading = false;
   bool _internetConnected = false;
-  
+
+  List _list = all;
 
   bool get isLoading => _isLoading;
   bool get internetConnected => _internetConnected;
+  List get list => _list;
 
   int _newMessages = 0;
 
@@ -44,6 +47,12 @@ class CurrentUserProvider extends ChangeNotifier {
     _internetConnected = internet;
     print(
         "Internet connection status changed to: $_internetConnected"); // Debug print
+    notifyListeners();
+  }
+
+  void changeItems(List list) {
+    _list = list;
+    print("List changed to : $_list"); // Debug print
     notifyListeners();
   }
 }

@@ -46,7 +46,7 @@ AppHeight(context, size) {
   return MediaQuery.of(context).size.height * size;
 }
 
-List shoes = [
+List all = [
   "https://www.greenlife.co.ke/wp-content/uploads/2022/04/Tea-Picking.jpg",
   "https://borgenproject.org/wp-content/uploads/5367333294_11355b10a6_c.jpg",
   "https://lh3.googleusercontent.com/ePwpK6fEaE3sYD0EZW02s6jICcS-o0nbgSStVHewRSRksEE8-bG_6utTlcbpqvJQlZqVa1eEH_YhvBuQ6UTYEEn80FV-ihlEejj_pk5xLinYAg=s1500",
@@ -55,10 +55,14 @@ List shoes = [
   "https://imageio.forbes.com/specials-images/imageserve/607c03be4b5b7c7fe822e494/Coal-mining---coal-miner-in-the-man-hands-of-coal-background--Picture-idea-about-coal/0x0.jpg?format=jpg&crop=1657,931,x0,y0,safe&width=960",
 ];
 
-
 List Agriculture = [
   "https://www.packtek.in/wp-content/uploads/2023/02/Tea-Packaging-1.jpg",
   "https://pictures-kenya.jijistatic.com/6341508__620x1103.jpg",
   "https://www.teahong.com/wp-content/uploads/2017/08/standard-packings-re4.jpg",
   "https://dcassetcdn.com/design_img/2780703/153037/153037_15261472_2780703_f3a1275b_image.jpg",
+];
+List mining = [
+  "https://www.beaeka.com/wp-content/uploads/2023/07/9P1A6735-768x512.jpg",
+  "https://dailynews.co.tz/wp-content/uploads/2024/06/55d4c3cf874886dcf726ba6ea5bfe756.jpeg",
+  "https://www.jumbosack.com/wp-content/uploads/2023/08/mining-industry-bulk-bags-with-dirt.webp",
 ];
