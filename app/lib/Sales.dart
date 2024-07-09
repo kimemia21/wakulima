@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app/Arrivals.dart';
 import 'package:app/Popular.dart';
 import 'package:app/TobBar.dart';
@@ -18,6 +20,35 @@ class Sales extends StatefulWidget {
 }
 
 class _SalesState extends State<Sales> {
+  final List<String> items =
+      List<String>.generate(20, (index) => "Item $index");
+  List<Map> Categories = [
+    {
+      "name": "Coal",
+      "imageUrl":
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Charcoal_8.jpg/1200px-Charcoal_8.jpg",
+      "onPress": MaterialPageRoute(builder: (context) => TopBar()),
+    },
+    {
+      "name": "Coal",
+      "imageUrl":
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Charcoal_8.jpg/1200px-Charcoal_8.jpg",
+      "onPress": MaterialPageRoute(builder: (context) => TopBar()),
+    },
+    {
+      "name": "Coal",
+      "imageUrl":
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Charcoal_8.jpg/1200px-Charcoal_8.jpg",
+      "onPress": MaterialPageRoute(builder: (context) => TopBar()),
+    },
+    {
+      "name": "Coal",
+      "imageUrl":
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Charcoal_8.jpg/1200px-Charcoal_8.jpg",
+      "onPress": MaterialPageRoute(builder: (context) => TopBar()),
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     // final champions = championsMap.values.toList();
@@ -74,7 +105,22 @@ class _SalesState extends State<Sales> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadiusDirectional.circular(10),
                       color: Colors.grey[300]),
-                  child: Text("Hello World"),
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, // Number of columns
+                      crossAxisSpacing: 4.0, // Spacing between columns
+                      mainAxisSpacing: 4.0, // Spacing between rows
+                    ),
+                    itemCount: Categories.length,
+                    itemBuilder: (context, index) {
+                      return CircleAvatar(
+                        backgroundColor: Colors.white,
+                        backgroundImage: NetworkImage(
+                          scale: 1.0,
+                          Categories[index]["imageUrl"])
+                      );
+                    },
+                  ),
                 ))
           ],
         ),
