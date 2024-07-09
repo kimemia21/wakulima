@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:clippy_flutter/paralellogram.dart';
 
 class DetailView extends StatefulWidget {
-  final Champion champion;
+  final Map champion;
 
   const DetailView({required this.champion});
 
@@ -15,7 +15,7 @@ class DetailView extends StatefulWidget {
 }
 
 class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
-  final Champion champion;
+  final Map champion;
 
   _DetailViewState({required this.champion});
 
@@ -57,8 +57,8 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print("-----------------------------------------------$champion");
     return Scaffold(
-  
       backgroundColor: backgoundColor,
       body: Stack(
         children: [
@@ -72,9 +72,9 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                   Stack(
                     children: [
                       Hero(
-                        tag: champion.name.toUpperCase(),
+                        tag: champion["name"].toUpperCase(),
                         child: Image.network(
-                          champion.imageUrl,
+                          champion["imageUrl"],
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.45,
@@ -109,7 +109,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                             padding: EdgeInsets.only(
                                 left: 15, right: 15, bottom: 20),
                             width: double.infinity,
-                            height:MediaQuery.of(context).size.height*0.4,
+                            height: MediaQuery.of(context).size.height * 0.4,
                             child: Stack(
                               children: [
                                 AnimatedBorder(animation: animation),
@@ -134,19 +134,19 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                                             .center,
                                                     children: [
                                                       // Image.asset(
-                                                      //     "images/role/${champion.role.toString().split(".")[1].toLowerCase()}.png",
+                                                      //     "images/role/${champion["role.toString().split(".")[1].toLowerCase()}.png",
                                                       //     width: 40,
                                                       //     height: 40),
                                                       SizedBox(
                                                         height: 20,
                                                       ),
-                                                      Text("ROLE",
+                                                      Text("Quality",
                                                           style: textTheme
                                                               .titleSmall),
                                                       Text(
-                                                          champion.role
-                                                              .toString()
-                                                              .split(".")[1],
+                                                          champion["quality"],
+                                                              // .toString()
+                                                              // .split(".")[1],
                                                           style: textTheme
                                                               .titleSmall
                                                               ?.copyWith(
@@ -157,16 +157,14 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: <Widget>[
-                                                    Container(
-                                                      height: 40,
-                                                      child: Center(
-                                                        child: DifficultyGraph(
-                                                            count: widget
-                                                                .champion
-                                                                .difficulty
-                                                                .index),
-                                                      ),
-                                                    ),
+                                                    // Container(
+                                                    //   height: 40,
+                                                    //   child: Center(
+                                                    //     child: DifficultyGraph(
+                                                    //         count: widget
+                                                    //             .champion),
+                                                    //   ),
+                                                    // ),
                                                     SizedBox(
                                                       height: 20,
                                                     ),
@@ -175,16 +173,16 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                                       style:
                                                           textTheme.titleSmall,
                                                     ),
-                                                    Text(
-                                                        champion.difficulty
-                                                            .toString()
-                                                            .split(".")[1]
-                                                            .toUpperCase(),
-                                                        style: textTheme
-                                                            .titleSmall
-                                                            ?.copyWith(
-                                                                color: Color(
-                                                                    0xffAE914B)))
+                                                    // Text(
+                                                    //     champion["difficulty"]
+                                                    //         .toString()
+                                                    //         .split(".")[1]
+                                                    //         .toUpperCase(),
+                                                    //     style: textTheme
+                                                    //         .titleSmall
+                                                    //         ?.copyWith(
+                                                    //             color: Color(
+                                                    //                 0xffAE914B)))
                                                   ],
                                                 )
                                               ],
@@ -203,7 +201,8 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                                   left: 20,
                                                   right: 20,
                                                   bottom: 30),
-                                              child: Text(champion.description,
+                                              child: Text(
+                                                  champion["description"],
                                                   style: textTheme.bodyLarge,
                                                   maxLines: 6,
                                                   overflow:
@@ -232,14 +231,14 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                champion.nickName,
+                                champion["deliveryDate"],
                                 style: textTheme.titleMedium,
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               Text(
-                                champion.name.toUpperCase(),
+                                champion["name"].toUpperCase(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge

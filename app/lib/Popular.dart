@@ -1,5 +1,6 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/contant.dart';
+import 'package:app/detail_view.dart';
 import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 Widget popular(BuildContext context) {
-  ;
   return Container(
       decoration: BoxDecoration(
           color: Colors.grey[100],
@@ -25,7 +25,17 @@ Widget popular(BuildContext context) {
               parent: ScrollPhysics(),
               decelerationRate: ScrollDecelerationRate.normal),
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context, int Index) {
+          itemBuilder: (BuildContext context, int Index) {
+            Map champion = {
+              "name": " item name",
+              "quality": "grade 1",
+              "quantitiy": "12 bags",
+              "price": "1000 per bag",
+              "description":"description text",
+              "deliveryDate": " 2 days",
+              "imageUrl": "${context.watch<CurrentUserProvider>().list[Index]}",
+            };
+
             return Container(
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -39,30 +49,49 @@ Widget popular(BuildContext context) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Globals().imagesEdges(
-                      context: context,
-                      image: context.watch<CurrentUserProvider>().list[Index],
-                      height: 150.0,
-                      width: 150.0),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                    child: Text(
-                      "Best Seller",
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              fontSize: 13, color: Colors.blue.shade400)),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                        vertical: AppHeight(context, 0.002),
-                        horizontal: AppHeight(context, 0.005)),
-                    child: Text(
-                      "Item$Index ",
-                      style: GoogleFonts.brunoAce(
-                          textStyle: TextStyle(
-                              fontSize: AppWidth(context, 0.045),
-                              color: Colors.black)),
+                  GestureDetector(
+                    onTap: () {
+                      print("this is pressed");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailView(
+                                    champion: champion,
+                                  )));
+                      DetailView(champion: champion);
+                    },
+                    child: Column(
+                      children: [
+                        Globals().imagesEdges(
+                            context: context,
+                            image: context
+                                .watch<CurrentUserProvider>()
+                                .list[Index],
+                            height: 150.0,
+                            width: 150.0),
+                        Container(
+                          margin:
+                              EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                          child: Text(
+                            "Best Seller",
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 13, color: Colors.blue.shade400)),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: AppHeight(context, 0.002),
+                              horizontal: AppHeight(context, 0.005)),
+                          child: Text(
+                            "Item$Index ",
+                            style: GoogleFonts.brunoAce(
+                                textStyle: TextStyle(
+                                    fontSize: AppWidth(context, 0.045),
+                                    color: Colors.black)),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
