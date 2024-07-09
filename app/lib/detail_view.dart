@@ -2,8 +2,12 @@ import 'package:app/Homepage.dart';
 import 'package:app/contant.dart';
 import 'package:app/globals.dart';
 import 'package:app/model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:clippy_flutter/paralellogram.dart';
+import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DetailView extends StatefulWidget {
   final Map champion;
@@ -23,6 +27,16 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
 
   late Animation<double> animation;
   late AnimationController controller;
+  final SwiperController _swiperController = SwiperController();
+
+  Widget appBarIcons({required Icon icon}) {
+    return Container(
+        padding: EdgeInsets.all(4),
+        decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadiusDirectional.circular(15)),
+        child: icon);
+  }
 
   @override
   void initState() {
@@ -58,7 +72,40 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("-----------------------------------------------$champion");
+
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Globals().switchScreens(
+                  context: context, screen: MyHomePage(title: "homepage"));
+            },
+            icon: Icon(Icons.arrow_back)),
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 2),
+            width: AppWidth(context, 0.3),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                appBarIcons(
+                  icon: Icon(CupertinoIcons.search),
+                ),
+                appBarIcons(
+                  icon: Icon(CupertinoIcons.cart),
+                ),
+                appBarIcons(
+                  icon: Icon(CupertinoIcons.ellipsis_vertical),
+                ),
+              ],
+            ),
+          )
+        ],
+        title: Text(
+          "Item",
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+        ),
+      ),
       backgroundColor: backgoundColor,
       body: Stack(
         children: [
@@ -69,20 +116,11 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                 final maxWidth = constraints.maxWidth;
 
                 return Stack(children: [
-                  Stack(
+                  Column(
                     children: [
-                      Hero(
-                        tag: champion["name"].toUpperCase(),
-                        child: Image.network(
-                          champion["imageUrl"],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.45,
-                        ),
-                      ),
                       AnimatedOpacity(
                         opacity: init ? 1 : 0,
-                        duration: Duration(milliseconds: 500),
+                        duration: Duration(milliseconds: 200),
                         child: Container(
                           width: maxWidth,
                           height: maxWidth,
@@ -95,6 +133,30 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                 imageOpacity.withOpacity(0.0),
                                 // imageOpacity,
                               ],
+                            ),
+                          ),
+                          child: SizedBox(
+                            height: AppHeight(context, 0.35),
+                            width: AppWidth(context, 0.8),
+                            child: Hero(
+                              tag: champion["name"].toUpperCase(),
+                              child: Swiper(
+                                itemBuilder: (context, index) {
+                                  return Image.network(
+                                    width: AppWidth(context, 0.8),
+                                    all[index],
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                                autoplay: true,
+                                itemCount: all.length,
+                                pagination: SwiperPagination(
+                                  margin: EdgeInsets.zero,
+                                  builder: SwiperPagination.fraction,
+                                ),
+                                control:
+                                    const SwiperControl(color: Colors.black54),
+                              ),
                             ),
                           ),
                         ),
@@ -143,10 +205,9 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                                       Text("Quality",
                                                           style: textTheme
                                                               .titleSmall),
-                                                      Text(
-                                                          champion["quality"],
-                                                              // .toString()
-                                                              // .split(".")[1],
+                                                      Text(champion["quality"],
+                                                          // .toString()
+                                                          // .split(".")[1],
                                                           style: textTheme
                                                               .titleSmall
                                                               ?.copyWith(
@@ -256,9 +317,9 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
               }),
             ),
           ),
-          Padding(
-              padding: EdgeInsets.only(left: 25, top: 25),
-              child: CustomBackButton()),
+          // Padding(
+          //     padding: EdgeInsets.only(left: 25, top: 25),
+          //     child: CustomBackButton()),
         ],
       ),
     );

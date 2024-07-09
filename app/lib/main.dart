@@ -5,8 +5,10 @@ import 'package:app/VerifyEmail.dart';
 import 'package:app/Welcome.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SplashScreen.dart';
+import 'package:app/contant.dart';
 import 'package:app/firebase_options.dart';
 import 'package:app/globals.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CurrentUserProvider())
       ],
       child: MaterialApp(
-          home: StreamBuilder<User?>(
+          home:
+          
+           StreamBuilder<User?>(
               stream: Globals().auth.authStateChanges(),
               builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
                 try {
@@ -55,7 +59,97 @@ class MyApp extends StatelessWidget {
                   print("Streambuilder error $e");
                   throw Exception(e);
                 }
-              })),
+              })
+              ),
     );
   }
 }
+
+
+
+// class ExampleCustomPagination extends StatelessWidget {
+//   const ExampleCustomPagination({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Custom Pagination'),
+//         ),
+//         body: Column(
+//           children: <Widget>[
+//             SizedBox(
+//               height: AppHeight(context, 0.45),
+//               child: Swiper(
+//                 itemBuilder: (context, index) {
+//                   return Image.network(
+//                     all[index],
+//                     fit: BoxFit.fill,
+//                   );
+//                 },
+//                 autoplay: true,
+//                 itemCount: all.length,
+//                 pagination: SwiperPagination(
+//                     margin: EdgeInsets.zero,
+//                     builder: SwiperPagination.dots
+                    
+//                     // SwiperCustomPagination(builder: (context, config) {
+//                     //   return ConstrainedBox(
+//                     //     child: Container(
+//                     //       color: Colors.white,
+//                     //       child: Text(
+//                     //         '${[config.activeIndex]} ${config.activeIndex + 1}/${config.itemCount}',
+//                     //         style: const TextStyle(fontSize: 20.0),
+//                     //       ),
+//                     //     ),
+//                     //     constraints: const BoxConstraints.expand(height: 50.0),
+//                     //   );
+//                     // })
+                    
+//                     ),
+//                 control: const SwiperControl(),
+//               ),
+//             ),
+//             // Expanded(
+//             //   child: Swiper(
+//             //     itemBuilder: (context, index) {
+//             //       return Image.asset(
+//             //         all[index],
+//             //         fit: BoxFit.fill,
+//             //       );
+//             //     },
+//             //     autoplay: true,
+//             //     itemCount: all.length,
+//             //     pagination: SwiperPagination(
+//             //         margin: EdgeInsets.zero,
+//             //         builder: SwiperCustomPagination(builder: (context, config) {
+//             //           return ConstrainedBox(
+//             //             child: Row(
+//             //               children: <Widget>[
+//             //                 Text(
+//             //                   '${[config.activeIndex]} ${config.activeIndex + 1}/${config.itemCount}',
+//             //                   style: const TextStyle(fontSize: 20.0),
+//             //                 ),
+//             //                 Expanded(
+//             //                   child: Align(
+//             //                     alignment: Alignment.centerRight,
+//             //                     child: const DotSwiperPaginationBuilder(
+//             //                             color: Colors.black12,
+//             //                             activeColor: Colors.black,
+//             //                             size: 10.0,
+//             //                             activeSize: 20.0)
+//             //                         .build(context, config),
+//             //                   ),
+//             //                 )
+//             //               ],
+//             //             ),
+//             //             constraints: const BoxConstraints.expand(height: 50.0),
+//             //           );
+//             //         })),
+//             //     control: const SwiperControl(color: Colors.redAccent),
+//             //   ),
+//             // )
+//           ],
+//         ));
+//   }
+// }

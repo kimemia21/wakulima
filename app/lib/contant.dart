@@ -6,7 +6,7 @@ enum Role { TANKER, FIGHTER, MARKSMAN, MAGE, ASSASIN }
 enum Difficulty { LOW, MODERATE, HIGH }
 
 final backgoundColor = Colors.grey.shade300;
-final imageOpacity = Colors.black54;
+final imageOpacity = Colors.black;
 final appbarColor = Color(0xff112120);
 
 final detailsTextColor = Color(0xff112120);
