@@ -220,6 +220,26 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                 color: Colors.green,
                               )
                             ],
+                          ),
+                          Row(
+                            children: [
+                              
+                              Text("Description",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.75,
+                                child: Text("Culpa incididunt magna eiusmod eu ex enim elit et eiusmod consectetur cillum mollit. Irure voluptate in consequat ut. Excepteur veniam veniam laborum occaecat sunt.",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600)),
+                              ),
+                             
+                            ],
                           )
                         ],
                       ),
@@ -249,6 +269,8 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                       ),
                     ),
                      InkWell(
+                      splashColor:  const Color.fromARGB(255, 0, 81, 147),
+                      radius: 20,
                       onTap: () {
                         // Define your onTap action here
                       },

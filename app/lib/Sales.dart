@@ -15,20 +15,25 @@ class Sales extends StatefulWidget {
 }
 
 class _SalesState extends State<Sales> {
-  List images_farm = [
-    "https://kenyaseed.com/wp-content/uploads/2018/02/smaller-farmer.png"
-  ];
+  
   @override
   Widget build(BuildContext context) {
-    final champions = championsMap.values.toList();
+    
+    // final champions = championsMap.values.toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
-          children: <Widget>[
-            TopBar(),
-            // Container(
+          children: <Widget>[TopBar(), popular(context), Arrivals()],
+        ),
+      ),
+    );
+  }
+}
+
+
+      // Container(
             //   width: double.infinity,
             //   height: 70,
             //   child: Padding(
@@ -70,11 +75,3 @@ class _SalesState extends State<Sales> {
             //     ),
             //   ),
             // ),
-            popular(context),
-            Arrivals()
-          ],
-        ),
-      ),
-    );
-  }
-}

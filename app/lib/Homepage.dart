@@ -67,7 +67,19 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            leading: Icon(CupertinoIcons.person),
+            leading: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(left: 10),
+              child: Text(
+                
+                "CXT",
+                style: GoogleFonts.brunoAce(
+                  letterSpacing: 1,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black54),
+              ),
+            ),
             actions: [
               IconButton(
                   onPressed: () {
@@ -76,15 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   icon: Icon(CupertinoIcons.cart))
             ],
-            centerTitle: true,
-            title: Text(
-              "CXT",
-              style: GoogleFonts.brunoAce(
-                letterSpacing: 1,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black54),
-            ),
+           
           ),
           bottomNavigationBar: CurvedNavigationBar(
             key: _bottomNavigationKey,
