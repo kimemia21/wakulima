@@ -196,20 +196,43 @@ class Globals {
     );
   }
 
-  Widget circularWidget() {
+  Widget circularWidget(
+    ImageUrl,
+    String text,
+    MaterialPageRoute onpress,
+  ) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.all(4),
       margin: EdgeInsets.all(2),
       child: Column(
         children: [
+          GestureDetector(
+            onTap: () {
+              onpress;
+            },
+            child: Container(
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                color: Colors.grey[400],
+                shape: BoxShape.circle, // Make the container circular
+                image: DecorationImage(
+                  fit: BoxFit
+                      .contain, // Ensure the image covers the entire container
+                  image: NetworkImage(
+                    ImageUrl,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Container(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadiusDirectional.circular(20)),
-            child: Image.network(
-                "https://cdn.britannica.com/47/246247-050-F1021DE9/AI-text-to-image-photo-robot-with-computer.jpg?w=400&h=300&c=crop"),
+            margin: EdgeInsets.only(top: 6, bottom: 6),
+            child: Text(
+              text,
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+            ),
           )
         ],
       ),
