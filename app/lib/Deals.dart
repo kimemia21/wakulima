@@ -23,28 +23,28 @@ class _DealsState extends State<Deals> {
           " High-quality coal with excellent energy output, ideal for heating and industrial use. Low in impurities for a cleaner burn.",
       "price": "2300",
       "imageUrl":
-          "https://www.kickgame.com/cdn/shop/products/DR5415-103.1.png?v=1678364171&width=1024",
+          "https://5.imimg.com/data5/SELLER/Default/2023/6/318885244/LJ/VI/HC/3855896/charcoal-packing-paper-bags.png",
     },
     {
       "description":
           " Investment-grade 24K gold bars, perfect for secure investments and wealth preservation. Pure and reliable quality",
       "price": "4000",
       "imageUrl":
-          "https://www.kickgame.com/cdn/shop/products/DR5415-103.1.png?v=1678364171&width=1024",
+          "https://pngimg.com/d/gold_PNG101019.png",
     },
     {
       "description":
           "Refreshing and healthy organic green tea, rich in antioxidants. Perfect for a rejuvenating and calming experience",
       "price": "7800",
       "imageUrl":
-          "https://www.kickgame.com/cdn/shop/products/DR5415-103.1.png?v=1678364171&width=1024",
+          "https://graefenhof-tee.de/wp-content/uploads/2022/02/Gra%CC%88fenhof-Tee-GmbH-BIONo-Plastic-Grafenhof-Tee-GmbH-v2-web.png",
     },
     {
       "description":
           "Pure and fresh dairy milk, rich in nutrients and ideal for daily consumption. Creamy taste with natural goodness.",
       "price": "7800",
       "imageUrl":
-          "https://www.kickgame.com/cdn/shop/products/DR5415-103.1.png?v=1678364171&width=1024",
+          "https://5.imimg.com/data5/SELLER/Default/2021/8/AL/BB/PW/4477221/s-s-milk-cans-locking-type-40-ltr--500x500.jpg",
     }
   ];
 
@@ -73,7 +73,7 @@ class _DealsState extends State<Deals> {
       width: AppWidth(context, 1),
       padding: EdgeInsets.all(4),
       decoration: BoxDecoration(
-          color: Colors.grey[200],
+ 
           borderRadius: BorderRadiusDirectional.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,6 +88,20 @@ class _DealsState extends State<Deals> {
                   textStyle: TextStyle(fontSize: AppHeight(context, 0.02))),
             ),
           ),
+          Container(
+            width: AppWidth(context, 1),
+            height: AppHeight(context, 0.3),
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: testMap.length,
+                itemBuilder: (context, index) {
+                  return Globals().dealsCards(
+                      context: context,
+                      image: testMap[index]["imageUrl"],
+                      description: testMap[index]["description"],
+                      price: testMap[index]["price"]);
+                }),
+          )
         ],
       ),
     );

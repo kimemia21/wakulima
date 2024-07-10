@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/DocsVerification.dart';
 import 'package:app/Homepage.dart';
 import 'package:app/Welcome.dart';
+import 'package:app/contant.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -234,6 +235,71 @@ class Globals {
               style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget dealsCards(
+      {required BuildContext context,
+      required String image,
+      required String description,
+      required String price}) {
+    return Container(
+      width: AppWidth(context, 0.35),
+      height: AppHeight(context, 0.2),
+      child: Column(
+        children: [
+     Container(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            
+            blurRadius: 5,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(22), // Circular border for the image
+        child: Image.network(
+          image,
+        width: AppWidth(context, 0.35),
+      height: AppHeight(context, 0.2),
+          fit: BoxFit.contain, // Ensures the image covers the area without distortion
+        ),
+      ),
+    ),
+          Container(
+            width: AppWidth(context, 0.3),
+            child: Text(
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              description,
+              style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black),
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Container(
+            width: AppWidth(context, 0.3),
+            child: Text(
+              "Kshs $price",
+              style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
+            ),
+          ),
         ],
       ),
     );

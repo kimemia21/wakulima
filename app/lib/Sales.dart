@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/Arrivals.dart';
+import 'package:app/Deals.dart';
 import 'package:app/Popular.dart';
 import 'package:app/TobBar.dart';
 import 'package:app/contant.dart';
@@ -50,114 +51,107 @@ class _SalesState extends State<Sales> {
 
   @override
   Widget build(BuildContext context) {
-    // final champions = championsMap.values.toList();
-//  Column(
-    //   children: <Widget>[TopBar(), popular(context), Arrivals()],
-    // ),
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Container(
-          width: AppWidth(context, 1),
-          height: AppHeight(context, 1),
-          margin: EdgeInsets.all(2),
-          padding: EdgeInsets.all(2),
-          child: Stack(
-            children: [
-              Positioned(
-                  top: 20,
-                  right: 20,
-                  left: 20,
-                  child: Container(
-                      padding: EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadiusDirectional.circular(20),
-                          color: Colors.grey.shade200),
-                      width: AppWidth(context, 1),
-                      height: 50,
-                      child: InkWell(
-                        splashColor: Colors.grey,
-                        radius: 100,
-                        onTap: () {
-                          // print("pressed");
-                          // Define your onTap action here
-                        },
-                        borderRadius: BorderRadius.circular(8),
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Optional: Add some padding for better touch target
-                          child: Row(
-                            children: [
-                              Icon(Icons.search_rounded),
-                              SizedBox(width: 10),
-                              Text("Search on Cxt")
-                            ],
-                          ),
-                        ),
-                      ))),
-              Positioned(
-                  top: 100,
-                  left: 20,
-                  child: Container(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "CTX Categories",
-                      style: GoogleFonts.poppins(
-                          fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                  )),
-              Positioned(
-                  top: 140,
-                  right: 20,
-                  left: 20,
-                  child: Container(
-                    width: AppWidth(context, 1),
-                    height: AppHeight(context, 0.5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadiusDirectional.circular(10),
-                        color: Colors.white),
-                    child: GridView.builder(
-                      physics: BouncingScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, // Number of columns
-                        crossAxisSpacing: 4.0, // Spacing between columns
-                        mainAxisSpacing: 4.0, // Spacing between rows
+        child: SingleChildScrollView(
+          child: Container(
+            width: AppWidth(context, 1),
+            margin: EdgeInsets.all(2),
+            padding: EdgeInsets.all(2),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade200,
+                  ),
+                  width: AppWidth(context, 1),
+                  height: 50,
+                  child: InkWell(
+                    splashColor: Colors.grey,
+                    radius: 100,
+                    onTap: () {
+                      // Define your onTap action here
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.search_rounded),
+                          SizedBox(width: 10),
+                          Text("Search on Cxt"),
+                        ],
                       ),
-                      itemCount: Categories.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            print("Pressed");
-                            Categories[index]["onPress"];
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                  radius: 45,
-                                  backgroundColor: Colors.grey[500],
-                                  backgroundImage: NetworkImage(
-                                      Categories[index]["imageUrl"])),
-                              Text(
-                                Categories[index]["name"],
-                                style: GoogleFonts.poppins(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black54),
-                              )
-                            ],
-                          ),
-                        );
-                      },
                     ),
-                  )),
-              Positioned(top: 400, right: 6, left: 6, child: Arrivals()),
-              Positioned(top: 650, right: 6, left: 6, child: Arrivals())
-            ],
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Text(
+                    "CTX Categories",
+                    style: GoogleFonts.poppins(
+                        fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Container(
+                  width: AppWidth(context, 1),
+                  height: AppHeight(context, 0.3),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  child: GridView.builder(
+                    physics: BouncingScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, // Number of columns
+                      crossAxisSpacing: 4.0, // Spacing between columns
+                      mainAxisSpacing: 4.0, // Spacing between rows
+                    ),
+                    itemCount: Categories.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          print("Pressed");
+                          Categories[index]["onPress"];
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundColor: Colors.grey[500],
+                              backgroundImage: NetworkImage(
+                                Categories[index]["imageUrl"],
+                              ),
+                            ),
+                            Text(
+                              Categories[index]["name"],
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: 20), // Add some space between the sections
+                Arrivals(),
+                SizedBox(height: 20), // Add some space between the sections
+                Deals(),
+              ],
+            ),
           ),
         ),
-      )),
+      ),
     );
   }
 }
