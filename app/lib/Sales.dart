@@ -30,21 +30,19 @@ class _SalesState extends State<Sales> {
       "onPress": MaterialPageRoute(builder: (context) => TopBar()),
     },
     {
-      "name": "Coal",
-      "imageUrl":
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Charcoal_8.jpg/1200px-Charcoal_8.jpg",
+      "name": "Gold",
+      "imageUrl": "https://www.goodreturns.in/img/2023/03/gold1-1678254479.jpg",
       "onPress": MaterialPageRoute(builder: (context) => TopBar()),
     },
     {
-      "name": "Coal",
+      "name": "Tea",
       "imageUrl":
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Charcoal_8.jpg/1200px-Charcoal_8.jpg",
+          "https://media.licdn.com/dms/image/C4E12AQE4P4p2RWx7Xw/article-inline_image-shrink_1000_1488/0/1520170688195?e=1724889600&v=beta&t=nelnt86XuXm3PS-CgLBzkKlTnhdOEI8XUNAUFtWmbp8",
       "onPress": MaterialPageRoute(builder: (context) => TopBar()),
     },
     {
-      "name": "Coal",
-      "imageUrl":
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Charcoal_8.jpg/1200px-Charcoal_8.jpg",
+      "name": "Milk",
+      "imageUrl": "https://kaluworks.com/shop/wp-content/uploads/2023/05/5.png",
       "onPress": MaterialPageRoute(builder: (context) => TopBar()),
     }
   ];
@@ -81,8 +79,7 @@ class _SalesState extends State<Sales> {
                         // print("pressed");
                         // Define your onTap action here
                       },
-                      borderRadius: BorderRadius.circular(
-                          8), // Optional: Add a border radius for a more button-like feel
+                      borderRadius: BorderRadius.circular(8),
                       child: Padding(
                         padding: const EdgeInsets.all(
                             8.0), // Optional: Add some padding for better touch target
@@ -97,6 +94,17 @@ class _SalesState extends State<Sales> {
                     ))),
             Positioned(
                 top: 100,
+                left: 20,
+                child: Container(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    "CTX Categories",
+                    style: GoogleFonts.poppins(
+                        fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                )),
+            Positioned(
+                top: 140,
                 right: 20,
                 left: 20,
                 child: Container(
@@ -104,8 +112,9 @@ class _SalesState extends State<Sales> {
                   height: AppHeight(context, 0.5),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadiusDirectional.circular(10),
-                      color: Colors.grey[300]),
+                      color: Colors.white),
                   child: GridView.builder(
+                    physics: BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // Number of columns
                       crossAxisSpacing: 4.0, // Spacing between columns
@@ -113,12 +122,30 @@ class _SalesState extends State<Sales> {
                     ),
                     itemCount: Categories.length,
                     itemBuilder: (context, index) {
-                      return CircleAvatar(
-                        backgroundColor: Colors.white,
-                        backgroundImage: NetworkImage(
-                          scale: 1.0,
-                          Categories[index]["imageUrl"])
-                      );
+                      return circularWidget();
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     print("Pressed");
+                      //     Categories[index]["onPress"];
+                      //   },
+                      //   child: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       CircleAvatar(
+                      //           radius: 45,
+                      //           backgroundColor: Colors.grey[500],
+                      //           backgroundImage: NetworkImage(
+                      //               Categories[index]["imageUrl"])),
+                      //       Text(
+                      //         Categories[index]["name"],
+                      //         style: GoogleFonts.poppins(
+                      //             fontSize: 18,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: Colors.black54),
+                      //       )
+                      //     ],
+                      //   ),
+                      // );
                     },
                   ),
                 ))

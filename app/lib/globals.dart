@@ -178,7 +178,11 @@ class Globals {
     ).show(context);
   }
 
-  Widget imagesEdges({required BuildContext context, required String image, required height, required double width}) {
+  Widget imagesEdges(
+      {required BuildContext context,
+      required String image,
+      required height,
+      required double width}) {
     return Container(
       height: height,
       width: width,
@@ -188,6 +192,26 @@ class Globals {
           image: NetworkImage(image),
           fit: BoxFit.cover,
         ),
+      ),
+    );
+  }
+
+  Widget circularWidget() {
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(4),
+      margin: EdgeInsets.all(2),
+      child: Column(
+        children: [
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadiusDirectional.circular(20)),
+            child: Image.network(
+                "https://cdn.britannica.com/47/246247-050-F1021DE9/AI-text-to-image-photo-robot-with-computer.jpg?w=400&h=300&c=crop"),
+          )
+        ],
       ),
     );
   }
