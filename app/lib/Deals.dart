@@ -1,5 +1,6 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/contant.dart';
+import 'package:app/detail_view.dart';
 import 'package:app/globals.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,33 +20,46 @@ class _DealsState extends State<Deals> {
   int activeIndex = 0;
   final List<Map> testMap = [
     {
+      "name": "kenyan coal",
       "description":
           " High-quality coal with excellent energy output, ideal for heating and industrial use. Low in impurities for a cleaner burn.",
       "price": "2300",
+      "quality": "grade 1",
+      "quantity": "bulk",
+      "deliveryDate": "1 days",
       "imageUrl":
-          "https://5.imimg.com/data5/SELLER/Default/2023/6/318885244/LJ/VI/HC/3855896/charcoal-packing-paper-bags.png",
+          ["https://5.imimg.com/data5/SELLER/Default/2023/6/318885244/LJ/VI/HC/3855896/charcoal-packing-paper-bags.png"],
     },
     {
+      "name": "Gold Subukia",
       "description":
           " Investment-grade 24K gold bars, perfect for secure investments and wealth preservation. Pure and reliable quality",
       "price": "4000",
-      "imageUrl":
-          "https://pngimg.com/d/gold_PNG101019.png",
+      "quality": "grade 1",
+      "quantity": "bulk",
+      "deliveryDate": "4 days",
+      "imageUrl": ["https://pngimg.com/d/gold_PNG101019.png"],
     },
     {
+      "name": "kericho tea",
       "description":
           "Refreshing and healthy organic green tea, rich in antioxidants. Perfect for a rejuvenating and calming experience",
       "price": "7800",
-      "imageUrl":
-          "https://graefenhof-tee.de/wp-content/uploads/2022/02/Gra%CC%88fenhof-Tee-GmbH-BIONo-Plastic-Grafenhof-Tee-GmbH-v2-web.png",
+      "quality": "grade 1",
+      "quantity": "bulk",
+      "deliveryDate": "10 days",
+      "imageUrl":["https://graefenhof-tee.de/wp-content/uploads/2022/02/Gra%CC%88fenhof-Tee-GmbH-BIONo-Plastic-Grafenhof-Tee-GmbH-v2-web.png"],
     },
     {
+      "name": "milk kajiado",
       "description":
           "Pure and fresh dairy milk, rich in nutrients and ideal for daily consumption. Creamy taste with natural goodness.",
       "price": "7800",
-      "imageUrl":
-          "https://5.imimg.com/data5/SELLER/Default/2021/8/AL/BB/PW/4477221/s-s-milk-cans-locking-type-40-ltr--500x500.jpg",
-    }
+      "quality": "grade 1",
+      "quantity": "bulk",
+      "deliveryDate": "1 days",
+      "imageUrl":["https://5.imimg.com/data5/SELLER/Default/2021/8/AL/BB/PW/4477221/s-s-milk-cans-locking-type-40-ltr--500x500.jpg"]
+           }
   ];
 
   Widget buildIndicator() => Container(
@@ -72,9 +86,8 @@ class _DealsState extends State<Deals> {
       // height: AppHeight(context, 0.1),
       width: AppWidth(context, 1),
       padding: EdgeInsets.all(4),
-      decoration: BoxDecoration(
- 
-          borderRadius: BorderRadiusDirectional.circular(20)),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadiusDirectional.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,11 +108,34 @@ class _DealsState extends State<Deals> {
                 scrollDirection: Axis.horizontal,
                 itemCount: testMap.length,
                 itemBuilder: (context, index) {
-                  return Globals().dealsCards(
-                      context: context,
-                      image: testMap[index]["imageUrl"],
-                      description: testMap[index]["description"],
-                      price: testMap[index]["price"]);
+                  return GestureDetector(
+                    onTap: () {
+                      print("PRESSED");
+                      try {
+                        Map champion = {
+                          "name": testMap[index]["name"],
+                          "quality": "grade 1",
+                          "quantity": testMap[index]["quantity"],
+                          "price": testMap[index]["price"],
+                          "description": testMap[index]["description"],
+                          "deliveryDate": testMap[index]["deliveryDate"],
+                          "imageUrl":testMap[index]["imageUrl"],
+                        };
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailView(champion: champion)));
+                      } catch (e) {
+                        print("Got tihs error in Arrivals.dart $e");
+                      }
+                    },
+                    child: Globals().dealsCards(
+                        context: context,
+                        image: testMap[index]["imageUrl"][0],
+                        description: testMap[index]["description"],
+                        price: testMap[index]["price"]),
+                  );
                 }),
           )
         ],

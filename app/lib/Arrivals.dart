@@ -1,5 +1,6 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/contant.dart';
+import 'package:app/detail_view.dart';
 import 'package:app/globals.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,11 +18,20 @@ class Arrivals extends StatefulWidget {
 
 class _ArrivalsState extends State<Arrivals> {
   int activeIndex = 0;
-  final List imageUrl = [
-    "https://www.kickgame.com/cdn/shop/products/DR5415-103.1.png?v=1678364171&width=1024",
-    "https://www.nike.ae/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw4b815cdf/nk/347/8/5/2/6/9/34785269_a422_4181_bf0f_c692c10d325e.png?sw=520&sh=520&sm=fit",
-    "https://www.nike.sa/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw651f0e1f/nk/b73/9/7/c/2/e/b7397c2e_a99a_41a8_b445_de9ded82681a.png",
-    "https://www.nike.ae/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw2cf9ce95/nk/51d/3/b/e/b/a/51d3beba_ea5c_4ee6_b702_ba54167ac880.png?sw=520&sh=520&sm=fit",
+
+  final List<Map> imageUrl = [
+    {
+      "imageUrl": [Agriculture[0]],
+    },
+    {
+      "imageUrl": [all[2]],
+    },
+    {
+      "imageUrl": [Agriculture[3]],
+    },
+    {
+      "imageUrl": [mining[0]],
+    }
   ];
 
   Widget buildIndicator() => Container(
@@ -48,7 +58,9 @@ class _ArrivalsState extends State<Arrivals> {
       // height: AppHeight(context, 0.1),
       width: AppWidth(context, 1),
       padding: EdgeInsets.all(4),
-      decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadiusDirectional.circular(20)),
+      decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadiusDirectional.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,10 +78,35 @@ class _ArrivalsState extends State<Arrivals> {
             height: AppHeight(context, 0.2),
             width: AppWidth(context, 1),
             child: CarouselSlider.builder(
-                itemCount:  context.watch<CurrentUserProvider>().list.length,
+                itemCount: context.watch<CurrentUserProvider>().list.length,
                 itemBuilder: (context, index, realindex) {
-                  final urlImage =  context.watch<CurrentUserProvider>().list[index];
-                  return Container(child: buildImage(context, urlImage));
+                  final urlImage =
+                      context.watch<CurrentUserProvider>().list[index];
+                  return GestureDetector(
+                      onTap: () {
+                        print("PRESSED");
+                        try {
+                          Map champion = {
+                            "name": " Arrivals",
+                            "quality": "grade 1",
+                            "quantitiy": "Available",
+                            "price": "1000 per bag",
+                            "description": "description text",
+                            "deliveryDate": " 2 days",
+                            "imageUrl": imageUrl[0]["imageUrl"],
+                          };
+                          print(
+                              "-----------------------------${imageUrl[index]["imageUrl"]}---------------------------");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailView(champion: champion)));
+                        } catch (e) {
+                          print("Got this error in Arrivals.dart $e");
+                        }
+                      },
+                      child: Container(child: buildImage(context, urlImage)));
                 },
                 options: CarouselOptions(
                     onPageChanged: (index, reason) =>
@@ -81,8 +118,9 @@ class _ArrivalsState extends State<Arrivals> {
                     autoPlayCurve: Curves.ease,
                     height: MediaQuery.of(context).size.height * 0.5)),
           ),
-          
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           buildIndicator(),
         ],
       ),
@@ -98,8 +136,7 @@ Widget buildImage(
     width: AppWidth(context, 0.8),
     margin: EdgeInsets.symmetric(
         horizontal: AppWidth(context, 0.005),
-        vertical: AppWidth(context, 0.005)
-        ),
+        vertical: AppWidth(context, 0.005)),
     decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(AppHeight(context, 0.02))),

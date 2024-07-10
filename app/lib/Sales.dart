@@ -55,6 +55,7 @@ class _SalesState extends State<Sales> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           child: Container(
             width: AppWidth(context, 1),
             margin: EdgeInsets.all(2),
@@ -106,19 +107,16 @@ class _SalesState extends State<Sales> {
                     color: Colors.white,
                   ),
                   child: GridView.builder(
-                    physics: BouncingScrollPhysics(),
+                    // physics: BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // Number of columns
-                      crossAxisSpacing: 4.0, // Spacing between columns
-                      mainAxisSpacing: 4.0, // Spacing between rows
+                      crossAxisSpacing: 2.0, // Spacing between columns
+                      mainAxisSpacing: 2.0, // Spacing between rows
                     ),
                     itemCount: Categories.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
-                          print("Pressed");
-                          Categories[index]["onPress"];
-                        },
+                        onTap: () {},
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

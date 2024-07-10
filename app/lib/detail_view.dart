@@ -71,7 +71,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("-----------------------------------------------$champion");
+    print("-----------------------------------------------${champion["imageUrl"]}");
 
     return Scaffold(
       appBar: AppBar(
@@ -143,12 +143,12 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                               itemBuilder: (context, index) {
                                 return Image.network(
                                   // width: AppWidth(context, 0.8),
-                                  all[index],
+                                  champion["imageUrl"][index],
                                   fit: BoxFit.cover,
                                 );
                               },
                               autoplay: true,
-                              itemCount: all.length,
+                              itemCount:  champion["imageUrl"].length,
                               pagination: SwiperPagination(
                                 margin: EdgeInsets.zero,
                                 builder: SwiperPagination.dots,
@@ -233,7 +233,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width*0.75,
-                                child: Text("Culpa incididunt magna eiusmod eu ex enim elit et eiusmod consectetur cillum mollit. Irure voluptate in consequat ut. Excepteur veniam veniam laborum occaecat sunt.",
+                                child: Text(champion["description"],
                                     style: GoogleFonts.poppins(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600)),
