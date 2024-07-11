@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:app/Arrivals.dart';
 import 'package:app/Deals.dart';
 import 'package:app/Popular.dart';
+import 'package:app/Search.dart';
 import 'package:app/TobBar.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/contant.dart';
@@ -79,6 +80,10 @@ class _SalesState extends State<Sales> {
                     radius: 100,
                     onTap: () {
                       // Define your onTap action here
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchPage()));
                     },
                     borderRadius: BorderRadius.circular(8),
                     child: Padding(
