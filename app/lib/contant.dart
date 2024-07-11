@@ -86,14 +86,14 @@ Widget cartItem(
   print("${[image, name, price]}");
 
   return Container(
-      height: AppHeight(context, .2),
+      height: AppHeight(context, .15),
       width: AppWidth(context, 1),
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(width: 1.5, color: Colors.grey.shade500),
+          border: Border.all(width: 1.2, color: Colors.grey.shade300),
           boxShadow: [
             BoxShadow(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.grey.withOpacity(0.25),
               spreadRadius: 2,
 
               blurRadius: 5,
@@ -108,11 +108,12 @@ Widget cartItem(
           Positioned(
               top: 10,
               child: Image.network(
-                  width: AppWidth(context, .2),
-                  height: AppHeight(context, .15),
+                  width: AppWidth(context, .23),
+                  height: AppHeight(context, .13),
                   fit: BoxFit.contain,
-                 image[0])),
+                  image[0])),
           Positioned(
+            width:AppWidth(context, 0.5),
               top: 14,
               left: AppWidth(context, .25),
               child: Column(
@@ -134,7 +135,29 @@ Widget cartItem(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
-                  )
+                  ),
+                  Container(
+                    width:AppWidth(context, 1),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Type"),
+                    
+                         Container(
+                         width:  AppWidth(context, .2),
+                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Icon(Icons.remove_circle,color: Colors.blue[300],),
+                            Text("2",style: GoogleFonts.poppins(fontWeight: FontWeight.w500),),
+                            Icon(Icons.add_circle,color: Colors.blue[300],)
+                           
+                           ],),
+                         )
+                      ],
+                    ),
+                  ),
+                  Text("Seller: Supplier name")
                 ],
               )),
         ],
