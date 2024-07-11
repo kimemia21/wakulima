@@ -71,7 +71,8 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("-----------------------------------------------${champion["imageUrl"]}");
+    print(
+        "-----------------------------------------------${champion["imageUrl"]}");
 
     return Scaffold(
       appBar: AppBar(
@@ -148,7 +149,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                 );
                               },
                               autoplay: true,
-                              itemCount:  champion["imageUrl"].length,
+                              itemCount: champion["imageUrl"].length,
                               pagination: SwiperPagination(
                                 margin: EdgeInsets.zero,
                                 builder: SwiperPagination.dots,
@@ -223,7 +224,6 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                           ),
                           Row(
                             children: [
-                              
                               Text("Description",
                                   style: GoogleFonts.poppins(
                                       fontSize: 16,
@@ -232,13 +232,12 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                                 width: 8,
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.75,
+                                width: MediaQuery.of(context).size.width * 0.75,
                                 child: Text(champion["description"],
                                     style: GoogleFonts.poppins(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600)),
                               ),
-                             
                             ],
                           )
                         ],
@@ -268,8 +267,8 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                     InkWell(
-                      splashColor:  const Color.fromARGB(255, 0, 81, 147),
+                    InkWell(
+                      splashColor: const Color.fromARGB(255, 0, 81, 147),
                       radius: 20,
                       onTap: () {
                         // Define your onTap action here
@@ -281,10 +280,10 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                         alignment: Alignment.center,
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: const Color.fromARGB(255, 0, 81, 147),)
-                                                    
-                        ),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 0, 81, 147),
+                            )),
                         margin: EdgeInsets.all(10),
                         child: Text(
                           "Add to Cart",

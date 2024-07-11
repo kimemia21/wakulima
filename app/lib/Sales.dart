@@ -4,9 +4,12 @@ import 'package:app/Arrivals.dart';
 import 'package:app/Deals.dart';
 import 'package:app/Popular.dart';
 import 'package:app/TobBar.dart';
+import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/contant.dart';
 import 'package:app/detail_view.dart';
+import 'package:app/globals.dart';
 import 'package:app/model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -116,7 +119,12 @@ class _SalesState extends State<Sales> {
                     itemCount: Categories.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Selection()));
+                        },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -149,6 +157,58 @@ class _SalesState extends State<Sales> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Selection extends StatefulWidget {
+  const Selection({super.key});
+
+  @override
+  State<Selection> createState() => _SelectionState();
+}
+
+class _SelectionState extends State<Selection> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 10),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Sales()));
+            },
+            child: Text(
+              "CXT",
+              style: GoogleFonts.brunoAce(
+                  letterSpacing: 1,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black54),
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                // FirebaseAuth.instance.signOut();
+                // Globals().switchScreens(context: context, screen: LoginScreen());
+              },
+              icon: Icon(CupertinoIcons.cart))
+        ],
+      ),
+      body: Column(
+        children: [
+          TopBar(),
+          popular(context),
+          Arrivals(),
+        ],
       ),
     );
   }
