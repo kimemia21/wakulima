@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -67,12 +68,75 @@ List mining = [
   "https://www.jumbosack.com/wp-content/uploads/2023/08/mining-industry-bulk-bags-with-dirt.webp",
 ];
 
- List<Map> cartItems = [];
-  Widget appBarIcons({required Icon icon}) {
-    return Container(
-        padding: EdgeInsets.all(4),
-        decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadiusDirectional.circular(15)),
-        child: icon);
-  }
+List<Map> cartItems = [];
+Widget appBarIcons({required Icon icon}) {
+  return Container(
+      padding: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadiusDirectional.circular(15)),
+      child: icon);
+}
+
+Widget cartItem(
+    {required BuildContext context,
+    required List image,
+    required String name,
+    required String price}) {
+  print("${[image, name, price]}");
+
+  return Container(
+      height: AppHeight(context, .2),
+      width: AppWidth(context, 1),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(width: 1.5, color: Colors.grey.shade500),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.3),
+              spreadRadius: 2,
+
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+          borderRadius: BorderRadiusDirectional.circular(10)),
+      margin: EdgeInsets.all(AppWidth(context, 0.05)),
+      padding: EdgeInsets.all(4),
+      child: Stack(
+        children: [
+          Positioned(
+              top: 10,
+              child: Image.network(
+                  width: AppWidth(context, .2),
+                  height: AppHeight(context, .15),
+                  fit: BoxFit.contain,
+                 image[0])),
+          Positioned(
+              top: 14,
+              left: AppWidth(context, .25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black54),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    "Kshs $price",
+                    style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
+                  )
+                ],
+              )),
+        ],
+      ));
+}

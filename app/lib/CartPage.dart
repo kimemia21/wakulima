@@ -28,33 +28,9 @@ class _CartpageState extends State<Cartpage> {
                     context: context, screen: MyHomePage(title: "homepage"));
               },
               icon: Icon(Icons.arrow_back)),
-          actions: [
-            Container(
-              margin: EdgeInsets.only(right: 2),
-              width: AppWidth(context, 0.3),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SearchPage()));
-                    },
-                    child: appBarIcons(
-                      icon: Icon(CupertinoIcons.search),
-                    ),
-                  ),
-                  appBarIcons(
-                    icon: Icon(CupertinoIcons.ellipsis_vertical),
-                  ),
-                ],
-              ),
-            )
-          ],
+          centerTitle: true,
           title: Text(
-            "Item",
+            "My Cart",
             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
         ),
@@ -64,7 +40,7 @@ class _CartpageState extends State<Cartpage> {
           child: ListView.builder(
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
-                return Text(cartItems[index].toString());
+                return cartItem(context: context, image: cartItems[index]["imageUrl"], name: cartItems[index]["name"], price:cartItems[index]["price"]);
               }),
         ));
   }
