@@ -14,12 +14,14 @@ class CurrentUserProvider extends ChangeNotifier {
   String currentUser = "${FirebaseAuth.instance.currentUser?.email}";
   bool _isLoading = false;
   bool _internetConnected = false;
+  int _cartNumber = 0;
 
   List _list = all;
 
   bool get isLoading => _isLoading;
   bool get internetConnected => _internetConnected;
   List get list => _list;
+  int get cartNumber => _cartNumber;
 
   int _newMessages = 0;
 
@@ -33,8 +35,11 @@ class CurrentUserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeMessageCount({required messageCount}) {
-    _newMessages = messageCount;
+  void changeCartCount() {
+    print("$_cartNumber before");
+    _cartNumber += 1;
+     print("$_cartNumber after");
+
     notifyListeners();
   }
 

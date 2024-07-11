@@ -66,3 +66,13 @@ List mining = [
   "https://dailynews.co.tz/wp-content/uploads/2024/06/55d4c3cf874886dcf726ba6ea5bfe756.jpeg",
   "https://www.jumbosack.com/wp-content/uploads/2023/08/mining-industry-bulk-bags-with-dirt.webp",
 ];
+
+ List<Map> cartItems = [];
+  Widget appBarIcons({required Icon icon}) {
+    return Container(
+        padding: EdgeInsets.all(4),
+        decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadiusDirectional.circular(15)),
+        child: icon);
+  }

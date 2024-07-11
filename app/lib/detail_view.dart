@@ -1,4 +1,8 @@
+import 'package:app/AppBloc.dart';
+import 'package:app/CartPage.dart';
 import 'package:app/Homepage.dart';
+import 'package:app/Sales.dart';
+import 'package:app/Search.dart';
 import 'package:app/contant.dart';
 import 'package:app/globals.dart';
 import 'package:app/model.dart';
@@ -8,6 +12,8 @@ import 'package:clippy_flutter/paralellogram.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:provider/provider.dart';
 
 class DetailView extends StatefulWidget {
   final Map champion;
@@ -78,8 +84,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Globals().switchScreens(
-                  context: context, screen: MyHomePage(title: "homepage"));
+              Globals().switchScreens(context: context, screen: Sales());
             },
             icon: Icon(Icons.arrow_back)),
         actions: [
@@ -89,11 +94,29 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                appBarIcons(
-                  icon: Icon(CupertinoIcons.search),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SearchPage()));
+                  },
+                  child: appBarIcons(
+                    icon: Icon(CupertinoIcons.search),
+                  ),
                 ),
-                appBarIcons(
-                  icon: Icon(CupertinoIcons.cart),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cartpage()));
+                  },
+                  child: badges.Badge(
+                    showBadge:
+                        context.watch<CurrentUserProvider>().cartNumber > 0,
+                    badgeContent: Text(
+                        "${context.watch<CurrentUserProvider>().cartNumber}"),
+                    child: appBarIcons(
+                      icon: Icon(CupertinoIcons.shopping_cart),
+                    ),
+                  ),
                 ),
                 appBarIcons(
                   icon: Icon(CupertinoIcons.ellipsis_vertical),
@@ -271,6 +294,9 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                       splashColor: const Color.fromARGB(255, 0, 81, 147),
                       radius: 20,
                       onTap: () {
+                        context.read<CurrentUserProvider>().changeCartCount();
+                        cartItems.add(champion);
+
                         // Define your onTap action here
                       },
                       borderRadius: BorderRadius.circular(
