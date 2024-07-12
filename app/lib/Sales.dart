@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:app/AppBloc.dart';
 import 'package:app/Arrivals.dart';
+import 'package:app/CartPage.dart';
 import 'package:app/Deals.dart';
 import 'package:app/Popular.dart';
 import 'package:app/Search.dart';
@@ -15,7 +17,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
+
+import 'package:badges/badges.dart' as badges;
 
 class Sales extends StatefulWidget {
   const Sales({super.key});
@@ -200,12 +205,20 @@ class _SelectionState extends State<Selection> {
           ),
         ),
         actions: [
-          IconButton(
-              onPressed: () {
-                // FirebaseAuth.instance.signOut();
-                // Globals().switchScreens(context: context, screen: LoginScreen());
-              },
-              icon: Icon(CupertinoIcons.cart))
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Cartpage()));
+            },
+            child: badges.Badge(
+              showBadge: context.watch<CurrentUserProvider>().cartNumber > 0,
+              badgeContent:
+                  Text("${context.watch<CurrentUserProvider>().cartNumber}"),
+              child: appBarIcons(
+                icon: Icon(CupertinoIcons.shopping_cart),
+              ),
+            ),
+          ),
         ],
       ),
       body: Column(

@@ -31,7 +31,7 @@ class _TopBarState extends State<TopBar> {
           FlashyTabBarItem(
             icon: IconButton(
               onPressed: () {
-                context.read<CurrentUserProvider>().changeItems(all);
+                // context.read<CurrentUserProvider>().changeItems(all);
               },
               icon: Icon(Icons.grid_view),
             ),
@@ -46,7 +46,7 @@ class _TopBarState extends State<TopBar> {
           FlashyTabBarItem(
             icon: IconButton(
                 onPressed: () {
-                  context.read<CurrentUserProvider>().changeItems(mining);
+                  // context.read<CurrentUserProvider>().changeItems(mining);
                 },
                 icon: (
                   Icon(
@@ -63,7 +63,7 @@ class _TopBarState extends State<TopBar> {
           FlashyTabBarItem(
             icon: IconButton(
               onPressed: () {
-                context.read<CurrentUserProvider>().changeItems(Agriculture);
+                // context.read<CurrentUserProvider>().changeItems(Agriculture);
               },
               icon: Icon(CupertinoIcons.leaf_arrow_circlepath, size: 30),
             ),

@@ -2,11 +2,14 @@
 
 import 'package:app/AddItem.dart';
 import 'package:app/Analyitics.dart';
+import 'package:app/AppBloc.dart';
+import 'package:app/CartPage.dart';
 import 'package:app/Offers.dart';
 import 'package:app/Profile.dart';
 import 'package:app/Sales.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/authentication/SignUp.dart';
+import 'package:app/contant.dart';
 import 'package:app/globals.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -31,23 +36,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-   
-      
- 
-        // CherryToast.success(
-        //   disableToastAnimation: false,
-        //   animationCurve: Curves.ease,
-        //   animationDuration: Duration(milliseconds: 500),
-        //   title: Text('Success login',
-        //       style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-        //   action: Text(
-        //     "Logged in as ${FirebaseAuth.instance.currentUser?.email}",
-        //     style: GoogleFonts.abel(fontWeight: FontWeight.w400),
-        //   ),
-        //   actionHandler: () {},
-        //   onToastClosed: () {},
-        // ).show(context);
-
+    // CherryToast.success(
+    //   disableToastAnimation: false,
+    //   animationCurve: Curves.ease,
+    //   animationDuration: Duration(milliseconds: 500),
+    //   title: Text('Success login',
+    //       style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+    //   action: Text(
+    //     "Logged in as ${FirebaseAuth.instance.currentUser?.email}",
+    //     style: GoogleFonts.abel(fontWeight: FontWeight.w400),
+    //   ),
+    //   actionHandler: () {},
+    //   onToastClosed: () {},
+    // ).show(context);
 
     super.initState();
   }
@@ -64,31 +65,42 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return PopScope(
       child: Scaffold(
-        backgroundColor: Colors.white,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(left: 10),
               child: Text(
-                
                 "CXT",
                 style: GoogleFonts.brunoAce(
-                  letterSpacing: 1,
+                    letterSpacing: 1,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Colors.black54),
               ),
             ),
             actions: [
-              IconButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    Globals().switchScreens(context: context, screen: LoginScreen());
-                  },
-                  icon: Icon(CupertinoIcons.cart))
+              Container(
+                margin: EdgeInsets.only(right: 10,left: 10),
+                child: GestureDetector(
+                    onTap: () {
+                      
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cartpage()));
+                    },
+                    child: badges.Badge(
+                      showBadge:
+                          context.watch<CurrentUserProvider>().cartNumber > 0,
+                      badgeContent: Text(
+                          "${context.watch<CurrentUserProvider>().cartNumber}"),
+                      child: appBarIcons(
+                        icon: Icon(CupertinoIcons.shopping_cart),
+                      ),
+                    ),
+                  ),
+              ),
             ],
-           
           ),
           bottomNavigationBar: CurvedNavigationBar(
             key: _bottomNavigationKey,
@@ -113,8 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
             letIndexChange: (index) => true,
           ),
           body: Screens[_page]
-          
-      
+
           //  Container(
           //   color: Colors.red,
           //   child: Center(
@@ -134,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //     ),
           //   ),
           // ),
-      
+
           // body: Center(
           //     child: Column(
           //   mainAxisAlignment: MainAxisAlignment.center,
@@ -155,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //     ),
           //   ],
           // )),
-      
+
           // floatingActionButton: FloatingActionButton(
           //   onPressed: () {},
           //   tooltip: 'Increment',
