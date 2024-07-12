@@ -61,6 +61,7 @@ class _SalesState extends State<Sales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appbar(context),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -83,12 +84,15 @@ class _SalesState extends State<Sales> {
                   child: InkWell(
                     splashColor: Colors.grey,
                     radius: 100,
-                    onTap: () {
-                      // Define your onTap action here
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SearchPage()));
+                     onTap: () async {
+                    await checkInternetConnection(context).then((value) {
+                      value
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchPage()))
+                          : Globals().nointernet(context: context);
+                    });
                     },
                     borderRadius: BorderRadius.circular(8),
                     child: Padding(
@@ -107,7 +111,7 @@ class _SalesState extends State<Sales> {
                   alignment: Alignment.topLeft,
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text(
-                    "CTX Categories",
+                    "CXT Categories",
                     style: GoogleFonts.poppins(
                         fontSize: 20, fontWeight: FontWeight.w600),
                   ),
@@ -129,11 +133,15 @@ class _SalesState extends State<Sales> {
                     itemCount: Categories.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
+                         onTap: () async {
+                    await checkInternetConnection(context).then((value) {
+                      value
+                          ? Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Selection()));
+                                  builder: (context) => Selection()))
+                          : Globals().nointernet(context: context);
+                    });
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -148,8 +156,8 @@ class _SalesState extends State<Sales> {
                             Text(
                               Categories[index]["name"],
                               style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.black54,
                               ),
                             ),
@@ -190,9 +198,15 @@ class _SelectionState extends State<Selection> {
           alignment: Alignment.center,
           margin: EdgeInsets.only(left: 10),
           child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Sales()));
+            onTap: () async {
+                    await checkInternetConnection(context).then((value) {
+                      value
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Sales()))
+                          : Globals().nointernet(context: context);
+                    });
             },
             child: Text(
               "CXT",
@@ -206,9 +220,15 @@ class _SelectionState extends State<Selection> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Cartpage()));
+             onTap: () async {
+                    await checkInternetConnection(context).then((value) {
+                      value
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Cartpage()))
+                          : Globals().nointernet(context: context);
+                    });
             },
             child: badges.Badge(
               showBadge: context.watch<CurrentUserProvider>().cartNumber > 0,

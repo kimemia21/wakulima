@@ -295,9 +295,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
                       radius: 20,
                       onTap: () {
                         context.read<CurrentUserProvider>().changeCartCount();
-                        cartItems.add(champion);
-
-                        // Define your onTap action here
+                     
                       },
                       borderRadius: BorderRadius.circular(
                           20), // Ensure the splash effect matches the border radius

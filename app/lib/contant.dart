@@ -1,6 +1,11 @@
+import 'package:app/AppBloc.dart';
+import 'package:app/CartPage.dart';
+import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badges;
 
 enum Role { TANKER, FIGHTER, MARKSMAN, MAGE, ASSASIN }
 
@@ -113,7 +118,7 @@ Widget cartItem(
                   fit: BoxFit.contain,
                   image[0])),
           Positioned(
-            width:AppWidth(context, 0.5),
+              width: AppWidth(context, 0.5),
               top: 14,
               left: AppWidth(context, .25),
               child: Column(
@@ -137,23 +142,32 @@ Widget cartItem(
                         color: Colors.black),
                   ),
                   Container(
-                    width:AppWidth(context, 1),
+                    width: AppWidth(context, 1),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Type"),
-                    
-                         Container(
-                         width:  AppWidth(context, .2),
-                           child: Row(
+                        Container(
+                          width: AppWidth(context, .2),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                            Icon(Icons.remove_circle,color: Colors.blue[300],),
-                            Text("2",style: GoogleFonts.poppins(fontWeight: FontWeight.w500),),
-                            Icon(Icons.add_circle,color: Colors.blue[300],)
-                           
-                           ],),
-                         )
+                              Icon(
+                                Icons.remove_circle,
+                                color: Colors.blue[300],
+                              ),
+                              Text(
+                                "2",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Icon(
+                                Icons.add_circle,
+                                color: Colors.blue[300],
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -162,4 +176,46 @@ Widget cartItem(
               )),
         ],
       ));
+}
+
+AppBar appbar(BuildContext context) {
+  
+  return AppBar(
+    backgroundColor: Colors.white,
+    leading: Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.only(left: 10),
+      child: Text(
+        "CXT",
+        style: GoogleFonts.brunoAce(
+            letterSpacing: 1,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.black54),
+      ),
+    ),
+    actions: [
+      Container(
+        margin: EdgeInsets.only(right: 10, left: 10),
+        child: GestureDetector(
+          onTap: () async {
+            await checkInternetConnection(context).then((value) {
+              value
+                  ? Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Cartpage()))
+                  : Globals().nointernet(context: context);
+            });
+          },
+          child: badges.Badge(
+            showBadge: context.watch<CurrentUserProvider>().cartNumber > 0,
+            badgeContent:
+                Text("${context.watch<CurrentUserProvider>().cartNumber}"),
+            child: appBarIcons(
+              icon: Icon(CupertinoIcons.shopping_cart),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
 }

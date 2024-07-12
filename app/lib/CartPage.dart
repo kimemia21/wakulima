@@ -35,7 +35,10 @@ class _CartpageState extends State<Cartpage> {
             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
         ),
-        body: Container(
+        body:cartItems.length<1?
+        Center(child: Text("Cart is empty"),):
+
+         Container(
           height: AppHeight(context, 1),
           width: AppWidth(context, 1),
           child: ListView.builder(

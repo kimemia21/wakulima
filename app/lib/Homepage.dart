@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:app/AddItem.dart';
 import 'package:app/Analyitics.dart';
 import 'package:app/AppBloc.dart';
@@ -33,9 +35,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _page = 0;
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  late Timer timer;
 
   @override
   void initState() {
+    // timer = Timer.periodic(Duration(seconds: 1), (_) {
+    //   Globals().nointernet(context: context);
+    // });
+
     // CherryToast.success(
     //   disableToastAnimation: false,
     //   animationCurve: Curves.ease,
@@ -66,42 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return PopScope(
       child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            leading: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(left: 10),
-              child: Text(
-                "CXT",
-                style: GoogleFonts.brunoAce(
-                    letterSpacing: 1,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black54),
-              ),
-            ),
-            actions: [
-              Container(
-                margin: EdgeInsets.only(right: 10,left: 10),
-                child: GestureDetector(
-                    onTap: () {
-                      
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cartpage()));
-                    },
-                    child: badges.Badge(
-                      showBadge:
-                          context.watch<CurrentUserProvider>().cartNumber > 0,
-                      badgeContent: Text(
-                          "${context.watch<CurrentUserProvider>().cartNumber}"),
-                      child: appBarIcons(
-                        icon: Icon(CupertinoIcons.shopping_cart),
-                      ),
-                    ),
-                  ),
-              ),
-            ],
-          ),
+         
           bottomNavigationBar: CurvedNavigationBar(
             key: _bottomNavigationKey,
             index: 0,

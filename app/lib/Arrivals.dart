@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/AppBloc.dart';
 import 'package:app/contant.dart';
 import 'package:app/detail_view.dart';
@@ -78,7 +80,7 @@ class _ArrivalsState extends State<Arrivals> {
             height: AppHeight(context, 0.2),
             width: AppWidth(context, 1),
             child: CarouselSlider.builder(
-                itemCount:imageUrl.length,
+                itemCount: imageUrl.length,
                 itemBuilder: (context, index, realindex) {
                   final urlImage =
                       context.watch<CurrentUserProvider>().list[index];
@@ -86,7 +88,9 @@ class _ArrivalsState extends State<Arrivals> {
                       onTap: () {
                         print("PRESSED");
                         try {
+                          Random id = Random();
                           Map champion = {
+                            "id": id,
                             "name": " Arrivals",
                             "quality": "grade 1",
                             "quantitiy": "Available",
