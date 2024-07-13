@@ -4,6 +4,7 @@ import 'package:app/detail_view.dart';
 import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -25,35 +26,65 @@ class _AlllistingState extends State<Alllisting> {
     "imageUrl": Agriculture,
   };
 
+  bool isGrid = true;
+
   @override
   Widget build(BuildContext context) {
+    print("----------------------building----------------------------");
     return Container(
+      margin: EdgeInsets.only(top: 15),
       width: AppWidth(context, 1),
       // height: AppHeight(context, 1),
-      child: GridView.builder(
-        shrinkWrap:true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: all.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 2,
-        ),
-        itemBuilder: (context, index) {
-          return _buildGridItem(context, index);
-        },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () => setState(() {
+                          isGrid = true;
+                        }),
+                    icon: Icon(Icons.grid_4x4_rounded)),
+                IconButton(
+                    onPressed: () => setState(() {
+                          isGrid = false;
+                        }),
+                    icon: Icon(Icons.list_outlined))
+              ],
+            ),
+          ),
+          ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              Wrap(
+                spacing: 4,
+                runSpacing: 10,
+                children: List.generate(all.length, (index) {
+                  return _buildGridItem(context, index);
+                }),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildGridItem(BuildContext context, int index) {
     return Container(
+      width: isGrid
+          ? MediaQuery.of(context).size.width / 3 - 4
+          : AppWidth(context, 1),
+      height: 220, // Divide width by 3 and subtract spacing
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(Globals().raduis),
       ),
       margin: EdgeInsets.only(bottom: 10),
-      width: 100,
-      height: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,12 +101,13 @@ class _AlllistingState extends State<Alllisting> {
               );
             },
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Globals().imagesEdges(
                   context: context,
-                  image: Agriculture[2],
+                  image: Agriculture[3],
                   height: 100.0,
-                  width: 100.0,
+                  width: double.infinity,
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
@@ -90,10 +122,6 @@ class _AlllistingState extends State<Alllisting> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: AppHeight(context, 0.002),
-                    horizontal: AppHeight(context, 0.005),
-                  ),
                   child: Text(
                     "Item$index ",
                     style: GoogleFonts.brunoAce(
@@ -119,6 +147,7 @@ class _AlllistingState extends State<Alllisting> {
               ),
             ),
           ),
+          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
