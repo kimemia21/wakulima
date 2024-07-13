@@ -1,6 +1,6 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/contant.dart';
-import 'package:app/detail_view.dart';
+import 'package:app/Detail_view.dart';
 import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

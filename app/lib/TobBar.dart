@@ -19,68 +19,39 @@ class _TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
-      child: FlashyTabBar(
-        selectedIndex: _selectedIndex,
-        showElevation: true,
-        animationDuration: Duration(milliseconds: 300),
-        onItemSelected: (index) => setState(() {
-          _selectedIndex = index;
-        }),
-        items: [
-          FlashyTabBarItem(
-            icon: IconButton(
-              onPressed: () {
-                // context.read<CurrentUserProvider>().changeItems(all);
-              },
-              icon: Icon(Icons.grid_view),
-            ),
-            title: Text(
-              'All',
-              style: GoogleFonts.poppins(),
-            ),
-            activeColor: Colors.black54,
-            inactiveColor: Color.fromARGB(255, 46, 46, 46),
-          ),
-
-          FlashyTabBarItem(
-            icon: IconButton(
-                onPressed: () {
-                  // context.read<CurrentUserProvider>().changeItems(mining);
-                },
-                icon: (
-                  Icon(
-                  Icons.terrain_rounded,
-                  size: 30,)
-                )),
-            activeColor: Colors.black54,
-            inactiveColor: Colors.black,
-            title: Text(
-              'Mining',
-              style: GoogleFonts.poppins(),
-            ),
-          ),
-          FlashyTabBarItem(
-            icon: IconButton(
-              onPressed: () {
-                // context.read<CurrentUserProvider>().changeItems(Agriculture);
-              },
-              icon: Icon(CupertinoIcons.leaf_arrow_circlepath, size: 30),
-            ),
-            title: Text(
-              'Agriculture',
-              style: GoogleFonts.poppins(),
-            ),
-            activeColor: Colors.black54,
-            inactiveColor: Colors.black,
-          ),
-
-          // FlashyTabBarItem(
-          //   icon: Icon(Icons.settings),
-          //   title: Text('한국어'),
-          // ),
-        ],
-      ),
-    );
+        width: AppWidth(context, 1),
+        height: 50,
+        margin: EdgeInsets.only(top: 10),
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return topbarItems("category $index", context);
+            }));
   }
+}
+
+Widget topbarItems(String text, BuildContext context) {
+  return Container(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(5),
+    decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadiusDirectional.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+
+            blurRadius: 5,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ]),
+    child: Text(
+      text,
+      style: GoogleFonts.poppins(
+        fontSize: 16,
+        color: Colors.black54,fontWeight: FontWeight.w600),
+    ),
+  );
 }

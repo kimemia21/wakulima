@@ -82,11 +82,7 @@ class _DetailViewState extends State<DetailView> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Globals().switchScreens(context: context, screen: Sales());
-            },
-            icon: Icon(Icons.arrow_back)),
+       automaticallyImplyLeading: true,
         actions: [
           Container(
             margin: EdgeInsets.only(right: 2),

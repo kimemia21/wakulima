@@ -1,5 +1,6 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/CartPage.dart';
+import 'package:app/Search.dart';
 import 'package:app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -195,6 +196,14 @@ AppBar appbar(BuildContext context) {
       ),
     ),
     actions: [
+      Container(
+         margin: EdgeInsets.only(right: 10, left: 10),
+        child: IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchPage()));
+          
+        }, icon:appBarIcons(icon: Icon(Icons.search))),
+      ),
+
       Container(
         margin: EdgeInsets.only(right: 10, left: 10),
         child: GestureDetector(

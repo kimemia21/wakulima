@@ -10,7 +10,7 @@ import 'package:app/Search.dart';
 import 'package:app/TobBar.dart';
 import 'package:app/authentication/LoginScreen.dart';
 import 'package:app/contant.dart';
-import 'package:app/detail_view.dart';
+import 'package:app/Detail_view.dart';
 import 'package:app/globals.dart';
 import 'package:app/model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
