@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app/AllListing.dart';
 import 'package:app/AppBloc.dart';
 import 'package:app/Arrivals.dart';
 import 'package:app/CartPage.dart';
@@ -124,6 +125,8 @@ class _SalesState extends State<Sales> {
                     color: Colors.white,
                   ),
                   child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     // physics: BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // Number of columns
@@ -192,61 +195,17 @@ class _SelectionState extends State<Selection> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 10),
-          child: GestureDetector(
-            onTap: () async {
-                    await checkInternetConnection(context).then((value) {
-                      value
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Sales()))
-                          : Globals().nointernet(context: context);
-                    });
-            },
-            child: Text(
-              "CXT",
-              style: GoogleFonts.brunoAce(
-                  letterSpacing: 1,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black54),
-            ),
-          ),
+      appBar: appbar(context),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopBar(),
+           
+            popular(context),
+            Arrivals(),
+            Alllisting()
+          ],
         ),
-        actions: [
-          GestureDetector(
-             onTap: () async {
-                    await checkInternetConnection(context).then((value) {
-                      value
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Cartpage()))
-                          : Globals().nointernet(context: context);
-                    });
-            },
-            child: badges.Badge(
-              showBadge: context.watch<CurrentUserProvider>().cartNumber > 0,
-              badgeContent:
-                  Text("${context.watch<CurrentUserProvider>().cartNumber}"),
-              child: appBarIcons(
-                icon: Icon(CupertinoIcons.shopping_cart),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          TopBar(),
-          popular(context),
-          Arrivals(),
-        ],
       ),
     );
   }

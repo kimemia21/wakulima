@@ -23,16 +23,20 @@ class _ArrivalsState extends State<Arrivals> {
 
   final List<Map> imageUrl = [
     {
-      "imageUrl": [Agriculture[0]],
+      "imageUrl": [Agriculture[1]],
+      "price": "34400"
     },
     {
-      "imageUrl": [all[2]],
+      "imageUrl": [all[1]],
+      "price": "45400"
     },
     {
-      "imageUrl": [Agriculture[3]],
+      "imageUrl": [Agriculture[1]],
+      "price": "60400"
     },
     {
-      "imageUrl": [mining[0]],
+      "imageUrl": [mining[2]],
+      "price": "30000"
     }
   ];
 
@@ -82,8 +86,6 @@ class _ArrivalsState extends State<Arrivals> {
             child: CarouselSlider.builder(
                 itemCount: imageUrl.length,
                 itemBuilder: (context, index, realindex) {
-                  final urlImage =
-                      context.watch<CurrentUserProvider>().list[index];
                   return GestureDetector(
                       onTap: () {
                         print("PRESSED");
@@ -110,7 +112,11 @@ class _ArrivalsState extends State<Arrivals> {
                           print("Got this error in Arrivals.dart $e");
                         }
                       },
-                      child: Container(child: buildImage(context, urlImage)));
+                      child: Container(
+                          child: buildImage(
+                              context,
+                              imageUrl[index]["imageUrl"][0],
+                              imageUrl[index]["price"])));
                 },
                 options: CarouselOptions(
                     onPageChanged: (index, reason) =>
@@ -132,10 +138,7 @@ class _ArrivalsState extends State<Arrivals> {
   }
 }
 
-Widget buildImage(
-  context,
-  String urlImage,
-) {
+Widget buildImage(context, String urlImage, String price) {
   return Container(
     width: AppWidth(context, 0.8),
     margin: EdgeInsets.symmetric(
@@ -169,7 +172,7 @@ Widget buildImage(
                 ),
                 Container(
                   child: Text(
-                    "Nike Air Jordan 4",
+                    "item name placeHolder",
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                       fontSize: 12,
@@ -179,7 +182,7 @@ Widget buildImage(
                 ),
                 Container(
                   child: Text(
-                    "\$750",
+                    "Kshs $price",
                     style: GoogleFonts.abel(
                         textStyle: TextStyle(
                       fontSize: AppWidth(context, 0.04),
