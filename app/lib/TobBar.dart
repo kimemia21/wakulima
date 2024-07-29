@@ -23,6 +23,7 @@ class _TopBarState extends State<TopBar> {
         height: 50,
         margin: EdgeInsets.only(top: 10),
         child: ListView.builder(
+          physics: BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
             itemCount: 10,
             itemBuilder: (context, index) {

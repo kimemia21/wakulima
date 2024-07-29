@@ -63,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> Screens = [
     Sales(),
     Analyitics(),
-    Additem(),
+    // Additem(),
     Offers(),
-    Profile()
+    // Profile()
   ];
 
   @override
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Icon(Icons.auto_graph, size: 28),
               Icon(Icons.add, size: 28),
               Icon(Icons.compare_arrows, size: 28),
-              Icon(Icons.perm_identity, size: 28),
+              // Icon(Icons.perm_identity, size: 28),
             ],
             color: Colors.white,
             buttonBackgroundColor: Colors.white,

@@ -1,7 +1,9 @@
 import 'package:app/AppBloc.dart';
 import 'package:app/CartPage.dart';
+import 'package:app/Homepage.dart';
 import 'package:app/Search.dart';
 import 'package:app/globals.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -180,30 +182,33 @@ Widget cartItem(
 }
 
 AppBar appbar(BuildContext context) {
-  
   return AppBar(
     backgroundColor: Colors.white,
     leading: Container(
       alignment: Alignment.center,
       margin: EdgeInsets.only(left: 10),
-      child: Text(
-        "CXT",
-        style: GoogleFonts.brunoAce(
-            letterSpacing: 1,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.black54),
+      child: GestureDetector(
+        onTap: () =>Globals().switchScreens(context: context,screen: MyHomePage(title: "homepage")),
+        child: Text(
+          "CXT",
+          style: GoogleFonts.brunoAce(
+              letterSpacing: 1,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.black54),
+        ),
       ),
     ),
     actions: [
       Container(
-         margin: EdgeInsets.only(right: 10, left: 10),
-        child: IconButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchPage()));
-          
-        }, icon:appBarIcons(icon: Icon(Icons.search))),
+        margin: EdgeInsets.only(right: 10, left: 10),
+        child: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchPage()));
+            },
+            icon: appBarIcons(icon: Icon(Icons.search))),
       ),
-
       Container(
         margin: EdgeInsets.only(right: 10, left: 10),
         child: GestureDetector(
@@ -228,3 +233,10 @@ AppBar appbar(BuildContext context) {
     ],
   );
 }
+
+
+
+
+
+
+
