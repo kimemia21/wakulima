@@ -62,7 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> Screens = [
     Sales(),
-    Analyitics(),
+
+   OrderAnalyticsPage(),
+    AddOrderPage(),
+    // Additem
     // Additem(),
     Offers(),
     // Profile()
@@ -73,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return PopScope(
       child: Scaffold(
           backgroundColor: Colors.white,
-         
           bottomNavigationBar: CurvedNavigationBar(
             key: _bottomNavigationKey,
             index: 0,
